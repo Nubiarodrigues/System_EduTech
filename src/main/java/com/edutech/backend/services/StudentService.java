@@ -1,11 +1,14 @@
 package com.edutech.backend.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.edutech.backend.dtos.StudentRequestDTO;
 import com.edutech.backend.dtos.StudentResponseDTO;
 import com.edutech.backend.entities.Student;
+import com.edutech.backend.mapper.StudentMapper;
 import com.edutech.backend.repositories.StudentRepository;
 
 @Service
@@ -21,9 +24,13 @@ public class StudentService {
 		return repositoryStudent.findAll().stream().map(StudentResponseDTO::new).toList();
 	}
 
-	public Student createStudent() {
-		Student newStudent = new Student();
-		return repositoryStudent.save(newStudent);
+	public Optional<Student> findById(Long id) {
+		return repositoryStudent.findById(id);
+	}
+
+	public Student createStudent(StudentRequestDTO dto) {
+		Student entity = StudentMapper.toEntity(dto);
+		return repositoryStudent.save(entity);
 	}
 
 }
