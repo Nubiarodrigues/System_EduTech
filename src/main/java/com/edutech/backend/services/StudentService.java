@@ -38,5 +38,9 @@ public class StudentService {
 		StudentMapper.updateData(entity, obj);
 		return repositoryStudent.save(entity);
 	}
+	
+	public void deleteStudent(Long id) {
+		repositoryStudent.deleteById(id);	
+	}
 
 }
