@@ -1,15 +1,17 @@
 package com.edutech.backend.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 import com.edutech.backend.dtos.StudentRequestDTO;
 import com.edutech.backend.dtos.StudentResponseDTO;
 import com.edutech.backend.entities.Student;
+import com.edutech.backend.exceptions.ResourceNotFoundException;
 import com.edutech.backend.mapper.StudentMapper;
 import com.edutech.backend.repositories.StudentRepository;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class StudentService {
@@ -24,8 +26,9 @@ public class StudentService {
 		return repositoryStudent.findAll().stream().map(StudentResponseDTO::new).toList();
 	}
 
-	public Optional<Student> findById(Long id) {
-		return repositoryStudent.findById(id);
+	public Student findById(Long id) {
+		return repositoryStudent.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 
 	public Student createStudent(StudentRequestDTO dto) {
@@ -34,13 +37,17 @@ public class StudentService {
 	}
 
 	public Student updateStudent(Long id, Student obj) {
-		Student entity = repositoryStudent.getReferenceById(id);
-		StudentMapper.updateData(entity, obj);
-		return repositoryStudent.save(entity);
+		try {
+			Student entity = repositoryStudent.getReferenceById(id);
+			StudentMapper.updateData(entity, obj);
+			return repositoryStudent.save(entity);
+		} catch(EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
 	}
-	
+
 	public void deleteStudent(Long id) {
-		repositoryStudent.deleteById(id);	
+		repositoryStudent.deleteById(id);
 	}
 
 }
