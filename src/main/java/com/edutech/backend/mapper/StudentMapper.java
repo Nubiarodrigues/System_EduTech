@@ -18,4 +18,16 @@ public class StudentMapper {
 	            dto.fatherName()
 	        );
 	    }
+	 
+	 public static void updateData(Student entity, Student objUpdate) {
+		 entity.setName(objUpdate.getName());
+		 entity.setDateBirth(objUpdate.getDateBirth());
+		 entity.setCpf(objUpdate.getCpf());
+		 entity.setSus(objUpdate.getSus());
+		 entity.setAddress(objUpdate.getAddress());
+		 entity.setTelephone(objUpdate.getTelephone());
+		 entity.setEmailResponsable(objUpdate.getEmailResponsable());
+		 entity.setMotherName(objUpdate.getMotherName());
+		 entity.setFatherName(objUpdate.getFatherName());
+	 }
 }

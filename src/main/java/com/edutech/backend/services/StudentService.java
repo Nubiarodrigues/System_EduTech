@@ -33,4 +33,10 @@ public class StudentService {
 		return repositoryStudent.save(entity);
 	}
 
+	public Student updateStudent(Long id, Student obj) {
+		Student entity = repositoryStudent.getReferenceById(id);
+		StudentMapper.updateData(entity, obj);
+		return repositoryStudent.save(entity);
+	}
+
 }
