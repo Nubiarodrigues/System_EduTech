@@ -49,14 +49,8 @@ public class StudentService {
 	}
 
 	public void deleteStudent(Long id) {
-		try {
-			repositoryStudent.deleteById(id);
-		} catch (EmptyResultDataAccessException e) {
-			throw new ResourceNotFoundException(id);
-		} catch (DataIntegrityViolationException e) {
-			throw new DatabaseException(e.getMessage());
-		}
-
+		Student student = repositoryStudent.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+		repositoryStudent.delete(student);
 	}
 
 }
