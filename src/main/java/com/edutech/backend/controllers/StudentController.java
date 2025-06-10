@@ -44,14 +44,15 @@ public class StudentController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Student> insert(@RequestBody @Valid StudentRequestDTO dto) {
+	public ResponseEntity<StudentResponseDTO> insert(@RequestBody @Valid StudentRequestDTO dto) {
 		Student newStudent = serviceStudent.createStudent(dto);
 		URI location = ServletUriComponentsBuilder
 				.fromCurrentRequest()
-				.path("{id}")
+				.path("/{id}")
 				.buildAndExpand(newStudent.getId())
 				.toUri();
-		return ResponseEntity.created(location).body(newStudent);
+		StudentResponseDTO response = new StudentResponseDTO(newStudent);
+		return ResponseEntity.created(location).body(response);
 	}
 
 	@PutMapping("/{id}")
