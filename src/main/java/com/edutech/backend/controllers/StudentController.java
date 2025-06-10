@@ -37,9 +37,10 @@ public class StudentController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Student> findAll(@PathVariable Long id) {
+	public ResponseEntity<StudentResponseDTO> findByIdStudent(@PathVariable Long id) {
 		Student wanted = serviceStudent.findById(id);
-		return ResponseEntity.ok().body(wanted);
+		StudentResponseDTO response = new StudentResponseDTO(wanted);
+		return ResponseEntity.ok().body(response);
 	}
 
 	@PostMapping
