@@ -38,7 +38,7 @@ public class StudentService {
 		return repositoryStudent.save(entity);
 	}
 
-	public Student updateStudent(Long id, Student obj) {
+	public Student updateStudent(Long id, StudentRequestDTO obj) {
 		try {
 			Student entity = repositoryStudent.getReferenceById(id);
 			StudentMapper.updateData(entity, obj);

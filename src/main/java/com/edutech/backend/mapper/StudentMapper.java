@@ -19,15 +19,16 @@ public class StudentMapper {
 	        );
 	    }
 	 
-	 public static void updateData(Student entity, Student objUpdate) {
-		 entity.setName(objUpdate.getName());
-		 entity.setDateBirth(objUpdate.getDateBirth());
-		 entity.setCpf(objUpdate.getCpf());
-		 entity.setSus(objUpdate.getSus());
-		 entity.setAddress(objUpdate.getAddress());
-		 entity.setTelephone(objUpdate.getTelephone());
-		 entity.setEmailResponsable(objUpdate.getEmailResponsable());
-		 entity.setMotherName(objUpdate.getMotherName());
-		 entity.setFatherName(objUpdate.getFatherName());
+	 
+	 public static void updateData(Student entity, StudentRequestDTO objUpdate) {
+		 entity.setName(objUpdate.name());
+		 entity.setDateBirth(objUpdate.dateBirth());
+		 entity.setCpf(objUpdate.cpf());
+		 entity.setSus(objUpdate.sus());
+		 entity.setAddress(objUpdate.address());
+		 entity.setTelephone(objUpdate.telephone());
+		 entity.setEmailResponsable(objUpdate.emailResponsable());
+		 entity.setMotherName(objUpdate.motherName());
+		 entity.setFatherName(objUpdate.fatherName());
 	 }
 }

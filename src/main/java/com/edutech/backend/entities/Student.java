@@ -31,7 +31,8 @@ public class Student extends User {
 	private LocalDate frequency;
 	private String emailResponsable;
 
-	public Student(String name, LocalDate dateBirth, String cpf, String sus, String address, String telephone,String emailResponsable, String motherName, String fatherName) {
+	public Student(String name, LocalDate dateBirth, String cpf, String sus, String address, String telephone,
+			String emailResponsable, String motherName, String fatherName) {
 		this.name = name;
 		this.dateBirth = dateBirth;
 		this.cpf = cpf;
