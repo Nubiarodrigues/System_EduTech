@@ -28,7 +28,8 @@ public class StudentService {
 	}
 
 	public Student findById(Long id) {
-		return repositoryStudent.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+		return repositoryStudent.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 
 	@Transactional
@@ -50,7 +51,8 @@ public class StudentService {
 
 	@Transactional
 	public void deleteStudent(Long id) {
-		Student student = repositoryStudent.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+		Student student = repositoryStudent.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException(id));
 		repositoryStudent.delete(student);
 	}
 

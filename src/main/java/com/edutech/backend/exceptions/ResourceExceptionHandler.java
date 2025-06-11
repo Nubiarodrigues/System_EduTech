@@ -55,7 +55,6 @@ public class ResourceExceptionHandler {
 		return ResponseEntity.status(status).body(err);
 	}
 
-
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	public ResponseEntity<String> handleInvalidEnum(HttpMessageNotReadableException ex) {
 		if (ex.getCause() instanceof InvalidFormatException) {
