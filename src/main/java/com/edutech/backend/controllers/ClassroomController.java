@@ -3,8 +3,11 @@ package com.edutech.backend.controllers;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,6 +38,19 @@ public class ClassroomController {
 		Classroom newClassroom = serviceClassroom.createClasseroom(dto);
 		ClassroomResponseDTO response = new ClassroomResponseDTO(newClassroom);
 		return ResponseEntity.ok(response);
+	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<ClassroomResponseDTO> update(@PathVariable Long id, @RequestBody ClassroomRequestDTO obj) {
+		Classroom current = serviceClassroom.updateClassroom(id, obj);
+		ClassroomResponseDTO response = new ClassroomResponseDTO(current);
+		return ResponseEntity.ok(response);
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> delete(@PathVariable Long id) {
+		serviceClassroom.deleteClassroom(id);
+		return ResponseEntity.ok().build();
 	}
 
 }
