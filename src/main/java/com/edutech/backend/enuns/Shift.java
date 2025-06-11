@@ -2,7 +2,7 @@ package com.edutech.backend.enuns;
 
 public enum Shift {
 	
-	MANHÃ,
+	MANHA,
 	TARDE,
 	NOITE
 
