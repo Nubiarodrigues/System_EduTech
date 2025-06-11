@@ -10,10 +10,10 @@ import jakarta.validation.constraints.NotNull;
 public record ClassroomRequestDTO(
 		@NotNull Integer series,
 		@NotBlank String identifierSeries,
-		@NotBlank Integer capacity,
-		@NotBlank Shift shift,
+		@NotNull Integer capacity,
+		Shift shift,
 		@NotNull Integer schoolYear,
-		@NotBlank TeachingState modality
+		TeachingState modality
 	) {
 
 	public ClassroomRequestDTO (Classroom classroom) {
