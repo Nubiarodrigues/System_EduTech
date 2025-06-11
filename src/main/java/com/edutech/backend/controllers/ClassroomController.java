@@ -36,10 +36,17 @@ public class ClassroomController {
 		List<ClassroomResponseDTO> classrooms = serviceClassroom.findAll();
 		return ResponseEntity.ok(classrooms);
 	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<ClassroomResponseDTO> findById(@PathVariable Long id){
+		Classroom classroom = serviceClassroom.findById(id);
+		ClassroomResponseDTO response = new ClassroomResponseDTO(classroom);
+		return ResponseEntity.ok().body(response);
+	}
 
 	@PostMapping
 	public ResponseEntity<ClassroomResponseDTO> create(@RequestBody @Valid ClassroomRequestDTO dto) {
-		Classroom newClassroom = serviceClassroom.createClasseroom(dto);
+		Classroom newClassroom = serviceClassroom.createClassroom(dto);
 		URI location = ServletUriComponentsBuilder
 				.fromCurrentRequest()
 				.path("/{id}")
