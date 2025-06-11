@@ -36,5 +36,9 @@ public abstract class User {
 
     @Enumerated(EnumType.STRING)
     protected RoleUser role;
+    
+    public User(String name) {
+    	this.name = name;
+    }
 
 }
