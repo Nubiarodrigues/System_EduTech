@@ -44,4 +44,15 @@ public class Classroom {
 	@Enumerated(EnumType.STRING)
 	private TeachingState modality;
 
+	public Classroom(Integer series, String identifierSeries, Integer capacity, Shift shift, Integer schoolYear,TeachingState modality) {
+		this.series = series;
+		this.identifierSeries = identifierSeries;
+		this.capacity = capacity;
+		this.shift = shift;
+		this.schoolYear = schoolYear;
+		this.modality = modality;
+	}
+	
+	
+
 }

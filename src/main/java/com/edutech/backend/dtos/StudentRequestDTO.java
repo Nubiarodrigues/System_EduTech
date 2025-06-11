@@ -14,10 +14,10 @@ public record StudentRequestDTO(
 	    @NotBlank String cpf,
 	    @NotBlank String sus,
 	    @NotBlank String address,
-	    String telephone,
-	    String emailResponsable,
-	    String motherName,
-	    String fatherName,
+	    @NotBlank String telephone,
+	    @NotBlank String emailResponsable,
+	    @NotBlank String motherName,
+	    @NotBlank String fatherName,
 	    @NotBlank Classroom classroom
 	) {
 	    public StudentRequestDTO(Student student) {
