@@ -2,6 +2,7 @@ package com.edutech.backend.dtos;
 
 import java.time.LocalDate;
 
+import com.edutech.backend.entities.Classroom;
 import com.edutech.backend.entities.Student;
 
 import jakarta.validation.constraints.NotBlank;
@@ -13,10 +14,11 @@ public record StudentRequestDTO(
 	    @NotBlank String cpf,
 	    @NotBlank String sus,
 	    @NotBlank String address,
-	    String telephone,
-	    String emailResponsable,
-	    String motherName,
-	    String fatherName
+	    @NotBlank String telephone,
+	    @NotBlank String emailResponsable,
+	    @NotBlank String motherName,
+	    @NotBlank String fatherName,
+	    @NotBlank Classroom classroom
 	) {
 	    public StudentRequestDTO(Student student) {
 	        this(
@@ -28,7 +30,8 @@ public record StudentRequestDTO(
 	            student.getTelephone(),
 	            student.getEmailResponsable(),
 	            student.getMotherName(),
-	            student.getFatherName()
+	            student.getFatherName(),
+	            student.getClassroom()
 	        );
 	    }
 	    

@@ -12,7 +12,8 @@ public record StudentResponseDTO(
 		LocalDate dateBirth,
 		@NotNull String cpf,
 		String motherName,
-		String fatherName) {
+		String fatherName)
+{
 
 	public StudentResponseDTO(Student student) {
 		this(
@@ -21,6 +22,7 @@ public record StudentResponseDTO(
 				student.getDateBirth(), 
 				student.getCpf(), 
 				student.getMotherName(),
-				student.getFatherName());
+				student.getFatherName()				
+			);
 	}
 }

@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-
 @MappedSuperclass
 @Getter
 @Setter
@@ -25,16 +24,20 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public abstract class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
-    protected Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@EqualsAndHashCode.Include
+	protected Long id;
 
-    protected String name;
-    protected String email;
-    protected String password;
+	protected String name;
+	protected String email;
+	protected String password;
 
-    @Enumerated(EnumType.STRING)
-    protected RoleUser role;
+	@Enumerated(EnumType.STRING)
+	protected RoleUser role;
+
+	public User(String name) {
+		this.name = name;
+	}
 
 }

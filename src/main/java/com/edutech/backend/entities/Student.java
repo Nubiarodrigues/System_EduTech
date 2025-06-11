@@ -2,9 +2,11 @@ package com.edutech.backend.entities;
 
 import java.time.LocalDate;
 
-import com.edutech.backend.dtos.StudentRequestDTO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,9 +33,13 @@ public class Student extends User {
 	private LocalDate frequency;
 	private String emailResponsable;
 
-	public Student(String name, LocalDate dateBirth, String cpf, String sus, String address, String telephone,
-			String emailResponsable, String motherName, String fatherName) {
-		this.name = name;
+	@ManyToOne
+	@JoinColumn(name = "classroom_id")
+	@JsonBackReference
+	private Classroom classroom;
+
+	public Student(String name, LocalDate dateBirth, String cpf, String sus, String address, String telephone,String emailResponsable, String motherName, String fatherName, Classroom classroom) {
+		super(name);
 		this.dateBirth = dateBirth;
 		this.cpf = cpf;
 		this.sus = sus;
@@ -42,6 +48,7 @@ public class Student extends User {
 		this.emailResponsable = emailResponsable;
 		this.motherName = motherName;
 		this.fatherName = fatherName;
+		this.classroom = classroom;
 	}
 
 }
