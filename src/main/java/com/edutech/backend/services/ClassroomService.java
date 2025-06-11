@@ -42,6 +42,7 @@ public class ClassroomService {
 
 	public void deleteClassroom(Long id) {
 		Optional<Classroom> entity = repositoryClassroom.findById(id);
+		repositoryClassroom.deleteById(id);
 	}
 
 }
