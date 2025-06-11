@@ -38,14 +38,14 @@ public class StudentController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<StudentResponseDTO> findByIdStudent(@PathVariable Long id) {
+	public ResponseEntity<StudentResponseDTO> findById(@PathVariable Long id) {
 		Student wanted = serviceStudent.findById(id);
 		StudentResponseDTO response = new StudentResponseDTO(wanted);
 		return ResponseEntity.ok().body(response);
 	}
 
 	@PostMapping
-	public ResponseEntity<StudentResponseDTO> insert(@RequestBody @Valid StudentRequestDTO dto) {
+	public ResponseEntity<StudentResponseDTO> create(@RequestBody @Valid StudentRequestDTO dto) {
 		Student newStudent = serviceStudent.createStudent(dto);
 		URI location = ServletUriComponentsBuilder
 				.fromCurrentRequest()
