@@ -6,9 +6,12 @@ import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -32,26 +35,37 @@ public class ResourceExceptionHandler {
 				request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
-	
+
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<StandardError> handleValidationException(MethodArgumentNotValidException ex, HttpServletRequest request){
+	public ResponseEntity<StandardError> handleValidationException(MethodArgumentNotValidException ex,
+			HttpServletRequest request) {
 		HttpStatus status = HttpStatus.BAD_REQUEST;
-		List<String> errors = ex.getBindingResult()
-				.getFieldErrors()
-				.stream()
+		List<String> errors = ex.getBindingResult().getFieldErrors().stream()
 				.map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage())
 				.collect(Collectors.toList());
 		String errorMessage = String.join(", ", errors);
-		
+
 		StandardError err = new StandardError(
-				Instant.now(),
+				Instant.now(), 
 				status.value(),
 				"Validation Error",
 				errorMessage,
-				request.getRequestURI()
-		);
-		
+				request.getRequestURI());
+
 		return ResponseEntity.status(status).body(err);
 	}
-	
+
+
+	@ExceptionHandler(HttpMessageNotReadableException.class)
+	public ResponseEntity<String> handleInvalidEnum(HttpMessageNotReadableException ex) {
+		if (ex.getCause() instanceof InvalidFormatException) {
+			return ResponseEntity
+					.badRequest()
+					.body("Valor inválido ou vazio para Enum. Verifique os dados enviados");
+		}
+		return ResponseEntity
+				.status(HttpStatus.BAD_REQUEST)
+				.body("Requisição inválida. Verifique os dados enviados.");
+	}
+
 }

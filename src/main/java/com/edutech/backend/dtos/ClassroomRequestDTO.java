@@ -11,9 +11,9 @@ public record ClassroomRequestDTO(
 		@NotNull Integer series,
 		@NotBlank String identifierSeries,
 		@NotNull Integer capacity,
-		Shift shift,
+		@NotNull (message = "Shift é obrigátorio") Shift shift,
 		@NotNull Integer schoolYear,
-		TeachingState modality
+		@NotNull (message = "TeachingState é obrigátorio") TeachingState modality
 	) {
 
 	public ClassroomRequestDTO (Classroom classroom) {
