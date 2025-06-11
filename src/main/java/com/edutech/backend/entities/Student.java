@@ -2,6 +2,8 @@ package com.edutech.backend.entities;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -33,6 +35,7 @@ public class Student extends User {
 
 	@ManyToOne
 	@JoinColumn(name = "classroom_id")
+	@JsonBackReference
 	private Classroom classroom;
 
 	public Student(String name, LocalDate dateBirth, String cpf, String sus, String address, String telephone,String emailResponsable, String motherName, String fatherName, Classroom classroom) {

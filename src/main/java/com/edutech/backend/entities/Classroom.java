@@ -1,13 +1,17 @@
 package com.edutech.backend.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.edutech.backend.enuns.Shift;
 import com.edutech.backend.enuns.TeachingState;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -38,8 +42,9 @@ public class Classroom {
 
 	private Integer schoolYear;
 
-	@OneToMany(mappedBy = "classroom")
-	private List<Student> students;
+	@OneToMany(mappedBy = "classroom", fetch = FetchType.EAGER)
+	@JsonManagedReference
+	private List<Student> students = new ArrayList<>();
 
 	@Enumerated(EnumType.STRING)
 	private TeachingState modality;
