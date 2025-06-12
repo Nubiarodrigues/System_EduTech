@@ -17,6 +17,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.edutech.backend.dtos.ClassroomRequestDTO;
 import com.edutech.backend.dtos.ClassroomResponseDTO;
 import com.edutech.backend.entities.Classroom;
+import com.edutech.backend.mapper.ClassroomMapper;
 import com.edutech.backend.services.ClassroomService;
 
 import jakarta.validation.Valid;
@@ -26,9 +27,11 @@ import jakarta.validation.Valid;
 public class ClassroomController {
 
 	private final ClassroomService serviceClassroom;
+	private final ClassroomMapper mapperClassroom;
 
-	public ClassroomController(ClassroomService serviceClassroom) {
+	public ClassroomController(ClassroomService serviceClassroom, ClassroomMapper mapperClassroom) {
 		this.serviceClassroom = serviceClassroom;
+		this.mapperClassroom = mapperClassroom;
 	}
 
 	@GetMapping
@@ -40,7 +43,7 @@ public class ClassroomController {
 	@GetMapping("/{id}")
 	public ResponseEntity<ClassroomResponseDTO> findById(@PathVariable Long id){
 		Classroom classroom = serviceClassroom.findById(id);
-		ClassroomResponseDTO response = new ClassroomResponseDTO(classroom);
+		ClassroomResponseDTO response = mapperClassroom.toResponseDTO(classroom);
 		return ResponseEntity.ok().body(response);
 	}
 
@@ -52,14 +55,14 @@ public class ClassroomController {
 				.path("/{id}")
 				.buildAndExpand(newClassroom.getId())
 				.toUri();
-		ClassroomResponseDTO response = new ClassroomResponseDTO(newClassroom);
+		ClassroomResponseDTO response = mapperClassroom.toResponseDTO(newClassroom);
 		return ResponseEntity.created(location).body(response);
 	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<ClassroomResponseDTO> update(@PathVariable Long id, @RequestBody @Valid ClassroomRequestDTO obj) {
 		Classroom current = serviceClassroom.updateClassroom(id, obj);
-		ClassroomResponseDTO response = new ClassroomResponseDTO(current);
+		ClassroomResponseDTO response = mapperClassroom.toResponseDTO(current);
 		return ResponseEntity.ok(response);
 	}
 

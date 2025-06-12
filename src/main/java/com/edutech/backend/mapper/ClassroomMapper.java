@@ -5,7 +5,9 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 import com.edutech.backend.dtos.ClassroomRequestDTO;
+import com.edutech.backend.dtos.ClassroomResponseDTO;
 import com.edutech.backend.entities.Classroom;
+import com.edutech.backend.entities.Student;
 
 @Mapper(componentModel = "spring")
 public interface ClassroomMapper {
@@ -14,7 +16,7 @@ public interface ClassroomMapper {
 	@Mapping(target = "students", ignore = true)
 	Classroom toEntity(ClassroomRequestDTO dto);
 
-	ClassroomRequestDTO toDTO(Classroom entity);
+	ClassroomResponseDTO toResponseDTO(Classroom entity);
 
 	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "students", ignore = true)
