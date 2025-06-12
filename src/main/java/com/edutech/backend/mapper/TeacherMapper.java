@@ -1,34 +1,27 @@
 package com.edutech.backend.mapper;
 
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+
 import com.edutech.backend.dtos.TeacherRequestDTO;
 import com.edutech.backend.entities.Teacher;
 
-public class TeacherMapper {
+@Mapper(componentModel = "spring")
+public interface TeacherMapper {
 
-	public static Teacher toEntity(TeacherRequestDTO dto) {
-		return new Teacher(
-				dto.name(),
-				dto.cpf(),
-				dto.telephone(),
-				dto.status(),
-				dto.dateBirth(),
-				dto.workloadTotal(),
-				dto.rg(),
-				dto.address(),
-				dto.matriculation(),
-				dto.formedCourse());	
-	}
+	@Mapping(target = "email", ignore = true)
+	@Mapping(target = "id", ignore = true)
+	@Mapping(target = "password", ignore = true)
+	@Mapping(target = "role", ignore = true)
+	Teacher toEntity(TeacherRequestDTO dto);
+
+	TeacherRequestDTO toDTO(Teacher entity);
 	
-	public static void updateData(Teacher entity, TeacherRequestDTO dto) {
-		entity.setName(dto.name());
-		entity.setCpf(dto.cpf());
-		entity.setTelephone(dto.telephone());
-		entity.setStatus(dto.status());
-		entity.setDateBirth(dto.dateBirth());
-		entity.setWorkloadTotal(dto.workloadTotal());
-		entity.setAddress(dto.address());
-		entity.setMatriculation(dto.matriculation());
-		entity.setFormedCourse(dto.formedCourse());
-	}
-
+	
+	@Mapping(target = "email", ignore = true)
+	@Mapping(target = "id", ignore = true)
+	@Mapping(target = "password", ignore = true)
+	@Mapping(target = "role", ignore = true)
+	void updateTeacherFromDTO(TeacherRequestDTO dto, @MappingTarget Teacher entity);
 }
