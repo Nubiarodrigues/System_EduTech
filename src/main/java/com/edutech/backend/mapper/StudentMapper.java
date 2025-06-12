@@ -5,7 +5,9 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 import com.edutech.backend.dtos.StudentRequestDTO;
+import com.edutech.backend.dtos.StudentResponseDTO;
 import com.edutech.backend.entities.Student;
+import com.edutech.backend.entities.Teacher;
 
 @Mapper(componentModel = "spring")
 public interface StudentMapper {
@@ -17,7 +19,7 @@ public interface StudentMapper {
 	@Mapping(target = "frequency", ignore = true)
 	Student toEntity(StudentRequestDTO dto);
 
-	StudentRequestDTO toDTO(Student entity);
+	StudentResponseDTO toResponseDTO(Student entity);
 
 	@Mapping(target = "email", ignore = true)
 	@Mapping(target = "id", ignore = true)

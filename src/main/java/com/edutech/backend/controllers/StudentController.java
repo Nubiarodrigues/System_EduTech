@@ -17,6 +17,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.edutech.backend.dtos.StudentRequestDTO;
 import com.edutech.backend.dtos.StudentResponseDTO;
 import com.edutech.backend.entities.Student;
+import com.edutech.backend.mapper.StudentMapper;
 import com.edutech.backend.services.StudentService;
 
 import jakarta.validation.Valid;
@@ -26,9 +27,11 @@ import jakarta.validation.Valid;
 public class StudentController {
 
 	private final StudentService serviceStudent;
+	private final StudentMapper mapperStudent;
 
-	public StudentController(StudentService serviceStudent) {
+	public StudentController(StudentService serviceStudent, StudentMapper mapperStudent) {
 		this.serviceStudent = serviceStudent;
+		this.mapperStudent = mapperStudent;
 	}
 
 	@GetMapping
@@ -40,7 +43,7 @@ public class StudentController {
 	@GetMapping("/{id}")
 	public ResponseEntity<StudentResponseDTO> findById(@PathVariable Long id) {
 		Student wanted = serviceStudent.findById(id);
-		StudentResponseDTO response = new StudentResponseDTO(wanted);
+		StudentResponseDTO response = mapperStudent.toResponseDTO(wanted);
 		return ResponseEntity.ok().body(response);
 	}
 
@@ -52,14 +55,14 @@ public class StudentController {
 				.path("/{id}")
 				.buildAndExpand(newStudent.getId())
 				.toUri();
-		StudentResponseDTO response = new StudentResponseDTO(newStudent);
+		StudentResponseDTO response = mapperStudent.toResponseDTO(newStudent);
 		return ResponseEntity.created(location).body(response);
 	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<StudentResponseDTO> update(@PathVariable Long id, @RequestBody @Valid StudentRequestDTO dto) {
 		Student current = serviceStudent.updateStudent(id, dto);
-		StudentResponseDTO response = new StudentResponseDTO(current);
+		StudentResponseDTO response = mapperStudent.toResponseDTO(current);
 		return ResponseEntity.ok(response);
 	}
 
