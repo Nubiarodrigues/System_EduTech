@@ -5,6 +5,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 import com.edutech.backend.dtos.TeacherRequestDTO;
+import com.edutech.backend.dtos.TeacherResponseDTO;
 import com.edutech.backend.entities.Teacher;
 
 @Mapper(componentModel = "spring")
@@ -16,8 +17,7 @@ public interface TeacherMapper {
 	@Mapping(target = "role", ignore = true)
 	Teacher toEntity(TeacherRequestDTO dto);
 
-	TeacherRequestDTO toDTO(Teacher entity);
-	
+	TeacherResponseDTO toResponseDTO(Teacher entity);
 	
 	@Mapping(target = "email", ignore = true)
 	@Mapping(target = "id", ignore = true)

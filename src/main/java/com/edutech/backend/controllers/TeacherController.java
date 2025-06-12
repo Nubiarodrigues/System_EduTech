@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.edutech.backend.dtos.TeacherRequestDTO;
 import com.edutech.backend.dtos.TeacherResponseDTO;
 import com.edutech.backend.entities.Teacher;
+import com.edutech.backend.mapper.TeacherMapper;
 import com.edutech.backend.services.TeacherService;
 
 import jakarta.validation.Valid;
@@ -24,9 +25,11 @@ import jakarta.validation.Valid;
 public class TeacherController {
 
 	private final TeacherService serviceTeacher;
+	private final TeacherMapper mapperTeacher;
 
-	public TeacherController(TeacherService serviceTeacher) {
+	public TeacherController(TeacherService serviceTeacher, TeacherMapper mapperTeacher) {
 		this.serviceTeacher = serviceTeacher;
+		this.mapperTeacher = mapperTeacher;
 	}
 
 	@GetMapping
@@ -38,21 +41,21 @@ public class TeacherController {
 	@GetMapping("/{id}")
 	public ResponseEntity<TeacherResponseDTO> findById(@PathVariable Long id){
 		Teacher teacher = serviceTeacher.findById(id);
-		TeacherResponseDTO response = new TeacherResponseDTO(teacher);
+		TeacherResponseDTO response = mapperTeacher.toResponseDTO(teacher);
 		return ResponseEntity.ok().body(response);
 	}
 
 	@PostMapping
 	public ResponseEntity<TeacherResponseDTO> create(@RequestBody @Valid TeacherRequestDTO dto) {
 		Teacher newTeacher = serviceTeacher.createTeacher(dto);
-		TeacherResponseDTO response = new TeacherResponseDTO(newTeacher);
+		TeacherResponseDTO response = mapperTeacher.toResponseDTO(newTeacher);
 		return ResponseEntity.ok(response);
 	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<TeacherResponseDTO> update(@PathVariable Long id, @RequestBody @Valid TeacherRequestDTO dto) {
 		Teacher current = serviceTeacher.updateTeacher(id, dto);
-		TeacherResponseDTO response = new TeacherResponseDTO(current);
+		TeacherResponseDTO response = mapperTeacher.toResponseDTO(current);
 		return ResponseEntity.ok(response);
 	}
 
