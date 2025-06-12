@@ -34,6 +34,13 @@ public class TeacherController {
 		List<TeacherResponseDTO> teachers = serviceTeacher.findAll();
 		return ResponseEntity.ok(teachers);
 	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<TeacherResponseDTO> findById(@PathVariable Long id){
+		Teacher teacher = serviceTeacher.findById(id);
+		TeacherResponseDTO response = new TeacherResponseDTO(teacher);
+		return ResponseEntity.ok().body(response);
+	}
 
 	@PostMapping
 	public ResponseEntity<TeacherResponseDTO> create(@RequestBody @Valid TeacherRequestDTO dto) {
