@@ -13,10 +13,7 @@ public record TeacherRequestDTO(
 		Situation status,
 		@NotNull LocalDate dateBirth,
 		@NotNull Integer workloadTotal,
-		String rg,
-		String address,
+		String rg, String address,
 		String matriculation,
-		@NotNull String formedCourse
-	) {
-
-}
+		@NotNull String formedCourse) 
+{}

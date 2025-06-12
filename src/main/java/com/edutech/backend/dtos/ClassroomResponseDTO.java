@@ -8,7 +8,11 @@ import com.edutech.backend.entities.Student;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record ClassroomResponseDTO(Long id, @NotNull Integer series, @NotBlank String identifierSeries, List<Student> students) {
+public record ClassroomResponseDTO(
+		Long id,
+		Integer series,
+		String identifierSeries,
+		List<Student> students) {
 
 	public ClassroomResponseDTO(Classroom classroom) {
 		this(

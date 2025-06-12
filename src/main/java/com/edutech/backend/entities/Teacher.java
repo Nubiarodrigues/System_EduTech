@@ -48,12 +48,4 @@ public class Teacher extends User {
 		this.matriculation = matriculation;
 		this.formedCourse = formedCourse;
 	}
-
-	public Teacher(Long id, String name, LocalDate dateBirth, Integer workloadTotal, String matriculation) {
-		super(id);
-		this.dateBirth = dateBirth;
-		this.workloadTotal = workloadTotal;
-		this.matriculation = matriculation;
-	}
-
 }

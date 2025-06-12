@@ -8,9 +8,9 @@ import jakarta.validation.constraints.NotNull;
 
 public record StudentResponseDTO(
 		Long id,
-		@NotNull String name,
+		String name,
 		LocalDate dateBirth,
-		@NotNull String cpf,
+		String cpf,
 		String motherName,
 		String fatherName)
 {
