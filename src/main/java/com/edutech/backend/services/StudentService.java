@@ -18,9 +18,11 @@ import jakarta.persistence.EntityNotFoundException;
 public class StudentService {
 
 	private final StudentRepository repositoryStudent;
+	private final StudentMapper mapperStudent;
 
-	public StudentService(StudentRepository repositoryStudent) {
+	public StudentService(StudentRepository repositoryStudent, StudentMapper mapperStudent) {
 		this.repositoryStudent = repositoryStudent;
+		this.mapperStudent = mapperStudent;
 	}
 
 	public List<StudentResponseDTO> findAll() {
@@ -34,7 +36,7 @@ public class StudentService {
 
 	@Transactional
 	public Student createStudent(StudentRequestDTO dto) {
-		Student entity = StudentMapper.toEntity(dto);
+		Student entity = mapperStudent.toEntity(dto);
 		return repositoryStudent.save(entity);
 	}
 
@@ -42,7 +44,7 @@ public class StudentService {
 	public Student updateStudent(Long id, StudentRequestDTO obj) {
 		try {
 			Student entity = repositoryStudent.getReferenceById(id);
-			StudentMapper.updateData(entity, obj);
+			mapperStudent.updateStudentFromDTO(obj, entity);
 			return repositoryStudent.save(entity);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException(id);

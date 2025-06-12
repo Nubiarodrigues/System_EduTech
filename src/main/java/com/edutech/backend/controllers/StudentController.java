@@ -17,19 +17,19 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.edutech.backend.dtos.StudentRequestDTO;
 import com.edutech.backend.dtos.StudentResponseDTO;
 import com.edutech.backend.entities.Student;
+import com.edutech.backend.mapper.StudentMapper;
 import com.edutech.backend.services.StudentService;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/student")
+@RequestMapping("/students")
+@RequiredArgsConstructor
 public class StudentController {
 
 	private final StudentService serviceStudent;
-
-	public StudentController(StudentService serviceStudent) {
-		this.serviceStudent = serviceStudent;
-	}
+	private final StudentMapper mapperStudent;
 
 	@GetMapping
 	public ResponseEntity<List<StudentResponseDTO>> findAll() {
@@ -39,27 +39,24 @@ public class StudentController {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<StudentResponseDTO> findById(@PathVariable Long id) {
-		Student wanted = serviceStudent.findById(id);
-		StudentResponseDTO response = new StudentResponseDTO(wanted);
+		Student student = serviceStudent.findById(id);
+		StudentResponseDTO response = mapperStudent.toResponseDTO(student);
 		return ResponseEntity.ok().body(response);
 	}
 
 	@PostMapping
 	public ResponseEntity<StudentResponseDTO> create(@RequestBody @Valid StudentRequestDTO dto) {
 		Student newStudent = serviceStudent.createStudent(dto);
-		URI location = ServletUriComponentsBuilder
-				.fromCurrentRequest()
-				.path("/{id}")
-				.buildAndExpand(newStudent.getId())
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newStudent.getId())
 				.toUri();
-		StudentResponseDTO response = new StudentResponseDTO(newStudent);
+		StudentResponseDTO response = mapperStudent.toResponseDTO(newStudent);
 		return ResponseEntity.created(location).body(response);
 	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<StudentResponseDTO> update(@PathVariable Long id, @RequestBody @Valid StudentRequestDTO dto) {
 		Student current = serviceStudent.updateStudent(id, dto);
-		StudentResponseDTO response = new StudentResponseDTO(current);
+		StudentResponseDTO response = mapperStudent.toResponseDTO(current);
 		return ResponseEntity.ok(response);
 	}
 
