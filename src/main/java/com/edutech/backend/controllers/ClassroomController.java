@@ -21,27 +21,24 @@ import com.edutech.backend.mapper.ClassroomMapper;
 import com.edutech.backend.services.ClassroomService;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/classroom")
+@RequestMapping("/classrooms")
+@RequiredArgsConstructor
 public class ClassroomController {
 
 	private final ClassroomService serviceClassroom;
 	private final ClassroomMapper mapperClassroom;
-
-	public ClassroomController(ClassroomService serviceClassroom, ClassroomMapper mapperClassroom) {
-		this.serviceClassroom = serviceClassroom;
-		this.mapperClassroom = mapperClassroom;
-	}
 
 	@GetMapping
 	public ResponseEntity<List<ClassroomResponseDTO>> findAll() {
 		List<ClassroomResponseDTO> classrooms = serviceClassroom.findAll();
 		return ResponseEntity.ok(classrooms);
 	}
-	
+
 	@GetMapping("/{id}")
-	public ResponseEntity<ClassroomResponseDTO> findById(@PathVariable Long id){
+	public ResponseEntity<ClassroomResponseDTO> findById(@PathVariable Long id) {
 		Classroom classroom = serviceClassroom.findById(id);
 		ClassroomResponseDTO response = mapperClassroom.toResponseDTO(classroom);
 		return ResponseEntity.ok().body(response);
@@ -50,17 +47,15 @@ public class ClassroomController {
 	@PostMapping
 	public ResponseEntity<ClassroomResponseDTO> create(@RequestBody @Valid ClassroomRequestDTO dto) {
 		Classroom newClassroom = serviceClassroom.createClassroom(dto);
-		URI location = ServletUriComponentsBuilder
-				.fromCurrentRequest()
-				.path("/{id}")
-				.buildAndExpand(newClassroom.getId())
-				.toUri();
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(newClassroom.getId()).toUri();
 		ClassroomResponseDTO response = mapperClassroom.toResponseDTO(newClassroom);
 		return ResponseEntity.created(location).body(response);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<ClassroomResponseDTO> update(@PathVariable Long id, @RequestBody @Valid ClassroomRequestDTO obj) {
+	public ResponseEntity<ClassroomResponseDTO> update(@PathVariable Long id,
+			@RequestBody @Valid ClassroomRequestDTO obj) {
 		Classroom current = serviceClassroom.updateClassroom(id, obj);
 		ClassroomResponseDTO response = mapperClassroom.toResponseDTO(current);
 		return ResponseEntity.ok(response);

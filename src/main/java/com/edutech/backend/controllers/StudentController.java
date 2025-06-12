@@ -21,18 +21,15 @@ import com.edutech.backend.mapper.StudentMapper;
 import com.edutech.backend.services.StudentService;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/student")
+@RequestMapping("/students")
+@RequiredArgsConstructor
 public class StudentController {
 
 	private final StudentService serviceStudent;
 	private final StudentMapper mapperStudent;
-
-	public StudentController(StudentService serviceStudent, StudentMapper mapperStudent) {
-		this.serviceStudent = serviceStudent;
-		this.mapperStudent = mapperStudent;
-	}
 
 	@GetMapping
 	public ResponseEntity<List<StudentResponseDTO>> findAll() {
@@ -42,18 +39,15 @@ public class StudentController {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<StudentResponseDTO> findById(@PathVariable Long id) {
-		Student wanted = serviceStudent.findById(id);
-		StudentResponseDTO response = mapperStudent.toResponseDTO(wanted);
+		Student student = serviceStudent.findById(id);
+		StudentResponseDTO response = mapperStudent.toResponseDTO(student);
 		return ResponseEntity.ok().body(response);
 	}
 
 	@PostMapping
 	public ResponseEntity<StudentResponseDTO> create(@RequestBody @Valid StudentRequestDTO dto) {
 		Student newStudent = serviceStudent.createStudent(dto);
-		URI location = ServletUriComponentsBuilder
-				.fromCurrentRequest()
-				.path("/{id}")
-				.buildAndExpand(newStudent.getId())
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newStudent.getId())
 				.toUri();
 		StudentResponseDTO response = mapperStudent.toResponseDTO(newStudent);
 		return ResponseEntity.created(location).body(response);
