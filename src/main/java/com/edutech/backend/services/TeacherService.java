@@ -1,7 +1,6 @@
 package com.edutech.backend.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -18,9 +17,11 @@ import jakarta.persistence.EntityNotFoundException;
 public class TeacherService {
 
 	private final TeacherRepository repositoryTeacher;
+	private final TeacherMapper mapperTeacher;
 
-	public TeacherService(TeacherRepository repositoryTeacher) {
+	public TeacherService(TeacherRepository repositoryTeacher, TeacherMapper mapperTeacher) {
 		this.repositoryTeacher = repositoryTeacher;
+		this.mapperTeacher = mapperTeacher;
 	}
 
 	public List<TeacherResponseDTO> findAll() {
@@ -28,18 +29,19 @@ public class TeacherService {
 	}
 
 	public Teacher findById(Long id) {
-		return repositoryTeacher.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+		return repositoryTeacher.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 
-	public Teacher createTeacher(TeacherRequestDTO teacher) {
-		Teacher newTeacher = TeacherMapper.toEntity(teacher);
+	public Teacher createTeacher(TeacherRequestDTO dto) {
+		Teacher newTeacher = mapperTeacher.toEntity(dto);
 		return repositoryTeacher.save(newTeacher);
 	}
 
 	public Teacher updateTeacher(Long id, TeacherRequestDTO obj) {
 		try {
 			Teacher entity = repositoryTeacher.getReferenceById(id);
-			TeacherMapper.updateData(entity, obj);
+			mapperTeacher.updateTeacherFromDTO(obj, entity);
 			return repositoryTeacher.save(entity);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException(id);

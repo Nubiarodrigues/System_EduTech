@@ -18,9 +18,11 @@ import jakarta.persistence.EntityNotFoundException;
 public class ClassroomService {
 
 	private final ClassroomRepository repositoryClassroom;
+	private final ClassroomMapper mapperClassroom;
 
-	public ClassroomService(ClassroomRepository repositoryClassroom) {
+	public ClassroomService(ClassroomRepository repositoryClassroom, ClassroomMapper mapperClassroom) {
 		this.repositoryClassroom = repositoryClassroom;
+		this.mapperClassroom = mapperClassroom;
 	}
 
 	public List<ClassroomResponseDTO> findAll() {
@@ -34,7 +36,7 @@ public class ClassroomService {
 
 	@Transactional
 	public Classroom createClassroom(ClassroomRequestDTO dto) {
-		Classroom entity = ClassroomMapper.toEntity(dto);
+		Classroom entity = mapperClassroom.toEntity(dto);
 		return repositoryClassroom.save(entity);
 	}
 
@@ -42,7 +44,7 @@ public class ClassroomService {
 	public Classroom updateClassroom(Long id, ClassroomRequestDTO obj) {
 		try {
 			Classroom entity = repositoryClassroom.getReferenceById(id);
-			ClassroomMapper.updateData(entity, obj);
+			mapperClassroom.updateClassroomFromDTO(obj, entity);
 			return repositoryClassroom.save(entity);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException(id);
