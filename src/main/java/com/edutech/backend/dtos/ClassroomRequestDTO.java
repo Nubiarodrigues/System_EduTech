@@ -1,5 +1,6 @@
 package com.edutech.backend.dtos;
 
+import com.edutech.backend.entities.Coordinator;
 import com.edutech.backend.enuns.Shift;
 import com.edutech.backend.enuns.TeachingState;
 
@@ -12,5 +13,5 @@ public record ClassroomRequestDTO(
 		@NotNull Integer capacity,
 		@NotNull(message = "Shift é obrigátorio") Shift shift,
 		@NotNull Integer schoolYear,
-		@NotNull(message = "TeachingState é obrigátorio") TeachingState modality) 
+		@NotNull(message = "TeachingState é obrigátorio") TeachingState modality)
 {}

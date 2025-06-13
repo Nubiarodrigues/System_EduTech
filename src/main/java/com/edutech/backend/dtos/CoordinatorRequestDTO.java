@@ -1,0 +1,23 @@
+package com.edutech.backend.dtos;
+
+import java.time.LocalDate;
+
+import com.edutech.backend.enuns.Situation;
+import com.edutech.backend.enuns.TeachingState;
+
+import jakarta.validation.constraints.NotNull;
+
+public record CoordinatorRequestDTO(
+		@NotNull String name,
+		@NotNull String cpf,
+		String telephone,
+		Situation status,
+		@NotNull LocalDate dateBirth,
+		String rg,
+		String address,
+		String matriculation,
+		@NotNull String formedCourse,
+		@NotNull TeachingState modality
+) {
+
+}

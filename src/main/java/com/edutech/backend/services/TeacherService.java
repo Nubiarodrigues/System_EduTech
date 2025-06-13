@@ -3,6 +3,7 @@ package com.edutech.backend.services;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.edutech.backend.dtos.TeacherRequestDTO;
 import com.edutech.backend.dtos.TeacherResponseDTO;
@@ -12,32 +13,30 @@ import com.edutech.backend.mapper.TeacherMapper;
 import com.edutech.backend.repositories.TeacherRepository;
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class TeacherService {
 
 	private final TeacherRepository repositoryTeacher;
 	private final TeacherMapper mapperTeacher;
-
-	public TeacherService(TeacherRepository repositoryTeacher, TeacherMapper mapperTeacher) {
-		this.repositoryTeacher = repositoryTeacher;
-		this.mapperTeacher = mapperTeacher;
-	}
 
 	public List<TeacherResponseDTO> findAll() {
 		return repositoryTeacher.findAll().stream().map(TeacherResponseDTO::new).toList();
 	}
 
 	public Teacher findById(Long id) {
-		return repositoryTeacher.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException(id));
+		return repositoryTeacher.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 
+	@Transactional
 	public Teacher createTeacher(TeacherRequestDTO dto) {
 		Teacher newTeacher = mapperTeacher.toEntity(dto);
 		return repositoryTeacher.save(newTeacher);
 	}
 
+	@Transactional
 	public Teacher updateTeacher(Long id, TeacherRequestDTO obj) {
 		try {
 			Teacher entity = repositoryTeacher.getReferenceById(id);
@@ -48,9 +47,9 @@ public class TeacherService {
 		}
 	}
 
+	@Transactional
 	public void deleteTeacher(Long id) {
-		Teacher teacher = repositoryTeacher.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException(id));
+		Teacher teacher = repositoryTeacher.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
 		repositoryTeacher.delete(teacher);
 	}
 }

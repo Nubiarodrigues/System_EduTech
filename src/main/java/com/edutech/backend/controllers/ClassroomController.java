@@ -47,7 +47,8 @@ public class ClassroomController {
 	@PostMapping
 	public ResponseEntity<ClassroomResponseDTO> create(@RequestBody @Valid ClassroomRequestDTO dto) {
 		Classroom newClassroom = serviceClassroom.createClassroom(dto);
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+		URI location = ServletUriComponentsBuilder
+				.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(newClassroom.getId()).toUri();
 		ClassroomResponseDTO response = mapperClassroom.toResponseDTO(newClassroom);
 		return ResponseEntity.created(location).body(response);

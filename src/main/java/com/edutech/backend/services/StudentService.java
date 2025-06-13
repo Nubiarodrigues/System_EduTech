@@ -13,25 +13,21 @@ import com.edutech.backend.mapper.StudentMapper;
 import com.edutech.backend.repositories.StudentRepository;
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class StudentService {
 
 	private final StudentRepository repositoryStudent;
 	private final StudentMapper mapperStudent;
-
-	public StudentService(StudentRepository repositoryStudent, StudentMapper mapperStudent) {
-		this.repositoryStudent = repositoryStudent;
-		this.mapperStudent = mapperStudent;
-	}
 
 	public List<StudentResponseDTO> findAll() {
 		return repositoryStudent.findAll().stream().map(StudentResponseDTO::new).toList();
 	}
 
 	public Student findById(Long id) {
-		return repositoryStudent.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException(id));
+		return repositoryStudent.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 
 	@Transactional
@@ -53,8 +49,7 @@ public class StudentService {
 
 	@Transactional
 	public void deleteStudent(Long id) {
-		Student student = repositoryStudent.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException(id));
+		Student student = repositoryStudent.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
 		repositoryStudent.delete(student);
 	}
 

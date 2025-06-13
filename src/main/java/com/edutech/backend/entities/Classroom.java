@@ -5,9 +5,9 @@ import java.util.List;
 
 import com.edutech.backend.enuns.Shift;
 import com.edutech.backend.enuns.TeachingState;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -15,6 +15,8 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -48,6 +50,11 @@ public class Classroom {
 
 	@Enumerated(EnumType.STRING)
 	private TeachingState modality;
+	
+	@ManyToOne
+	@JoinColumn(name = "classroom_id")
+	@JsonBackReference
+	private Coordinator coordinatorClass;
 
 	public Classroom(Integer series, String identifierSeries, Integer capacity, Shift shift, Integer schoolYear,TeachingState modality) {
 		this.series = series;
