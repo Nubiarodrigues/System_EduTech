@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.edutech.backend.dtos.CoordinatorRequestDTO;
 import com.edutech.backend.dtos.CoordinatorResponseDTO;
+import com.edutech.backend.entities.Classroom;
 import com.edutech.backend.entities.Coordinator;
 import com.edutech.backend.mapper.CoordinatorMapper;
 import com.edutech.backend.services.CoordinatorService;
@@ -43,6 +44,12 @@ public class CoordinatorController {
 		return ResponseEntity.ok().body(response);
 	}
 
+	@GetMapping("/{id}/classrooms")
+	public ResponseEntity<List<Classroom>> getClassByCoordinator(@PathVariable Long id) {
+		List<Classroom> classroom = serviceCoordinator.getClassroomByModality(id);
+		return ResponseEntity.ok(classroom);
+	}
+
 	@PostMapping
 	public ResponseEntity<Coordinator> create(@RequestBody @Valid CoordinatorRequestDTO dto) {
 		Coordinator newCoordinator = serviceCoordinator.createCoordinator(dto);
@@ -51,7 +58,8 @@ public class CoordinatorController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<CoordinatorResponseDTO> update(@PathVariable Long id, @RequestBody @Valid CoordinatorRequestDTO dto) {
+	public ResponseEntity<CoordinatorResponseDTO> update(@PathVariable Long id,
+			@RequestBody @Valid CoordinatorRequestDTO dto) {
 		Coordinator current = serviceCoordinator.updateCoordinator(id, dto);
 		CoordinatorResponseDTO response = mapperCoordinator.toResponseDTO(current);
 		return ResponseEntity.ok().body(response);

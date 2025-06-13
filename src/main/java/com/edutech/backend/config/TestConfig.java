@@ -40,7 +40,7 @@ public class TestConfig implements CommandLineRunner {
 
 		Classroom c4 = new Classroom(6, "A", 35, Shift.TARDE, 2025, TeachingState.ENSINO_FUNDAMENTAL_II);
 		Classroom c5 = new Classroom(7, "A", 35, Shift.TARDE, 2025, TeachingState.ENSINO_FUNDAMENTAL_II);
-		Classroom c6 = new Classroom(8, "A", 35, Shift.TARDE, 2025, TeachingState.ENSINO_FUNDAMENTAL_II);
+		Classroom c6 = new Classroom(8, "A", 35, Shift.TARDE, 2025, TeachingState.ENSINO_FUNDAMENTAL_I);
 
 		repositoryClassroom.saveAll(Arrays.asList(c1, c2, c3, c4, c5, c6));
 
@@ -58,7 +58,7 @@ public class TestConfig implements CommandLineRunner {
 
 		Student s10 = new Student("Laura Nogueira", LocalDate.parse("2011-08-15"), "123.456.789-00", "1234567890001","Rua das Acácias, 120", "839555-1010", "laura.resp@gmail.com", "Mariana Nogueira", "Pedro Nogueira",c4);
 		Student s11 = new Student("Gustavo Almeida", LocalDate.parse("2010-03-22"), "234.567.890-11", "2345678901112","Rua das Palmeiras, 45", "839555-2020", "gustavo.resp@gmail.com", "Renata Almeida", "Carlos Almeida",c4);
-		Student s12 = new Student("Beatriz Santos", LocalDate.parse("2012-12-05"), "345.678.901-22", "3456789012223","Av. Central, 300", "839555-3030", "beatriz.resp@gmail.com", "Viviane Santos", "Roberto Santos", c4);
+		Student s12 = new Student("Beatriz Santos", LocalDate.parse("2012-12-05"), "345.678.901-22", "3456789012223","Av. Central, 300", "839555-3030", "beatriz.resp@gmail.com", "Viviane Santos", "Roberto Santos", c6);
 
 		repositoryStudent.saveAll(Arrays.asList(s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12));
 
@@ -134,7 +134,7 @@ public class TestConfig implements CommandLineRunner {
 			    .address("Av. Brasil, 450 - Campina Grande/PB")
 			    .matriculation("7896542")
 			    .formedCourse("História")
-			    .modality(TeachingState.ENSINO_FUNDAMENTAL_II)
+			    .modality(TeachingState.ENSINO_FUNDAMENTAL_I)
 			    .build();
 
 		repositoryCoordinator.saveAll(Arrays.asList(co1, co2));
