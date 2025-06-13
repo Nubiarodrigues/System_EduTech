@@ -36,6 +36,13 @@ public class CoordinatorController {
 		return ResponseEntity.ok().body(coordinators);
 	}
 
+	@GetMapping("/{id}")
+	public ResponseEntity<CoordinatorResponseDTO> findById(@PathVariable Long id) {
+		Coordinator coordinator = serviceCoordinator.findById(id);
+		CoordinatorResponseDTO response = mapperCoordinator.toResponseDTO(coordinator);
+		return ResponseEntity.ok().body(response);
+	}
+
 	@PostMapping
 	public ResponseEntity<Coordinator> create(@RequestBody @Valid CoordinatorRequestDTO dto) {
 		Coordinator newCoordinator = serviceCoordinator.createCoordinator(dto);
@@ -44,7 +51,7 @@ public class CoordinatorController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<CoordinatorResponseDTO> update(@PathVariable Long id,@RequestBody @Valid CoordinatorRequestDTO dto) {
+	public ResponseEntity<CoordinatorResponseDTO> update(@PathVariable Long id, @RequestBody @Valid CoordinatorRequestDTO dto) {
 		Coordinator current = serviceCoordinator.updateCoordinator(id, dto);
 		CoordinatorResponseDTO response = mapperCoordinator.toResponseDTO(current);
 		return ResponseEntity.ok().body(response);
