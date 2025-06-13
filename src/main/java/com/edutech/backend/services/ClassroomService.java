@@ -8,9 +8,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.edutech.backend.dtos.ClassroomRequestDTO;
 import com.edutech.backend.dtos.ClassroomResponseDTO;
 import com.edutech.backend.entities.Classroom;
+import com.edutech.backend.entities.Coordinator;
+import com.edutech.backend.enuns.Situation;
 import com.edutech.backend.exceptions.ResourceNotFoundException;
 import com.edutech.backend.mapper.ClassroomMapper;
 import com.edutech.backend.repositories.ClassroomRepository;
+import com.edutech.backend.repositories.CoordinatorRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +24,7 @@ public class ClassroomService {
 
 	private final ClassroomRepository repositoryClassroom;
 	private final ClassroomMapper mapperClassroom;
+	private final CoordinatorRepository repositoryCoordinator;
 
 	public List<ClassroomResponseDTO> findAll() {
 		return repositoryClassroom.findAll().stream().map(ClassroomResponseDTO::new).toList();
@@ -32,8 +36,14 @@ public class ClassroomService {
 
 	@Transactional
 	public Classroom createClassroom(ClassroomRequestDTO dto) {
-		Classroom entity = mapperClassroom.toEntity(dto);
-		return repositoryClassroom.save(entity);
+		Coordinator coordinator = repositoryCoordinator
+				.findByModalityAndStatus(dto.modality(), Situation.ATIVO)
+				.orElseThrow(() -> new ResourceNotFoundException("Coordenador não encontrado para esta modalidade"));
+
+		Classroom classroom = mapperClassroom.toEntity(dto);
+		classroom.setCoordinatorClass(coordinator);
+		classroom = repositoryClassroom.save(classroom);
+		return classroom;
 	}
 
 	@Transactional
@@ -49,7 +59,8 @@ public class ClassroomService {
 
 	@Transactional
 	public void deleteClassroom(Long id) {
-		Classroom classroom = repositoryClassroom.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+		Classroom classroom = repositoryClassroom.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException(id));
 		repositoryClassroom.delete(classroom);
 	}
 
