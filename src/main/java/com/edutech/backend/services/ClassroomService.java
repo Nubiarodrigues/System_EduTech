@@ -13,25 +13,21 @@ import com.edutech.backend.mapper.ClassroomMapper;
 import com.edutech.backend.repositories.ClassroomRepository;
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class ClassroomService {
 
 	private final ClassroomRepository repositoryClassroom;
 	private final ClassroomMapper mapperClassroom;
-
-	public ClassroomService(ClassroomRepository repositoryClassroom, ClassroomMapper mapperClassroom) {
-		this.repositoryClassroom = repositoryClassroom;
-		this.mapperClassroom = mapperClassroom;
-	}
 
 	public List<ClassroomResponseDTO> findAll() {
 		return repositoryClassroom.findAll().stream().map(ClassroomResponseDTO::new).toList();
 	}
 
 	public Classroom findById(Long id) {
-		return repositoryClassroom.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException(id));
+		return repositoryClassroom.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 
 	@Transactional
@@ -53,8 +49,7 @@ public class ClassroomService {
 
 	@Transactional
 	public void deleteClassroom(Long id) {
-		Classroom classroom = repositoryClassroom.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException(id));
+		Classroom classroom = repositoryClassroom.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
 		repositoryClassroom.delete(classroom);
 	}
 
