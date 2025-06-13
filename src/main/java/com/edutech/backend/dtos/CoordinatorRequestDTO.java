@@ -14,7 +14,7 @@ public record CoordinatorRequestDTO(
 		Situation status,
 		@NotNull LocalDate dateBirth,
 		String rg,
-		String adsress,
+		String address,
 		String matriculation,
 		@NotNull String formedCourse,
 		@NotNull TeachingState modality
