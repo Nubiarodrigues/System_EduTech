@@ -25,5 +25,5 @@ public interface CoordinatorMapper {
 	@Mapping(target = "password", ignore = true)
 	@Mapping(target = "role", ignore = true)
 	@Mapping(target = "classroomsModality", ignore = true)
-	void updateStudentFromDTO(CoordinatorRequestDTO dto, @MappingTarget Coordinator entity);
+	void updateCoordinatorFromDTO(CoordinatorRequestDTO dto, @MappingTarget Coordinator entity);
 }

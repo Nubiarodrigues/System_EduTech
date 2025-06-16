@@ -43,5 +43,6 @@ public abstract class User {
 	public User(Long id) {
 		this.id = id;
 	}
+	
 
 }

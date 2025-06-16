@@ -1,5 +1,6 @@
 package com.edutech.backend.controllers;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.edutech.backend.dtos.CoordinatorRequestDTO;
 import com.edutech.backend.dtos.CoordinatorResponseDTO;
@@ -51,15 +53,18 @@ public class CoordinatorController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Coordinator> create(@RequestBody @Valid CoordinatorRequestDTO dto) {
+	public ResponseEntity<CoordinatorResponseDTO> create(@RequestBody @Valid CoordinatorRequestDTO dto) {
 		Coordinator newCoordinator = serviceCoordinator.createCoordinator(dto);
+		URI location = ServletUriComponentsBuilder
+				.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(newCoordinator.getId())
+				.toUri();
 		CoordinatorResponseDTO response = mapperCoordinator.toResponseDTO(newCoordinator);
-		return ResponseEntity.status(HttpStatus.CREATED).body(newCoordinator);
+		return ResponseEntity.created(location).body(response);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<CoordinatorResponseDTO> update(@PathVariable Long id,
-			@RequestBody @Valid CoordinatorRequestDTO dto) {
+	public ResponseEntity<CoordinatorResponseDTO> update(@PathVariable Long id, @RequestBody @Valid CoordinatorRequestDTO dto) {
 		Coordinator current = serviceCoordinator.updateCoordinator(id, dto);
 		CoordinatorResponseDTO response = mapperCoordinator.toResponseDTO(current);
 		return ResponseEntity.ok().body(response);
