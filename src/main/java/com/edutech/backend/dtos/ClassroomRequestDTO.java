@@ -1,6 +1,5 @@
 package com.edutech.backend.dtos;
 
-import com.edutech.backend.entities.Coordinator;
 import com.edutech.backend.enuns.Shift;
 import com.edutech.backend.enuns.TeachingState;
 

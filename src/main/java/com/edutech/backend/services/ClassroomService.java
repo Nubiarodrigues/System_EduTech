@@ -36,8 +36,7 @@ public class ClassroomService {
 
 	@Transactional
 	public Classroom createClassroom(ClassroomRequestDTO dto) {
-		Coordinator coordinator = repositoryCoordinator
-				.findByModalityAndStatus(dto.modality(), Situation.ATIVO)
+		Coordinator coordinator = repositoryCoordinator.findByModalityAndStatus(dto.modality(), Situation.ATIVO)
 				.orElseThrow(() -> new ResourceNotFoundException("Coordenador não encontrado para esta modalidade"));
 
 		Classroom classroom = mapperClassroom.toEntity(dto);
@@ -47,10 +46,15 @@ public class ClassroomService {
 	}
 
 	@Transactional
-	public Classroom updateClassroom(Long id, ClassroomRequestDTO obj) {
+	public Classroom updateClassroom(Long id, ClassroomRequestDTO dto) {
 		try {
 			Classroom entity = repositoryClassroom.getReferenceById(id);
-			mapperClassroom.updateClassroomFromDTO(obj, entity);
+			mapperClassroom.updateClassroomFromDTO(dto, entity);
+			Coordinator coordinator = repositoryCoordinator.findByModalityAndStatus(dto.modality(), Situation.ATIVO)
+					.orElseThrow(
+							() -> new ResourceNotFoundException("Coordenador não encontrado para esta modalidade"));
+
+			entity.setCoordinatorClass(coordinator);
 			return repositoryClassroom.save(entity);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException(id);
@@ -59,8 +63,7 @@ public class ClassroomService {
 
 	@Transactional
 	public void deleteClassroom(Long id) {
-		Classroom classroom = repositoryClassroom.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException(id));
+		Classroom classroom = repositoryClassroom.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
 		repositoryClassroom.delete(classroom);
 	}
 

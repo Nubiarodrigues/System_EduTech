@@ -55,8 +55,7 @@ public class ClassroomController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<ClassroomResponseDTO> update(@PathVariable Long id,
-			@RequestBody @Valid ClassroomRequestDTO obj) {
+	public ResponseEntity<ClassroomResponseDTO> update(@PathVariable Long id, @RequestBody @Valid ClassroomRequestDTO obj) {
 		Classroom current = serviceClassroom.updateClassroom(id, obj);
 		ClassroomResponseDTO response = mapperClassroom.toResponseDTO(current);
 		return ResponseEntity.ok(response);
