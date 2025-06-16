@@ -30,8 +30,7 @@ public class CoordinatorService {
 	}
 
 	public Coordinator findById(Long id) {
-		return repositoryCoordinator.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException(id));
+		return repositoryCoordinator.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 
 	@Transactional
@@ -57,11 +56,9 @@ public class CoordinatorService {
 				.orElseThrow(() -> new ResourceNotFoundException(id));
 		repositoryCoordinator.deleteById(id);
 	}
-	
-	public List<Classroom> getClassroomByModality(Long id){
-		Coordinator coordinator = repositoryCoordinator.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException(id));
-	
+
+	public List<Classroom> getClassroomByModality(Long id) {
+		Coordinator coordinator = repositoryCoordinator.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
 		return repositoryClassroom.findByModality(coordinator.getModality());
 	}
 
