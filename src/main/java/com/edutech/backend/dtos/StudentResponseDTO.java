@@ -3,12 +3,13 @@ package com.edutech.backend.dtos;
 import java.time.LocalDate;
 
 import com.edutech.backend.entities.Student;
-
-import jakarta.validation.constraints.NotNull;
+import com.edutech.backend.enuns.RoleUser;
 
 public record StudentResponseDTO(
 		Long id,
 		String name,
+		String email,
+		RoleUser role,
 		LocalDate dateBirth,
 		String cpf,
 		String motherName,
@@ -19,6 +20,8 @@ public record StudentResponseDTO(
 		this(
 				student.getId(),
 				student.getName(),
+				student.getEmail(),
+				student.getRole(),
 				student.getDateBirth(), 
 				student.getCpf(), 
 				student.getMotherName(),

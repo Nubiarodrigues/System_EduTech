@@ -3,10 +3,13 @@ package com.edutech.backend.dtos;
 import java.time.LocalDate;
 
 import com.edutech.backend.entities.Teacher;
+import com.edutech.backend.enuns.RoleUser;
 
 public record TeacherResponseDTO(
 		Long id,
 		String name,
+		String email,
+		RoleUser role,
 		LocalDate dateBirth,
 		Integer workloadTotal,
 		String matriculation) {
@@ -15,6 +18,8 @@ public record TeacherResponseDTO(
 		this(
 				teacher.getId(),
 				teacher.getName(),
+				teacher.getEmail(),
+				teacher.getRole(),
 				teacher.getDateBirth(),
 				teacher.getWorkloadTotal(),
 				teacher.getMatriculation());
