@@ -52,7 +52,7 @@ public class Classroom {
 	private TeachingState modality;
 	
 	@ManyToOne
-	@JoinColumn(name = "classroom_id")
+	@JoinColumn(name = "coordinator_id")
 	@JsonBackReference
 	private Coordinator coordinatorClass;
 
