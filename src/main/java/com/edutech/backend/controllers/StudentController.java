@@ -47,7 +47,9 @@ public class StudentController {
 	@PostMapping
 	public ResponseEntity<StudentResponseDTO> create(@RequestBody @Valid StudentRequestDTO dto) {
 		Student newStudent = serviceStudent.createStudent(dto);
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newStudent.getId())
+		URI location = ServletUriComponentsBuilder
+				.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(newStudent.getId())
 				.toUri();
 		StudentResponseDTO response = mapperStudent.toResponseDTO(newStudent);
 		return ResponseEntity.created(location).body(response);

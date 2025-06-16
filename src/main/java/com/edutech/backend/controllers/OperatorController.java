@@ -40,8 +40,10 @@ public class OperatorController {
 	@PostMapping
 	public ResponseEntity<OperatorResponseDTO> create(@RequestBody @Valid OperatorRequestDTO dto) {
 		Operator newOperator = serviceOperator.createOperator(dto);
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(newOperator.getId()).toUri();
+		URI location = ServletUriComponentsBuilder
+				.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(newOperator.getId())
+				.toUri();
 		OperatorResponseDTO response = mapperOperator.toResponseDTO(newOperator);
 		return ResponseEntity.created(location).body(response);
 	}
@@ -57,7 +59,6 @@ public class OperatorController {
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		serviceOperator.deleteOperator(id);
 		return ResponseEntity.noContent().build();
-
 	}
 
 }
