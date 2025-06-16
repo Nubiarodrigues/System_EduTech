@@ -44,7 +44,7 @@ public class CoordinatorService {
 	public Coordinator updateCoordinator(Long id, CoordinatorRequestDTO dto) {
 		try {
 			Coordinator entity = repositoryCoordinator.getReferenceById(id);
-			mapperCoordinator.updateStudentFromDTO(dto, entity);
+			mapperCoordinator.updateCoordinatorFromDTO(dto, entity);
 			return repositoryCoordinator.save(entity);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException(id);
