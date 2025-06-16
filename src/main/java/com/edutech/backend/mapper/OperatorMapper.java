@@ -5,6 +5,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 import com.edutech.backend.dtos.OperatorRequestDTO;
+import com.edutech.backend.dtos.OperatorResponseDTO;
 import com.edutech.backend.entities.Operator;
 
 @Mapper(componentModel = "spring")
@@ -15,6 +16,10 @@ public interface OperatorMapper {
 	@Mapping(target = "password", ignore = true)
 	@Mapping(target = "role", ignore = true)
 	Operator toEntity(OperatorRequestDTO dto);
+	
+	
+	OperatorResponseDTO toResponseDTO(Operator entity);
+	
 	
 	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "email", ignore = true)
