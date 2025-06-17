@@ -37,17 +37,8 @@ public class StudentService {
 
 	@Transactional
 	public Student createStudent(StudentRequestDTO dto) {
-		Classroom classroom = repositoryClassroom.findById(dto.classroomId())
-				.orElseThrow(() -> new ResourceNotFoundException("Turma não existe"));
-
-		if (repositoryStudent.findByEmail(dto.email()).isPresent()) {
-			throw new ExistingResourceException("E-mail já cadastrado.");
-		}
-
 		Student entity = mapperStudent.toEntity(dto);
-
-		entity.setClassroom(classroom);
-		entity.setRegistration(new RegistrationGenerator().generateRegistrationUnique(entity.getRegistration()));
+		prepareCreateStudent(entity, dto);
 		return repositoryStudent.save(entity);
 	}
 
@@ -66,6 +57,22 @@ public class StudentService {
 	public void deleteStudent(Long id) {
 		Student student = repositoryStudent.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
 		repositoryStudent.delete(student);
+	}
+
+	
+	private void prepareCreateStudent(Student student, StudentRequestDTO dto) {
+
+		Classroom classroom = repositoryClassroom.findById(dto.classroomId())
+				.orElseThrow(() -> new ResourceNotFoundException("Turma não existe"));
+
+		if (repositoryStudent.findByEmail(dto.email()).isPresent()) {
+			throw new ExistingResourceException("E-mail já cadastrado.");
+		}
+
+		student.setClassroom(classroom);
+		
+		student.setRegistration(new RegistrationGenerator()
+				.generateRegistrationUnique(student.getRegistration()));
 	}
 
 }
