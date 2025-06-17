@@ -13,6 +13,7 @@ import com.edutech.backend.exceptions.ResourceNotFoundException;
 import com.edutech.backend.mapper.StudentMapper;
 import com.edutech.backend.repositories.ClassroomRepository;
 import com.edutech.backend.repositories.StudentRepository;
+import com.edutech.backend.utils.RegistrationGenerator;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -35,10 +36,16 @@ public class StudentService {
 
 	@Transactional
 	public Student createStudent(StudentRequestDTO dto) {
-		Classroom classroom = repositoryClassroom.findById(dto.classroomId()).orElseThrow(() -> new ResourceNotFoundException("Classroom não existe"));
-		
+		Classroom classroom = repositoryClassroom.findById(dto.classroomId())
+				.orElseThrow(() -> new ResourceNotFoundException("Turma não existe"));
+
 		Student entity = mapperStudent.toEntity(dto);
+
 		entity.setClassroom(classroom);
+
+		entity.setRegistration(new RegistrationGenerator()
+				.generateRegistrationUnique(entity.getRegistration()));
+
 		return repositoryStudent.save(entity);
 	}
 
