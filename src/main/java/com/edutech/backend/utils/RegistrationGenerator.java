@@ -12,7 +12,7 @@ public class RegistrationGenerator {
 	public String generateRegistrationUnique(String registration) {
 	    do {
 	        int number = random.nextInt(1_000_000);
-	        registration = String.format("%d60", number);
+	        registration = String.format("%06d", number);
 	    } while (generatedRecords.contains(registration));
 	    
 	    generatedRecords.add(registration);
