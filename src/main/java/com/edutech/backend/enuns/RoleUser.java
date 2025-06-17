@@ -6,7 +6,7 @@ public enum RoleUser {
 	TEACHER("teacher"),
 	OPERATOR("operator"),
 	STUDENT("student"),
-	COORDINATION("coordination");
+	COORDINATOR("coordinator");
 
 	private String role;
 

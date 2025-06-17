@@ -9,6 +9,7 @@ import com.edutech.backend.dtos.StudentRequestDTO;
 import com.edutech.backend.dtos.StudentResponseDTO;
 import com.edutech.backend.entities.Classroom;
 import com.edutech.backend.entities.Student;
+import com.edutech.backend.exceptions.ExistingResourceException;
 import com.edutech.backend.exceptions.ResourceNotFoundException;
 import com.edutech.backend.mapper.StudentMapper;
 import com.edutech.backend.repositories.ClassroomRepository;
@@ -39,13 +40,14 @@ public class StudentService {
 		Classroom classroom = repositoryClassroom.findById(dto.classroomId())
 				.orElseThrow(() -> new ResourceNotFoundException("Turma não existe"));
 
+		if (repositoryStudent.findByEmail(dto.email()).isPresent()) {
+			throw new ExistingResourceException("E-mail já cadastrado.");
+		}
+
 		Student entity = mapperStudent.toEntity(dto);
 
 		entity.setClassroom(classroom);
-
-		entity.setRegistration(new RegistrationGenerator()
-				.generateRegistrationUnique(entity.getRegistration()));
-
+		entity.setRegistration(new RegistrationGenerator().generateRegistrationUnique(entity.getRegistration()));
 		return repositoryStudent.save(entity);
 	}
 

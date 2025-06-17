@@ -22,7 +22,11 @@ public class ResourceExceptionHandler {
 	public ResponseEntity<StandardError> resourceNotFound(ResourceNotFoundException e, HttpServletRequest request) {
 		String error = "Resource not found";
 		HttpStatus status = HttpStatus.NOT_FOUND;
-		StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(),
+		StandardError err = new StandardError(
+				Instant.now(),
+				status.value(),
+				error,
+				e.getMessage(),
 				request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
@@ -31,7 +35,11 @@ public class ResourceExceptionHandler {
 	public ResponseEntity<StandardError> database(DatabaseException e, HttpServletRequest request) {
 		String error = "Database error";
 		HttpStatus status = HttpStatus.BAD_REQUEST;
-		StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(),
+		StandardError err = new StandardError(
+				Instant.now(),
+				status.value(),
+				error,
+				e.getMessage(),
 				request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
@@ -45,11 +53,7 @@ public class ResourceExceptionHandler {
 				.collect(Collectors.toList());
 		String errorMessage = String.join(", ", errors);
 
-		StandardError err = new StandardError(
-				Instant.now(), 
-				status.value(),
-				"Validation Error",
-				errorMessage,
+		StandardError err = new StandardError(Instant.now(), status.value(), "Validation Error", errorMessage,
 				request.getRequestURI());
 
 		return ResponseEntity.status(status).body(err);
@@ -58,13 +62,22 @@ public class ResourceExceptionHandler {
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	public ResponseEntity<String> handleInvalidEnum(HttpMessageNotReadableException ex) {
 		if (ex.getCause() instanceof InvalidFormatException) {
-			return ResponseEntity
-					.badRequest()
-					.body("Valor inválido ou vazio para Enum. Verifique os dados enviados");
+			return ResponseEntity.badRequest().body("Valor inválido ou vazio para Enum. Verifique os dados enviados");
 		}
-		return ResponseEntity
-				.status(HttpStatus.BAD_REQUEST)
-				.body("Requisição inválida. Verifique os dados enviados.");
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Requisição inválida. Verifique os dados enviados.");
+	}
+
+	@ExceptionHandler(ExistingResourceException.class)
+	public ResponseEntity<StandardError> existingResource(ExistingResourceException e, HttpServletRequest request) {
+		String error = "Existing resource";
+		HttpStatus status = HttpStatus.CONFLICT;
+		StandardError err = new StandardError(
+				Instant.now(),
+				status.value(),
+				error,
+				e.getMessage(),
+				request.getRequestURI());
+		return ResponseEntity.status(status).body(err);
 	}
 
 }
