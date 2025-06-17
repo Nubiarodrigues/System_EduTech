@@ -7,9 +7,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.edutech.backend.dtos.StudentRequestDTO;
 import com.edutech.backend.dtos.StudentResponseDTO;
+import com.edutech.backend.entities.Classroom;
 import com.edutech.backend.entities.Student;
 import com.edutech.backend.exceptions.ResourceNotFoundException;
 import com.edutech.backend.mapper.StudentMapper;
+import com.edutech.backend.repositories.ClassroomRepository;
 import com.edutech.backend.repositories.StudentRepository;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -21,6 +23,7 @@ public class StudentService {
 
 	private final StudentRepository repositoryStudent;
 	private final StudentMapper mapperStudent;
+	private final ClassroomRepository repositoryClassroom;
 
 	public List<StudentResponseDTO> findAll() {
 		return repositoryStudent.findAll().stream().map(StudentResponseDTO::new).toList();
@@ -32,7 +35,10 @@ public class StudentService {
 
 	@Transactional
 	public Student createStudent(StudentRequestDTO dto) {
+		Classroom classroom = repositoryClassroom.findById(dto.classroomId()).orElseThrow(() -> new ResourceNotFoundException("Classroom não existe"));
+		
 		Student entity = mapperStudent.toEntity(dto);
+		entity.setClassroom(classroom);
 		return repositoryStudent.save(entity);
 	}
 
