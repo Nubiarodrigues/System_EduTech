@@ -18,6 +18,5 @@ public record TeacherRequestDTO(
 		@NotNull LocalDate dateBirth,
 		@NotNull Integer workloadTotal,
 		String rg, String address,
-		String matriculation,
 		@NotNull String formedCourse) 
 {}

@@ -12,7 +12,7 @@ public record TeacherResponseDTO(
 		RoleUser role,
 		LocalDate dateBirth,
 		Integer workloadTotal,
-		String matriculation) {
+		String registration) {
 
 	public TeacherResponseDTO(Teacher teacher) {
 		this(
@@ -22,6 +22,6 @@ public record TeacherResponseDTO(
 				teacher.getRole(),
 				teacher.getDateBirth(),
 				teacher.getWorkloadTotal(),
-				teacher.getMatriculation());
+				teacher.getRegistration());
 	}
 }

@@ -1,5 +1,9 @@
 package com.edutech.backend.entities;
 
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
+
 import com.edutech.backend.enuns.RoleUser;
 
 import jakarta.persistence.EnumType;
@@ -32,6 +36,7 @@ public abstract class User {
 	protected String name;
 	protected String email;
 	protected String password;
+	protected String registration;
 
 	@Enumerated(EnumType.STRING)
 	protected RoleUser role;
@@ -43,6 +48,5 @@ public abstract class User {
 	public User(Long id) {
 		this.id = id;
 	}
-	
 
 }
