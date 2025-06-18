@@ -11,4 +11,6 @@ import com.edutech.backend.enuns.TeachingState;
 public interface CoordinatorRepository extends JpaRepository<Coordinator, Long> {
 
 	Optional<Coordinator> findByModalityAndStatus(TeachingState modality, Situation status);
+	
+	Optional<Coordinator> findByEmail(String email);
 }

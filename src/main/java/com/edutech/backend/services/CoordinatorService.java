@@ -9,10 +9,12 @@ import com.edutech.backend.dtos.CoordinatorRequestDTO;
 import com.edutech.backend.dtos.CoordinatorResponseDTO;
 import com.edutech.backend.entities.Classroom;
 import com.edutech.backend.entities.Coordinator;
+import com.edutech.backend.exceptions.ExistingResourceException;
 import com.edutech.backend.exceptions.ResourceNotFoundException;
 import com.edutech.backend.mapper.CoordinatorMapper;
 import com.edutech.backend.repositories.ClassroomRepository;
 import com.edutech.backend.repositories.CoordinatorRepository;
+import com.edutech.backend.utils.RegistrationGenerator;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +38,7 @@ public class CoordinatorService {
 	@Transactional
 	public Coordinator createCoordinator(CoordinatorRequestDTO dto) {
 		Coordinator newCoordinator = mapperCoordinator.toEntity(dto);
+		prepareCreateCoordinator(newCoordinator, dto);
 		return repositoryCoordinator.save(newCoordinator);
 	}
 
@@ -57,9 +60,22 @@ public class CoordinatorService {
 		repositoryCoordinator.deleteById(id);
 	}
 
+	
 	public List<Classroom> getClassroomByModality(Long id) {
-		Coordinator coordinator = repositoryCoordinator.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+		Coordinator coordinator = repositoryCoordinator.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException(id));
 		return repositoryClassroom.findByModality(coordinator.getModality());
+	}
+
+	
+	public void prepareCreateCoordinator(Coordinator coordinator, CoordinatorRequestDTO dto) {
+
+		if (repositoryCoordinator.findByEmail(dto.email()).isPresent()) {
+			throw new ExistingResourceException("Email já existe.");
+		}
+
+		coordinator.setRegistration(new RegistrationGenerator()
+				.generateRegistrationUnique(coordinator.getRegistration()));
 	}
 
 }
