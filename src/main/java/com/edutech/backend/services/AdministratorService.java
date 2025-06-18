@@ -8,9 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.edutech.backend.dtos.AdministratorRequestDTO;
 import com.edutech.backend.dtos.AdministratorResponseDTO;
 import com.edutech.backend.entities.Administrator;
+import com.edutech.backend.exceptions.ExistingResourceException;
 import com.edutech.backend.exceptions.ResourceNotFoundException;
 import com.edutech.backend.mapper.AdministratorMapper;
 import com.edutech.backend.repositories.AdministratorRepository;
+import com.edutech.backend.utils.RegistrationGenerator;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +31,7 @@ public class AdministratorService {
 	@Transactional
 	public Administrator createAdmin(AdministratorRequestDTO dto) {
 		Administrator newAdministrator = mapperAdministrator.toEntity(dto);
+		prepareCreateAdministrator(newAdministrator, dto);
 		return repositoryAdministrator.save(newAdministrator);
 	}
 
@@ -48,6 +51,18 @@ public class AdministratorService {
 		Administrator administrator = repositoryAdministrator.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException(id));
 		repositoryAdministrator.delete(administrator);
+	}
+	
+	
+	private void prepareCreateAdministrator(Administrator admin, AdministratorRequestDTO dto) {
+		
+		if(repositoryAdministrator.findByEmail(dto.email()).isPresent()) {
+			throw new ExistingResourceException("Email já existe. ");
+		}
+		
+		admin.setRegistration(new RegistrationGenerator()
+				.generateRegistrationUnique(admin.getRegistration()));
+		
 	}
 
 }

@@ -13,7 +13,8 @@ public record StudentResponseDTO(
 		LocalDate dateBirth,
 		String cpf,
 		String motherName,
-		String fatherName)
+		String fatherName,
+		String registration)
 {
 
 	public StudentResponseDTO(Student student) {
@@ -25,7 +26,8 @@ public record StudentResponseDTO(
 				student.getDateBirth(), 
 				student.getCpf(), 
 				student.getMotherName(),
-				student.getFatherName()				
+				student.getFatherName(),
+				student.getRegistration()
 			);
 	}
 }

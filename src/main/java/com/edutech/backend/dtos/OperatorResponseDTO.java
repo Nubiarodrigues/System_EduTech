@@ -3,7 +3,7 @@ package com.edutech.backend.dtos;
 import com.edutech.backend.entities.Operator;
 import com.edutech.backend.enuns.RoleUser;
 
-public record OperatorResponseDTO(Long id, String name, String email, RoleUser role, String sector) {
+public record OperatorResponseDTO(Long id, String name, String email, RoleUser role, String sector, String registration) {
 
 	public OperatorResponseDTO(Operator operator) {
 		this(
@@ -11,7 +11,8 @@ public record OperatorResponseDTO(Long id, String name, String email, RoleUser r
 				operator.getName(),
 				operator.getEmail(),
 				operator.getRole(),
-				operator.getSector());
+				operator.getSector(),
+				operator.getRegistration());
 	}
 
 }

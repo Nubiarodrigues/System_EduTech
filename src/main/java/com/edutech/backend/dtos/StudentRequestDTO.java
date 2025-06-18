@@ -21,5 +21,5 @@ public record StudentRequestDTO(
 		@NotBlank String emailResponsable,
 		@NotBlank String motherName,
 		@NotBlank String fatherName,
-		@NotNull Classroom classroom) 
+		@NotNull Long classroomId) 
 {}

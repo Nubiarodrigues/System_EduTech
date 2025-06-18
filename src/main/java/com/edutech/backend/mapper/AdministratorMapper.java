@@ -10,18 +10,12 @@ import com.edutech.backend.entities.Administrator;
 import com.edutech.backend.entities.Classroom;
 
 @Mapper(componentModel = "spring")
-public interface AdministratorMapper {  
-	
-	@Mapping(target = "role", ignore = true)
-	@Mapping(target = "password", ignore = true)
-	@Mapping(target = "id", ignore = true)
+public interface AdministratorMapper {
+
 	Administrator toEntity(AdministratorRequestDTO dto);
-	
+
 	AdministratorResponseDTO toResponseDTO(Administrator administrator);
-	
-	@Mapping(target = "role", ignore = true)
-	@Mapping(target = "password", ignore = true)
-	@Mapping(target = "id", ignore = true)
+
 	void updateAdministratorFromDTO(AdministratorRequestDTO dto, @MappingTarget Administrator entity);
 
 }

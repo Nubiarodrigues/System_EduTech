@@ -8,9 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.edutech.backend.dtos.TeacherRequestDTO;
 import com.edutech.backend.dtos.TeacherResponseDTO;
 import com.edutech.backend.entities.Teacher;
+import com.edutech.backend.exceptions.ExistingResourceException;
 import com.edutech.backend.exceptions.ResourceNotFoundException;
 import com.edutech.backend.mapper.TeacherMapper;
 import com.edutech.backend.repositories.TeacherRepository;
+import com.edutech.backend.utils.RegistrationGenerator;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +35,7 @@ public class TeacherService {
 	@Transactional
 	public Teacher createTeacher(TeacherRequestDTO dto) {
 		Teacher newTeacher = mapperTeacher.toEntity(dto);
+		prepareCreateTeacher(newTeacher, dto);
 		return repositoryTeacher.save(newTeacher);
 	}
 
@@ -51,5 +54,16 @@ public class TeacherService {
 	public void deleteTeacher(Long id) {
 		Teacher teacher = repositoryTeacher.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
 		repositoryTeacher.delete(teacher);
+	}
+
+	
+	private void prepareCreateTeacher(Teacher teacher, TeacherRequestDTO dto) {
+
+		if (repositoryTeacher.findByEmail(dto.email()).isPresent()) {
+			throw new ExistingResourceException("E-mail já cadastrado.");
+		}
+
+		teacher.setRegistration(new RegistrationGenerator()
+				.generateRegistrationUnique(teacher.getRegistration()));
 	}
 }

@@ -7,10 +7,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.edutech.backend.dtos.StudentRequestDTO;
 import com.edutech.backend.dtos.StudentResponseDTO;
+import com.edutech.backend.entities.Classroom;
 import com.edutech.backend.entities.Student;
+import com.edutech.backend.exceptions.ExistingResourceException;
 import com.edutech.backend.exceptions.ResourceNotFoundException;
 import com.edutech.backend.mapper.StudentMapper;
+import com.edutech.backend.repositories.ClassroomRepository;
 import com.edutech.backend.repositories.StudentRepository;
+import com.edutech.backend.utils.RegistrationGenerator;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +25,7 @@ public class StudentService {
 
 	private final StudentRepository repositoryStudent;
 	private final StudentMapper mapperStudent;
+	private final ClassroomRepository repositoryClassroom;
 
 	public List<StudentResponseDTO> findAll() {
 		return repositoryStudent.findAll().stream().map(StudentResponseDTO::new).toList();
@@ -33,6 +38,7 @@ public class StudentService {
 	@Transactional
 	public Student createStudent(StudentRequestDTO dto) {
 		Student entity = mapperStudent.toEntity(dto);
+		prepareCreateStudent(entity, dto);
 		return repositoryStudent.save(entity);
 	}
 
@@ -51,6 +57,22 @@ public class StudentService {
 	public void deleteStudent(Long id) {
 		Student student = repositoryStudent.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
 		repositoryStudent.delete(student);
+	}
+
+	
+	private void prepareCreateStudent(Student student, StudentRequestDTO dto) {
+
+		Classroom classroom = repositoryClassroom.findById(dto.classroomId())
+				.orElseThrow(() -> new ResourceNotFoundException("Turma não existe"));
+
+		if (repositoryStudent.findByEmail(dto.email()).isPresent()) {
+			throw new ExistingResourceException("E-mail já cadastrado.");
+		}
+
+		student.setClassroom(classroom);
+		
+		student.setRegistration(new RegistrationGenerator()
+				.generateRegistrationUnique(student.getRegistration()));
 	}
 
 }
