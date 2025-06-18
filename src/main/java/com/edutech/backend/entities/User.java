@@ -1,9 +1,5 @@
 package com.edutech.backend.entities;
 
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
-
 import com.edutech.backend.enuns.RoleUser;
 
 import jakarta.persistence.EnumType;
