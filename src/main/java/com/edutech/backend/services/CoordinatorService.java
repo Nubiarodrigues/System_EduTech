@@ -68,7 +68,7 @@ public class CoordinatorService {
 	}
 
 	
-	public void prepareCreateCoordinator(Coordinator coordinator, CoordinatorRequestDTO dto) {
+	private void prepareCreateCoordinator(Coordinator coordinator, CoordinatorRequestDTO dto) {
 
 		if (repositoryCoordinator.findByEmail(dto.email()).isPresent()) {
 			throw new ExistingResourceException("Email já existe.");

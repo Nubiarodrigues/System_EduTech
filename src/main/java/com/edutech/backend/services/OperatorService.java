@@ -7,11 +7,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.edutech.backend.dtos.OperatorRequestDTO;
 import com.edutech.backend.dtos.OperatorResponseDTO;
-import com.edutech.backend.entities.Coordinator;
 import com.edutech.backend.entities.Operator;
+import com.edutech.backend.exceptions.ExistingResourceException;
 import com.edutech.backend.exceptions.ResourceNotFoundException;
 import com.edutech.backend.mapper.OperatorMapper;
 import com.edutech.backend.repositories.OperatorRepository;
+import com.edutech.backend.utils.RegistrationGenerator;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,7 @@ public class OperatorService {
 	@Transactional
 	public Operator createOperator(OperatorRequestDTO dto) {
 		Operator newOperator = mapperOperator.toEntity(dto);
+		prepareCreateOperator(newOperator, dto);
 		return repositoryOperator.save(newOperator);
 	}
 
@@ -49,6 +51,17 @@ public class OperatorService {
 		Operator operator = repositoryOperator.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException(id));
 		repositoryOperator.deleteById(id);
+	}
+
+	private void prepareCreateOperator(Operator operator, OperatorRequestDTO dto) {
+
+		if (repositoryOperator.findByEmail(dto.email()).isPresent()) {
+			throw new ExistingResourceException("Email já existe. ");
+		}
+
+		operator.setRegistration(new RegistrationGenerator()
+				.generateRegistrationUnique(operator.getRegistration()));
+
 	}
 
 }

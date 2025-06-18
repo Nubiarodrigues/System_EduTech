@@ -11,19 +11,9 @@ import com.edutech.backend.entities.Operator;
 @Mapper(componentModel = "spring")
 public interface OperatorMapper {
 
-	@Mapping(target = "id", ignore = true)
-	@Mapping(target = "email", ignore = true)
-	@Mapping(target = "password", ignore = true)
-	@Mapping(target = "role", ignore = true)
 	Operator toEntity(OperatorRequestDTO dto);
-	
-	
+
 	OperatorResponseDTO toResponseDTO(Operator entity);
-	
-	
-	@Mapping(target = "id", ignore = true)
-	@Mapping(target = "email", ignore = true)
-	@Mapping(target = "password", ignore = true)
-	@Mapping(target = "role", ignore = true)
+
 	void updateOperatorFromDTO(OperatorRequestDTO dto, @MappingTarget Operator entity);
 }
