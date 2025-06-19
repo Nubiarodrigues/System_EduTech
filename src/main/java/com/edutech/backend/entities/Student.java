@@ -27,6 +27,7 @@ public class Student extends User {
 	private String telephone;
 	private String cpf;
 	private String sus;
+	private String cep;
 	private String address;
 	private String fatherName;
 	private String motherName;
@@ -38,12 +39,12 @@ public class Student extends User {
 	@JsonBackReference
 	private Classroom classroom;
 
-	public Student(String name, LocalDate dateBirth, String cpf, String sus, String address, String telephone,String emailResponsable, String motherName, String fatherName, Classroom classroom) {
+	public Student(String name, LocalDate dateBirth, String cpf, String sus, String cep, String telephone,String emailResponsable, String motherName, String fatherName, Classroom classroom) {
 		super(name);
 		this.dateBirth = dateBirth;
 		this.cpf = cpf;
 		this.sus = sus;
-		this.address = address;
+		this.cep = cep;
 		this.telephone = telephone;
 		this.emailResponsable = emailResponsable;
 		this.motherName = motherName;
