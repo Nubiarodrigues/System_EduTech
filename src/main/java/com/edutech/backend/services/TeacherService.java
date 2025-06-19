@@ -23,6 +23,7 @@ public class TeacherService {
 
 	private final TeacherRepository repositoryTeacher;
 	private final TeacherMapper mapperTeacher;
+	private final CepService serviceCep;
 
 	public List<TeacherResponseDTO> findAll() {
 		return repositoryTeacher.findAll().stream().map(TeacherResponseDTO::new).toList();
@@ -65,5 +66,7 @@ public class TeacherService {
 
 		teacher.setRegistration(new RegistrationGenerator()
 				.generateRegistrationUnique(teacher.getRegistration()));
+		
+		teacher.setAddress(serviceCep.findAdress(dto.cep()));
 	}
 }

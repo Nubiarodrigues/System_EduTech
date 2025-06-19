@@ -32,10 +32,11 @@ public class Teacher extends User {
 	private LocalDate dateBirth;
 	private Integer workloadTotal;
 	private String rg;
+	private String cep;
 	private String address;
 	private String formedCourse;
 
-	public Teacher(String name, String cpf, String telephone, Situation status, LocalDate dateBirth,Integer workloadTotal, String rg, String address, String formedCourse) {
+	public Teacher(String name, String cpf, String telephone, Situation status, LocalDate dateBirth,Integer workloadTotal, String rg, String cep, String formedCourse) {
 		super(name);
 		this.cpf = cpf;
 		this.telephone = telephone;
@@ -43,7 +44,7 @@ public class Teacher extends User {
 		this.dateBirth = dateBirth;
 		this.workloadTotal = workloadTotal;
 		this.rg = rg;
-		this.address = address;
+		this.cep = cep;
 		this.formedCourse = formedCourse;
 	}
 }
