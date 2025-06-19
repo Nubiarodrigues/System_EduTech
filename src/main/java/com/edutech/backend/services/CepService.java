@@ -8,14 +8,17 @@ import com.edutech.backend.dtos.AdressDTO;
 import com.edutech.backend.exceptions.ExternalServiceException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lombok.RequiredArgsConstructor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
 @Service
+@RequiredArgsConstructor
 public class CepService {
 
-	private final OkHttpClient client = new OkHttpClient();
+	private final OkHttpClient client;
+	private final ObjectMapper mapper;
 
 	public String findAdress(String cep) {
 
@@ -25,7 +28,6 @@ public class CepService {
 
 			if (response.isSuccessful()) {
 				String json = response.body().string();
-				ObjectMapper mapper = new ObjectMapper();
 				AdressDTO dto = mapper.readValue(json, AdressDTO.class);
 				return formatAdress(dto);
 			} else {
