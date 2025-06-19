@@ -26,6 +26,7 @@ public class StudentService {
 	private final StudentRepository repositoryStudent;
 	private final StudentMapper mapperStudent;
 	private final ClassroomRepository repositoryClassroom;
+	private final CepService serviceCep;
 
 	public List<StudentResponseDTO> findAll() {
 		return repositoryStudent.findAll().stream().map(StudentResponseDTO::new).toList();
@@ -59,7 +60,6 @@ public class StudentService {
 		repositoryStudent.delete(student);
 	}
 
-	
 	private void prepareCreateStudent(Student student, StudentRequestDTO dto) {
 
 		Classroom classroom = repositoryClassroom.findById(dto.classroomId())
@@ -70,9 +70,12 @@ public class StudentService {
 		}
 
 		student.setClassroom(classroom);
-		
+
 		student.setRegistration(new RegistrationGenerator()
 				.generateRegistrationUnique(student.getRegistration()));
+
+		student.setAddress(serviceCep.findAdress(dto.cep()));
+
 	}
 
 }

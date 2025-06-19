@@ -26,6 +26,7 @@ public class CoordinatorService {
 	private final CoordinatorRepository repositoryCoordinator;
 	private final CoordinatorMapper mapperCoordinator;
 	private final ClassroomRepository repositoryClassroom;
+	private final CepService serviceCep;
 
 	public List<CoordinatorResponseDTO> findAll() {
 		return repositoryCoordinator.findAll().stream().map(CoordinatorResponseDTO::new).toList();
@@ -60,14 +61,12 @@ public class CoordinatorService {
 		repositoryCoordinator.deleteById(id);
 	}
 
-	
 	public List<Classroom> getClassroomByModality(Long id) {
 		Coordinator coordinator = repositoryCoordinator.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException(id));
 		return repositoryClassroom.findByModality(coordinator.getModality());
 	}
 
-	
 	private void prepareCreateCoordinator(Coordinator coordinator, CoordinatorRequestDTO dto) {
 
 		if (repositoryCoordinator.findByEmail(dto.email()).isPresent()) {
@@ -75,7 +74,9 @@ public class CoordinatorService {
 		}
 
 		coordinator.setRegistration(new RegistrationGenerator()
-				.generateRegistrationUnique(coordinator.getRegistration()));
+						.generateRegistrationUnique(coordinator.getRegistration()));
+
+		coordinator.setAddress(serviceCep.findAdress(dto.cep()));
 	}
 
 }

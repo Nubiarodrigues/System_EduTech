@@ -16,7 +16,7 @@ public record StudentRequestDTO(
 		@NotNull String email,
 		@NotNull String password,
 		@NotBlank String sus,
-		@NotBlank String address,
+		@NotBlank String cep,
 		@NotBlank String telephone,
 		@NotBlank String emailResponsable,
 		@NotBlank String motherName,
