@@ -32,9 +32,9 @@ public class ResourceExceptionHandler {
 		return ResponseEntity.status(status).body(err);
 	}
 
-	@ExceptionHandler(DatabaseException.class)
-	public ResponseEntity<StandardError> database(DatabaseException e, HttpServletRequest request) {
-		String error = "Database error";
+	@ExceptionHandler(InvalidDataException.class)
+	public ResponseEntity<StandardError> database(InvalidDataException e, HttpServletRequest request) {
+		String error = "Invalid data";
 		HttpStatus status = HttpStatus.BAD_REQUEST;
 		StandardError err = new StandardError(
 				Instant.now(),

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.edutech.backend.dtos.AdressDTO;
 import com.edutech.backend.exceptions.ExternalServiceException;
+import com.edutech.backend.exceptions.InvalidDataException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,7 @@ public class CepService {
 				AdressDTO dto = mapper.readValue(json, AdressDTO.class);
 				return formatAdress(dto);
 			} else {
-				throw new ExternalServiceException("Erro... (status: " + response.code() + ")");
+				throw new InvalidDataException("Formato do cep incorreto, verifique o campo.  Status:  " + response.code());
 			}
 
 		} catch (IOException e) {
