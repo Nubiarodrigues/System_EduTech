@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.springframework.stereotype.Service;
 
 import com.edutech.backend.dtos.AdressDTO;
+import com.edutech.backend.exceptions.ExternalServiceException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import okhttp3.OkHttpClient;
@@ -28,11 +29,11 @@ public class CepService {
 				AdressDTO dto = mapper.readValue(json, AdressDTO.class);
 				return formatAdress(dto);
 			} else {
-				throw new RuntimeException("Erro: " + response.code());
+				throw new ExternalServiceException("Erro... (status: " + response.code() + ")");
 			}
 
 		} catch (IOException e) {
-			throw new RuntimeException("Falha na requisição", e);
+			throw new ExternalServiceException("Falha na requisição");
 		}
 	}
 
