@@ -14,6 +14,7 @@ public class ValidatorUtils {
 			throw new InvalidDataException("Formato de e-mail inválido");
 		}
 	}
+	
 
 	public static void validateCpf(String cpf) {
 
@@ -39,6 +40,7 @@ public class ValidatorUtils {
 		}
 
 	}
+	
 
 	private static boolean checkCpf(int[] numberCpf) {
 		int i, j, sum, module, dv1, dv2;
@@ -79,4 +81,23 @@ public class ValidatorUtils {
 
 	}
 
+	
+	public static void validateTelephone(String telephone) {
+
+		if (telephone == null || telephone.isEmpty()) {
+			throw new InvalidDataException("O telefone não deve ser nulo ou vazio");
+		}
+
+		if (!telephone.matches("^\\(?\\d{2}\\)?\\s?9?\\s?\\d{4}-?\\d{4}$")) {
+			throw new InvalidDataException("Formato do telefone é inválido");
+		}
+
+		String digitsOnly = telephone.replaceAll("\\D", "");
+		
+		if (digitsOnly.charAt(2) == '9') {
+			System.out.println("Ok");
+		} else {
+			throw new InvalidDataException("Coloque o 9 depois do DDD.");
+		}
+	}
 }
