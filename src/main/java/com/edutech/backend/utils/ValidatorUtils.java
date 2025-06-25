@@ -11,7 +11,7 @@ public class ValidatorUtils {
 		}
 
 		if (!email.matches("^[a-zA-Z0-9.]+@[a-zA-Z]+\\.(pb)\\.gov\\.br$")) {
-			throw new InvalidDataException("Formato de e-mail inválido");
+			throw new InvalidDataException("O formato do e-mail inválido");
 		}
 	}
 	
@@ -23,7 +23,7 @@ public class ValidatorUtils {
 		}
 
 		if (!cpf.matches("^\\d{11}$")) {
-			throw new InvalidDataException("Formato do CPF é inválido");
+			throw new InvalidDataException("O formato do CPF é inválido");
 		}
 
 		int[] cpf_digitos = new int[cpf.length()];
@@ -89,7 +89,7 @@ public class ValidatorUtils {
 		}
 
 		if (!telephone.matches("^\\(?\\d{2}\\)?\\s?9?\\s?\\d{4}-?\\d{4}$")) {
-			throw new InvalidDataException("Formato do telefone é inválido");
+			throw new InvalidDataException("O formato do telefone é inválido");
 		}
 
 		String digitsOnly = telephone.replaceAll("\\D", "");
@@ -100,4 +100,18 @@ public class ValidatorUtils {
 			throw new InvalidDataException("Coloque o 9 depois do DDD.");
 		}
 	}
+	
+	
+	public static void validateCep(String cep) {
+		
+		if (cep == null || cep.isEmpty()) {
+			throw new InvalidDataException("O cep não deve ser nulo ou vazio");
+		}
+		
+		if(!cep.matches("^\\d{8}$")) {
+			throw new InvalidDataException("O formato do CEP é inválido");
+		}
+	}
+	
+	
 }
