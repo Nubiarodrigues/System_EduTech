@@ -13,6 +13,7 @@ import com.edutech.backend.exceptions.ResourceNotFoundException;
 import com.edutech.backend.mapper.AdministratorMapper;
 import com.edutech.backend.repositories.AdministratorRepository;
 import com.edutech.backend.utils.RegistrationGenerator;
+import com.edutech.backend.utils.ValidatorUtils;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -55,9 +56,10 @@ public class AdministratorService {
 	
 	
 	private void prepareCreateAdministrator(Administrator admin, AdministratorRequestDTO dto) {
+		ValidatorUtils.validateEmail(dto.email());
 		
 		if(repositoryAdministrator.findByEmail(dto.email()).isPresent()) {
-			throw new ExistingResourceException("Email já existe. ");
+			throw new ExistingResourceException("Email já cadastrado. ");
 		}
 		
 		admin.setRegistration(new RegistrationGenerator()

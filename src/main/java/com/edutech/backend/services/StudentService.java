@@ -15,6 +15,7 @@ import com.edutech.backend.mapper.StudentMapper;
 import com.edutech.backend.repositories.ClassroomRepository;
 import com.edutech.backend.repositories.StudentRepository;
 import com.edutech.backend.utils.RegistrationGenerator;
+import com.edutech.backend.utils.ValidatorUtils;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -61,6 +62,10 @@ public class StudentService {
 	}
 
 	private void prepareCreateStudent(Student student, StudentRequestDTO dto) {
+		ValidatorUtils.validateEmail(dto.email());
+		ValidatorUtils.validateCpf(dto.cpf());
+		ValidatorUtils.validateTelephone(dto.telephone());
+		ValidatorUtils.validateCep(dto.cep());
 
 		Classroom classroom = repositoryClassroom.findById(dto.classroomId())
 				.orElseThrow(() -> new ResourceNotFoundException("Turma não existe"));

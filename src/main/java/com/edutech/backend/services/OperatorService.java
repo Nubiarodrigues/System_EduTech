@@ -13,6 +13,7 @@ import com.edutech.backend.exceptions.ResourceNotFoundException;
 import com.edutech.backend.mapper.OperatorMapper;
 import com.edutech.backend.repositories.OperatorRepository;
 import com.edutech.backend.utils.RegistrationGenerator;
+import com.edutech.backend.utils.ValidatorUtils;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -54,9 +55,10 @@ public class OperatorService {
 	}
 
 	private void prepareCreateOperator(Operator operator, OperatorRequestDTO dto) {
+		ValidatorUtils.validateEmail(dto.email());
 
 		if (repositoryOperator.findByEmail(dto.email()).isPresent()) {
-			throw new ExistingResourceException("Email já existe. ");
+			throw new ExistingResourceException("Email já cadastrado ");
 		}
 
 		operator.setRegistration(new RegistrationGenerator()
