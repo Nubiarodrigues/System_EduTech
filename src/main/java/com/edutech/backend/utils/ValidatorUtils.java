@@ -17,6 +17,17 @@ public class ValidatorUtils {
 		}
 
 	}
+	
+	public static void validateEmailResponsable(String email) {
+		if (email == null || email.isEmpty()) {
+			throw new InvalidDataException("O e-mail não deve ser nulo ou vazio");
+		}
+		
+		if (!email.matches("^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
+			throw new InvalidDataException("O formato do e-mail do responsável inválido.");
+		}
+		
+	}
 
 	public static void validateCpf(String cpf) {
 
