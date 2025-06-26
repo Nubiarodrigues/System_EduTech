@@ -33,7 +33,7 @@ public class ResourceExceptionHandler {
 	}
 
 	@ExceptionHandler(InvalidDataException.class)
-	public ResponseEntity<StandardError> database(InvalidDataException e, HttpServletRequest request) {
+	public ResponseEntity<StandardError> invalidData(InvalidDataException e, HttpServletRequest request) {
 		String error = "Invalid data";
 		HttpStatus status = HttpStatus.BAD_REQUEST;
 		StandardError err = new StandardError(

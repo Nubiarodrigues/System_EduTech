@@ -15,6 +15,7 @@ import com.edutech.backend.mapper.CoordinatorMapper;
 import com.edutech.backend.repositories.ClassroomRepository;
 import com.edutech.backend.repositories.CoordinatorRepository;
 import com.edutech.backend.utils.RegistrationGenerator;
+import com.edutech.backend.utils.ValidatorUtils;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -68,11 +69,15 @@ public class CoordinatorService {
 	}
 
 	private void prepareCreateCoordinator(Coordinator coordinator, CoordinatorRequestDTO dto) {
-
+		ValidatorUtils.validateEmail(dto.email());
+		ValidatorUtils.validateCpf(dto.cpf());
+		ValidatorUtils.validateTelephone(dto.telephone());
+		ValidatorUtils.validateCep(dto.cep());
+		
 		if (repositoryCoordinator.findByEmail(dto.email()).isPresent()) {
-			throw new ExistingResourceException("Email já existe.");
+			throw new ExistingResourceException("E-mail já cadastrado.");
 		}
-
+ 
 		coordinator.setRegistration(new RegistrationGenerator()
 						.generateRegistrationUnique(coordinator.getRegistration()));
 

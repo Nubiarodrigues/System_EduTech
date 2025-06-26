@@ -13,6 +13,7 @@ import com.edutech.backend.exceptions.ResourceNotFoundException;
 import com.edutech.backend.mapper.TeacherMapper;
 import com.edutech.backend.repositories.TeacherRepository;
 import com.edutech.backend.utils.RegistrationGenerator;
+import com.edutech.backend.utils.ValidatorUtils;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -59,6 +60,10 @@ public class TeacherService {
 
 	
 	private void prepareCreateTeacher(Teacher teacher, TeacherRequestDTO dto) {
+		ValidatorUtils.validateEmail(dto.email());
+		ValidatorUtils.validateCpf(dto.cpf());
+		ValidatorUtils.validateTelephone(dto.telephone());
+		ValidatorUtils.validateCep(dto.cep());
 
 		if (repositoryTeacher.findByEmail(dto.email()).isPresent()) {
 			throw new ExistingResourceException("E-mail já cadastrado.");
