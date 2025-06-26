@@ -12,11 +12,5 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 public class Administrator extends User {
-
-	
-	public Administrator() {
-		super();
-	}
-	
 	
 }
