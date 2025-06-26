@@ -1,7 +1,6 @@
 package com.edutech.backend.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 import com.edutech.backend.dtos.CoordinatorRequestDTO;

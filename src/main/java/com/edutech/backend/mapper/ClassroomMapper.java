@@ -7,7 +7,6 @@ import org.mapstruct.MappingTarget;
 import com.edutech.backend.dtos.ClassroomRequestDTO;
 import com.edutech.backend.dtos.ClassroomResponseDTO;
 import com.edutech.backend.entities.Classroom;
-import com.edutech.backend.entities.Coordinator;
 
 @Mapper(componentModel = "spring")
 public interface ClassroomMapper {
