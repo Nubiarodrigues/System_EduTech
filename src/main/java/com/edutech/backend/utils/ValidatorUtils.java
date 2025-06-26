@@ -1,5 +1,7 @@
 package com.edutech.backend.utils;
 
+import java.time.LocalDate;
+
 import com.edutech.backend.exceptions.InvalidDataException;
 
 public class ValidatorUtils {
@@ -13,8 +15,19 @@ public class ValidatorUtils {
 		if (!email.matches("^[a-zA-Z0-9.]+@[a-zA-Z]+\\.(pb)\\.gov\\.br$")) {
 			throw new InvalidDataException("O formato do e-mail inválido");
 		}
+
 	}
 	
+	public static void validateEmailResponsable(String email) {
+		if (email == null || email.isEmpty()) {
+			throw new InvalidDataException("O e-mail não deve ser nulo ou vazio");
+		}
+		
+		if (!email.matches("^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
+			throw new InvalidDataException("O formato do e-mail do responsável inválido.");
+		}
+		
+	}
 
 	public static void validateCpf(String cpf) {
 
@@ -40,7 +53,6 @@ public class ValidatorUtils {
 		}
 
 	}
-	
 
 	private static boolean checkCpf(int[] numberCpf) {
 		int i, j, sum, module, dv1, dv2;
@@ -81,7 +93,6 @@ public class ValidatorUtils {
 
 	}
 
-	
 	public static void validateTelephone(String telephone) {
 
 		if (telephone == null || telephone.isEmpty()) {
@@ -93,25 +104,76 @@ public class ValidatorUtils {
 		}
 
 		String digitsOnly = telephone.replaceAll("\\D", "");
-		
-		if (digitsOnly.charAt(2) == '9') {
-			System.out.println("Ok");
-		} else {
+
+		if (!(digitsOnly.charAt(2) == '9')) {
 			throw new InvalidDataException("Coloque o 9 depois do DDD.");
 		}
 	}
-	
-	
+
 	public static void validateCep(String cep) {
-		
+
 		if (cep == null || cep.isEmpty()) {
 			throw new InvalidDataException("O cep não deve ser nulo ou vazio");
 		}
-		
-		if(!cep.matches("^\\d{8}$")) {
+
+		if (!cep.matches("^\\d{8}$")) {
 			throw new InvalidDataException("O formato do CEP é inválido");
 		}
 	}
+
+	public static void validateName(String name) {
+
+		if (name == null || name.isEmpty()) {
+			throw new InvalidDataException("O nome não deve ser nulo ou vazio");
+		}
+
+		if (name.length() <= 5) {
+			throw new InvalidDataException("Nome muito curto.");
+		}
+
+		if (name.length() > 100) {
+			throw new InvalidDataException("Nome muito longo.");
+		}
+
+		if (!name.matches("^(?:[A-Z][\\p{L}]+|(?:da|de|do|das|dos))(?:\\s(?:[A-Z][\\p{L}]+|da|de|do|das|dos))*$")) {
+			throw new InvalidDataException("Formato do nome inválido. Use apenas letras com iniciais maiúsculas.");
+		}
+
+	}
+
+	public static void validateSus(String sus) {
+
+		if (sus == null || sus.isEmpty()) {
+			throw new InvalidDataException("O sus não deve ser nulo ou vazio");
+		}
+
+		if (!sus.matches("^\\d{15}$")) {
+			throw new InvalidDataException("O sus deve conter 15 números.");
+		}
+
+	}
 	
-	
+	public static void validateBirthDate(LocalDate birthDate) {
+		
+		if (birthDate == null) {
+			throw new InvalidDataException("A data de nascimento não deve ser nulo");
+		}
+		
+		LocalDate today = LocalDate.now();
+		LocalDate minBDate = today.minusYears(4);
+		
+		if(birthDate.isAfter(today)) {
+			throw new InvalidDataException("A data de nascimento não pode ser no futuro");
+		}
+		
+		if(birthDate.isBefore(today.minusYears(120))) {
+			throw new InvalidDataException("A data de nascimento inválida.");
+		}
+		
+		if(birthDate.isAfter(minBDate)) {
+			throw new InvalidDataException("Aluno precisa ter no mínimo 4 anos de idade.");
+		}
+		
+	}
+
 }

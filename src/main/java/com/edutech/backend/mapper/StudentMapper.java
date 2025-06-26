@@ -7,7 +7,6 @@ import org.mapstruct.MappingTarget;
 import com.edutech.backend.dtos.StudentRequestDTO;
 import com.edutech.backend.dtos.StudentResponseDTO;
 import com.edutech.backend.entities.Student;
-import com.edutech.backend.entities.Teacher;
 
 @Mapper(componentModel = "spring")
 public interface StudentMapper {
