@@ -1,5 +1,7 @@
 package com.edutech.backend.utils;
 
+import java.time.LocalDate;
+
 import com.edutech.backend.exceptions.InvalidDataException;
 
 public class ValidatorUtils {
@@ -13,6 +15,7 @@ public class ValidatorUtils {
 		if (!email.matches("^[a-zA-Z0-9.]+@[a-zA-Z]+\\.(pb)\\.gov\\.br$")) {
 			throw new InvalidDataException("O formato do e-mail inválido");
 		}
+
 	}
 
 	public static void validateCpf(String cpf) {
@@ -137,6 +140,29 @@ public class ValidatorUtils {
 			throw new InvalidDataException("O sus deve conter 15 números.");
 		}
 
+	}
+	
+	public static void validateBirthDate(LocalDate birthDate) {
+		
+		if (birthDate == null) {
+			throw new InvalidDataException("A data de nascimento não deve ser nulo");
+		}
+		
+		LocalDate today = LocalDate.now();
+		LocalDate minBDate = today.minusYears(4);
+		
+		if(birthDate.isAfter(today)) {
+			throw new InvalidDataException("A data de nascimento não pode ser no futuro");
+		}
+		
+		if(birthDate.isBefore(today.minusYears(120))) {
+			throw new InvalidDataException("A data de nascimento inválida.");
+		}
+		
+		if(birthDate.isAfter(minBDate)) {
+			throw new InvalidDataException("Aluno precisa ter no mínimo 4 anos de idade.");
+		}
+		
 	}
 
 }
