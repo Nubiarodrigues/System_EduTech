@@ -112,7 +112,7 @@ public class ValidatorUtils {
 		if (name == null || name.isEmpty()) {
 			throw new InvalidDataException("O nome não deve ser nulo ou vazio");
 		}
-		
+
 		if (name.length() <= 5) {
 			throw new InvalidDataException("Nome muito curto.");
 		}
@@ -123,6 +123,18 @@ public class ValidatorUtils {
 
 		if (!name.matches("([A-Z][\\p{L}]+)(\\s[A-Z][\\p{L}]+)*")) {
 			throw new InvalidDataException("Formato do nome inválido. Use apenas letras com iniciais maiúsculas.");
+		}
+
+	}
+
+	public static void validateSus(String sus) {
+
+		if (sus == null || sus.isEmpty()) {
+			throw new InvalidDataException("O sus não deve ser nulo ou vazio");
+		}
+
+		if (!sus.matches("^\\d{15}$")) {
+			throw new InvalidDataException("O sus deve conter 15 números.");
 		}
 
 	}
