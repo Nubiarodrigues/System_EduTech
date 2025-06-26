@@ -14,7 +14,6 @@ public class ValidatorUtils {
 			throw new InvalidDataException("O formato do e-mail inválido");
 		}
 	}
-	
 
 	public static void validateCpf(String cpf) {
 
@@ -40,7 +39,6 @@ public class ValidatorUtils {
 		}
 
 	}
-	
 
 	private static boolean checkCpf(int[] numberCpf) {
 		int i, j, sum, module, dv1, dv2;
@@ -81,7 +79,6 @@ public class ValidatorUtils {
 
 	}
 
-	
 	public static void validateTelephone(String telephone) {
 
 		if (telephone == null || telephone.isEmpty()) {
@@ -93,25 +90,41 @@ public class ValidatorUtils {
 		}
 
 		String digitsOnly = telephone.replaceAll("\\D", "");
-		
-		if (digitsOnly.charAt(2) == '9') {
-			System.out.println("Ok");
-		} else {
+
+		if (!(digitsOnly.charAt(2) == '9')) {
 			throw new InvalidDataException("Coloque o 9 depois do DDD.");
 		}
 	}
-	
-	
+
 	public static void validateCep(String cep) {
-		
+
 		if (cep == null || cep.isEmpty()) {
 			throw new InvalidDataException("O cep não deve ser nulo ou vazio");
 		}
-		
-		if(!cep.matches("^\\d{8}$")) {
+
+		if (!cep.matches("^\\d{8}$")) {
 			throw new InvalidDataException("O formato do CEP é inválido");
 		}
 	}
-	
-	
+
+	public static void validateName(String name) {
+
+		if (name == null || name.isEmpty()) {
+			throw new InvalidDataException("O nome não deve ser nulo ou vazio");
+		}
+		
+		if (name.length() <= 5) {
+			throw new InvalidDataException("Nome muito curto.");
+		}
+
+		if (name.length() > 100) {
+			throw new InvalidDataException("Nome muito longo.");
+		}
+
+		if (!name.matches("([A-Z][\\p{L}]+)(\\s[A-Z][\\p{L}]+)*")) {
+			throw new InvalidDataException("Formato do nome inválido. Use apenas letras com iniciais maiúsculas.");
+		}
+
+	}
+
 }
