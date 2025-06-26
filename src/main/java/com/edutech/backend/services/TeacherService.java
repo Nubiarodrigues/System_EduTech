@@ -60,6 +60,8 @@ public class TeacherService {
 
 	
 	private void prepareCreateTeacher(Teacher teacher, TeacherRequestDTO dto) {
+		ValidatorUtils.validateName(dto.name());
+		ValidatorUtils.validateBirthDate(dto.dateBirth());
 		ValidatorUtils.validateEmail(dto.email());
 		ValidatorUtils.validateCpf(dto.cpf());
 		ValidatorUtils.validateTelephone(dto.telephone());

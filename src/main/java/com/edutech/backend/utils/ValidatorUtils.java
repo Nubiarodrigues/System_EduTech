@@ -135,7 +135,7 @@ public class ValidatorUtils {
 			throw new InvalidDataException("Nome muito longo.");
 		}
 
-		if (!name.matches("([A-Z][\\p{L}]+)(\\s[A-Z][\\p{L}]+)*")) {
+		if (!name.matches("^(?:[A-Z][\\p{L}]+|(?:da|de|do|das|dos))(?:\\s(?:[A-Z][\\p{L}]+|da|de|do|das|dos))*$")) {
 			throw new InvalidDataException("Formato do nome inválido. Use apenas letras com iniciais maiúsculas.");
 		}
 

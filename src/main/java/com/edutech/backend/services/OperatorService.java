@@ -55,6 +55,7 @@ public class OperatorService {
 	}
 
 	private void prepareCreateOperator(Operator operator, OperatorRequestDTO dto) {
+		ValidatorUtils.validateName(dto.name());
 		ValidatorUtils.validateEmail(dto.email());
 
 		if (repositoryOperator.findByEmail(dto.email()).isPresent()) {

@@ -56,6 +56,7 @@ public class AdministratorService {
 	
 	
 	private void prepareCreateAdministrator(Administrator admin, AdministratorRequestDTO dto) {
+		ValidatorUtils.validateName(dto.name());
 		ValidatorUtils.validateEmail(dto.email());
 		
 		if(repositoryAdministrator.findByEmail(dto.email()).isPresent()) {

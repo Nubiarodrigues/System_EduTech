@@ -69,6 +69,8 @@ public class CoordinatorService {
 	}
 
 	private void prepareCreateCoordinator(Coordinator coordinator, CoordinatorRequestDTO dto) {
+		ValidatorUtils.validateName(dto.name());
+		ValidatorUtils.validateBirthDate(dto.dateBirth());
 		ValidatorUtils.validateEmail(dto.email());
 		ValidatorUtils.validateCpf(dto.cpf());
 		ValidatorUtils.validateTelephone(dto.telephone());

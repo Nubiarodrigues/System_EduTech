@@ -66,6 +66,11 @@ public class StudentService {
 		ValidatorUtils.validateCpf(dto.cpf());
 		ValidatorUtils.validateTelephone(dto.telephone());
 		ValidatorUtils.validateCep(dto.cep());
+		ValidatorUtils.validateSus(dto.sus());
+		ValidatorUtils.validateName(dto.motherName());
+		ValidatorUtils.validateName(dto.fatherName());
+		ValidatorUtils.validateBirthDate(dto.dateBirth());
+		ValidatorUtils.validateEmailResponsable(dto.emailResponsable());
 
 		Classroom classroom = repositoryClassroom.findById(dto.classroomId())
 				.orElseThrow(() -> new ResourceNotFoundException("Turma não existe"));
