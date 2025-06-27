@@ -13,9 +13,8 @@ public class ValidatorUtils {
 		}
 
 		if (!email.matches("^[a-zA-Z0-9.]+@[a-zA-Z]+\\.(pb)\\.gov\\.br$")) {
-			throw new InvalidDataException("O formato do e-mail inválido");
-		}
-
+            throw new InvalidDataException("O formato do e-mail inválido");
+        }
 	}
 	
 	public static void validateEmailResponsable(String email) {
