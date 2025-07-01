@@ -119,17 +119,14 @@ public class ValidatorUtils {
 		if (name == null || name.isEmpty()) {
 			throw new InvalidDataException("O nome não deve ser nulo ou vazio");
 		}
-
 		if (name.length() <= 5) {
 			throw new InvalidDataException("Nome muito curto.");
 		}
-
 		if (name.length() > 100) {
 			throw new InvalidDataException("Nome muito longo.");
 		}
-
-		if (!name.matches("^(?:[A-Z][\\p{L}]+|(?:da|de|do|das|dos))(?:\\s(?:[A-Z][\\p{L}]+|da|de|do|das|dos))*$")) {
-			throw new InvalidDataException("Formato do nome inválido. Use apenas letras com iniciais maiúsculas.");
+		if (!name.matches("^(?:[A-ZÀ-Ÿ][\\p{L}]+|da|de|do|das|dos)(?:\\s(?:[A-ZÀ-Ÿ][\\p{L}]+|da|de|do|das|dos))*$")) {
+			throw new InvalidDataException("Formato do nome inválido. Use letras maiúsculas no início das palavras e preposições em minúsculas.");
 		}
 
 	}
