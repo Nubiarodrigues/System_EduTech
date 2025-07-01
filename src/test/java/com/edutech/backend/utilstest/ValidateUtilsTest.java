@@ -34,4 +34,30 @@ public class ValidateUtilsTest {
         assertEquals("O formato do e-mail inválido", e.getMessage());
     }
 
+    @Test
+    public void testValidateEmailResponsable_valid(){
+        assertDoesNotThrow(() -> ValidatorUtils.validateEmailResponsable("joao.silvadasilva@gmail.com"));
+    }
+
+    @Test
+    public void testValidateEmailResponsable_NullIOrEmpty(){
+        InvalidDataException e = assertThrows(InvalidDataException.class, () -> {
+            ValidatorUtils.validateEmailResponsable(null);
+        });
+        assertEquals("O e-mail não deve ser nulo ou vazio", e.getMessage());
+
+        e = assertThrows(InvalidDataException.class, () -> {
+           ValidatorUtils.validateEmailResponsable("");
+        });
+        assertEquals("O e-mail não deve ser nulo ou vazio", e.getMessage());
+    }
+
+    @Test
+    public void testValidateEmailResponsable_InvalidFormat() {
+        InvalidDataException e = assertThrows(InvalidDataException.class, () -> {
+           ValidatorUtils.validateEmailResponsable("joaosilva!234@gmail.com");
+        });
+        assertEquals("O formato do e-mail do responsável inválido.", e.getMessage());
+    }
+
 }
