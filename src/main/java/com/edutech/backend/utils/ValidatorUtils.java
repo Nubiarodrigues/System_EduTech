@@ -1,6 +1,8 @@
 package com.edutech.backend.utils;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -152,36 +154,35 @@ public class ValidatorUtils {
 	public static void validateSus(String sus) {
 
 		if (sus == null || sus.isEmpty()) {
-			throw new InvalidDataException("O sus não deve ser nulo ou vazio");
+			throw new InvalidDataException("O número do sus não deve ser nulo ou vazio");
 		}
 
 		if (!sus.matches("^\\d{15}$")) {
-			throw new InvalidDataException("O sus deve conter 15 números.");
+			throw new InvalidDataException("O número do sus deve conter 15 números.");
 		}
 
 	}
 	
 	public static void validateBirthDate(LocalDate birthDate) {
-		
+
 		if (birthDate == null) {
 			throw new InvalidDataException("A data de nascimento não deve ser nulo");
 		}
 		
 		LocalDate today = LocalDate.now();
-		LocalDate minBDate = today.minusYears(4);
+		LocalDate minDate = today.minusYears(4);
 		
 		if(birthDate.isAfter(today)) {
-			throw new InvalidDataException("A data de nascimento não pode ser no futuro");
+			throw new InvalidDataException("A data de nascimento não pode ser no futuro.");
 		}
 		
 		if(birthDate.isBefore(today.minusYears(120))) {
-			throw new InvalidDataException("A data de nascimento inválida.");
+			throw new InvalidDataException("A data de nascimento é inválida.");
 		}
 		
-		if(birthDate.isAfter(minBDate)) {
-			throw new InvalidDataException("Aluno precisa ter no mínimo 4 anos de idade.");
+		if(birthDate.isAfter(minDate)) {
+			throw new InvalidDataException("O usuário precisa ter no mínimo 4 anos de idade.");
 		}
-		
 	}
 
 }
