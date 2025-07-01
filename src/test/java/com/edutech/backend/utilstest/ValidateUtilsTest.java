@@ -4,6 +4,8 @@ import com.edutech.backend.exceptions.InvalidDataException;
 import com.edutech.backend.utils.ValidatorUtils;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ValidateUtilsTest {
@@ -194,5 +196,74 @@ public class ValidateUtilsTest {
             ValidatorUtils.validateName("Núbia Maria Rodrigues da Silva Santos Pereira de Almeida Costa Carvalho Fernandes Oliveira Souza Lima Barbosa Marques Dias");
         });
         assertEquals("Nome muito longo.", e.getMessage());
+    }
+
+    @Test
+    public void testValidateSus_ValidFormat(){
+        assertDoesNotThrow(() -> ValidatorUtils.validateSus("703406021173953"));
+    }
+
+    @Test
+    public void testValidateSus_NullOrEmpty(){
+        InvalidDataException e = assertThrows(InvalidDataException.class, () -> {
+            ValidatorUtils.validateSus(null);
+        });
+        assertEquals("O número do sus não deve ser nulo ou vazio", e.getMessage());
+
+        e = assertThrows(InvalidDataException.class, () -> {
+            ValidatorUtils.validateSus("");
+        });
+        assertEquals("O número do sus não deve ser nulo ou vazio", e.getMessage());
+    }
+
+    @Test
+    public void testValidateSus_InvalidFormat(){
+        InvalidDataException e = assertThrows(InvalidDataException.class, () -> {
+            ValidatorUtils.validateSus("7034060211739");
+        });
+        assertEquals("O número do sus deve conter 15 números.", e.getMessage());
+    }
+
+    @Test
+    public void testValidateBirthDate_ValidFormat(){
+        LocalDate validDate = LocalDate.of(2002, 1, 22);
+
+        assertDoesNotThrow(() -> {
+            ValidatorUtils.validateBirthDate(validDate);
+        });
+    }
+
+    @Test
+    public void testValidateBirthDate_NullOrEmpty(){
+        InvalidDataException e = assertThrows(InvalidDataException.class, () -> {
+            ValidatorUtils.validateBirthDate(null);
+        });
+        assertEquals("A data de nascimento não deve ser nulo", e.getMessage());
+    }
+
+    @Test
+    public void testValidateBirthDate_InvalidFutureDate(){
+        LocalDate futureDate = LocalDate.now().plusDays(1);
+
+        InvalidDataException e = assertThrows(InvalidDataException.class, () -> {
+            ValidatorUtils.validateBirthDate(futureDate);
+        });
+        assertEquals("A data de nascimento não pode ser no futuro", e.getMessage());
+    }
+
+    @Test
+    public void testValidateBirthDate_InvalidDate(){
+        InvalidDataException e = assertThrows(InvalidDataException.class, () -> {
+            ValidatorUtils.validateBirthDate(LocalDate.of(1890,1, 1));
+        });
+        assertEquals("A data de nascimento é inválida." , e.getMessage());
+    }
+
+    @Test
+    public void testValidateBirthDate_MinimumAge(){
+        InvalidDataException e = assertThrows(InvalidDataException.class, () -> {
+            ValidatorUtils.validateBirthDate(LocalDate.of(2022, 1,1));
+        });
+        assertEquals("O usuário precisa ter no mínimo 4 anos de idade.", e.getMessage());
     }
 }
