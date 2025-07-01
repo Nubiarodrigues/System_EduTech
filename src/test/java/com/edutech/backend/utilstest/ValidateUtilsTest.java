@@ -40,7 +40,7 @@ public class ValidateUtilsTest {
     }
 
     @Test
-    public void testValidateEmailResponsable_NullIOrEmpty(){
+    public void testValidateEmailResponsable_NullOrEmpty(){
         InvalidDataException e = assertThrows(InvalidDataException.class, () -> {
             ValidatorUtils.validateEmailResponsable(null);
         });
@@ -94,5 +94,30 @@ public class ValidateUtilsTest {
         assertEquals("CPF inválido", e.getMessage());
     }
 
+    @Test
+    public void testvalidateTelephone_ValidFormat(){
+        assertDoesNotThrow(() -> ValidatorUtils.validateTelephone("83986516605"));
+    }
+
+    @Test
+    public void testValidateTelephone_NullOrEmpty(){
+        InvalidDataException e = assertThrows(InvalidDataException.class, () -> {
+            ValidatorUtils.validateTelephone(null);
+        });
+        assertEquals("O telefone não deve ser nulo ou vazio", e.getMessage());
+
+        e = assertThrows(InvalidDataException.class, () -> {
+            ValidatorUtils.validateTelephone("");
+        });
+        assertEquals("O telefone não deve ser nulo ou vazio", e.getMessage());
+    }
+
+    @Test
+    public void testvalidateTelephone_InvalidFormat(){
+        InvalidDataException e = assertThrows(InvalidDataException.class, () -> {
+            ValidatorUtils.validateTelephone("(83) 9 8651-6605");
+        });
+        assertEquals("O formato do telefone é inválido", e.getMessage());
+    }
 
 }
