@@ -62,6 +62,7 @@ public class StudentService {
 	}
 
 	private void prepareCreateStudent(Student student, StudentRequestDTO dto) {
+		ValidatorUtils.validateName(dto.name());
 		ValidatorUtils.validateEmail(dto.email());
 		ValidatorUtils.validateCpf(dto.cpf());
 		ValidatorUtils.validateTelephone(dto.telephone());
