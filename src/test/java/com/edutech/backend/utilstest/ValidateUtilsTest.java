@@ -146,4 +146,53 @@ public class ValidateUtilsTest {
         assertEquals("O formato do CEP é inválido", e.getMessage());
     }
 
+    @Test
+    public void testValidateName_ValidFormat(){
+        assertDoesNotThrow(() -> ValidatorUtils.validateName("João da Silva"));
+    }
+
+    @Test
+    public void testValidateName_NullOrEmpty(){
+        InvalidDataException e = assertThrows(InvalidDataException.class, () -> {
+            ValidatorUtils.validateName(null);
+        });
+        assertEquals("O nome não deve ser nulo ou vazio", e.getMessage());
+
+        e = assertThrows(InvalidDataException.class, () -> {
+            ValidatorUtils.validateName("");
+        });
+        assertEquals("O nome não deve ser nulo ou vazio", e.getMessage());
+    }
+
+    @Test
+    public void testValidateName_InvalidFormat_PrepositionUpperCase(){
+        InvalidDataException e = assertThrows(InvalidDataException.class, () -> {
+            ValidatorUtils.validateName("Maria Aparecida Da Silva");
+        });
+        assertEquals("Preposições devem estar em minúsculas.", e.getMessage());
+    }
+
+    @Test
+    public void testValidateName_InvalidFormat_LetterInitialLowerCase(){
+        InvalidDataException e = assertThrows(InvalidDataException.class, () -> {
+            ValidatorUtils.validateName("Maria aparecida da Silva");
+        });
+        assertEquals("Cada nome deve começar com letra maiúscula.", e.getMessage());
+    }
+
+    @Test
+    public void testValidateName_TooShort() {
+        InvalidDataException e = assertThrows(InvalidDataException.class, () -> {
+            ValidatorUtils.validateName("Anna");
+        });
+        assertEquals("Nome muito curto.", e.getMessage());
+    }
+
+    @Test
+    public void testValidateName_TooLong(){
+        InvalidDataException e = assertThrows(InvalidDataException.class, () -> {
+            ValidatorUtils.validateName("Núbia Maria Rodrigues da Silva Santos Pereira de Almeida Costa Carvalho Fernandes Oliveira Souza Lima Barbosa Marques Dias");
+        });
+        assertEquals("Nome muito longo.", e.getMessage());
+    }
 }
