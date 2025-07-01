@@ -248,7 +248,7 @@ public class ValidateUtilsTest {
         InvalidDataException e = assertThrows(InvalidDataException.class, () -> {
             ValidatorUtils.validateBirthDate(futureDate);
         });
-        assertEquals("A data de nascimento não pode ser no futuro", e.getMessage());
+        assertEquals("A data de nascimento não pode ser no futuro.", e.getMessage());
     }
 
     @Test
