@@ -47,7 +47,7 @@ public class ValidatorUtils {
 
 		result = checkCpf(cpf_digitos);
 
-		if (!result == true) {
+		if (!result) {
 			throw new InvalidDataException("CPF inválido");
 		}
 
