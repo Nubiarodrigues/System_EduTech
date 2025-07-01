@@ -98,14 +98,8 @@ public class ValidatorUtils {
 			throw new InvalidDataException("O telefone não deve ser nulo ou vazio");
 		}
 
-		if (!telephone.matches("^\\(?\\d{2}\\)?\\s?9?\\s?\\d{4}-?\\d{4}$")) {
+		if (!telephone.matches("^\\d{11}$")) {
 			throw new InvalidDataException("O formato do telefone é inválido");
-		}
-
-		String digitsOnly = telephone.replaceAll("\\D", "");
-
-		if (!(digitsOnly.charAt(2) == '9')) {
-			throw new InvalidDataException("Coloque o 9 depois do DDD.");
 		}
 	}
 
