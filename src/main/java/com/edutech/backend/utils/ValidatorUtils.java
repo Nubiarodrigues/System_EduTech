@@ -1,6 +1,8 @@
 package com.edutech.backend.utils;
 
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 
 import com.edutech.backend.exceptions.InvalidDataException;
 
@@ -125,10 +127,26 @@ public class ValidatorUtils {
 		if (name.length() > 100) {
 			throw new InvalidDataException("Nome muito longo.");
 		}
-		if (!name.matches("^(?:[A-ZÀ-Ÿ][\\p{L}]+|da|de|do|das|dos)(?:\\s(?:[A-ZÀ-Ÿ][\\p{L}]+|da|de|do|das|dos))*$")) {
-			throw new InvalidDataException("Formato do nome inválido. Use letras maiúsculas no início das palavras e preposições em minúsculas.");
-		}
 
+		// lista de preposições permitidas
+		List<String> prepositions = List.of("da", "de", "do", "das", "dos");
+
+		// divide o nome em palavras, removendo espaços extras
+		String[] words = name.trim().split("\\s+");
+
+		for(String word : words){
+			// se for preposição, deve estar em maiúsculo
+			if(prepositions.contains(word.toLowerCase())){
+				if(!word.equals(word.toLowerCase())){
+					throw new InvalidDataException("Preposições devem estar em minúsculas.");
+				}
+			} else {
+				// se não for preposição, deve começar com letra maiúscula
+				if(!Character.isUpperCase(word.charAt(0))){
+					throw new InvalidDataException("Cada nome deve começar com letra maiúscula.");
+				}
+			}
+		}
 	}
 
 	public static void validateSus(String sus) {
