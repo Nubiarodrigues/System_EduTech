@@ -120,4 +120,30 @@ public class ValidateUtilsTest {
         assertEquals("O formato do telefone é inválido", e.getMessage());
     }
 
+    @Test
+    public void testValidateCep_ValidFormat(){
+        assertDoesNotThrow(() -> ValidatorUtils.validateCep("58067047"));
+    }
+
+    @Test
+    public void testValidateCep_NullOrEmpty(){
+        InvalidDataException e = assertThrows(InvalidDataException.class, () -> {
+            ValidatorUtils.validateCep(null);
+        });
+        assertEquals("O cep não deve ser nulo ou vazio", e.getMessage());
+
+        e = assertThrows(InvalidDataException.class, () -> {
+           ValidatorUtils.validateCep("");
+        });
+        assertEquals("O cep não deve ser nulo ou vazio", e.getMessage());
+    }
+
+    @Test
+    public void testValidateCep_InvalidFormat(){
+        InvalidDataException e = assertThrows(InvalidDataException.class, () -> {
+           ValidatorUtils.validateCep("58067-047");
+        });
+        assertEquals("O formato do CEP é inválido", e.getMessage());
+    }
+
 }
