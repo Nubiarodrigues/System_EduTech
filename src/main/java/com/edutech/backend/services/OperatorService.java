@@ -63,7 +63,7 @@ public class OperatorService {
 		}
 
 		operator.setRegistration(new RegistrationGenerator()
-				.generateRegistrationUnique(operator.getRegistration()));
+				.generateRegistrationUniqueOperatorAndAdmin(operator.getRegistration()));
 
 	}
 
