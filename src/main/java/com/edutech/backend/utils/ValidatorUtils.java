@@ -1,33 +1,30 @@
 package com.edutech.backend.utils;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.Arrays;
-import java.util.List;
-
 import com.edutech.backend.exceptions.InvalidDataException;
+
+import java.time.LocalDate;
+import java.util.List;
 
 public class ValidatorUtils {
 
 	public static void validateEmail(String email) {
 
 		if (email == null || email.isEmpty()) {
-			throw new InvalidDataException("O e-mail não deve ser nulo ou vazio");
+			throw new InvalidDataException("O campo de e-mail é obrigatório.");
 		}
 
 		if (!email.matches("^[a-zA-Z0-9.]+@[a-zA-Z]+\\.(pb)\\.gov\\.br$")) {
-            throw new InvalidDataException("O formato do e-mail inválido");
+            throw new InvalidDataException("O formato do e-mail é inválido.");
         }
 	}
 	
 	public static void validateEmailResponsable(String email) {
 		if (email == null || email.isEmpty()) {
-			throw new InvalidDataException("O e-mail não deve ser nulo ou vazio");
+			throw new InvalidDataException("O campo de e-mail do responsável é obrigatório.");
 		}
 		
 		if (!email.matches("^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
-			throw new InvalidDataException("O formato do e-mail do responsável inválido.");
+			throw new InvalidDataException("Formato inválido: verifique o e-mail do responsável.");
 		}
 		
 	}
@@ -35,11 +32,11 @@ public class ValidatorUtils {
 	public static void validateCpf(String cpf) {
 
 		if (cpf == null || cpf.isEmpty()) {
-			throw new InvalidDataException("O CPF não deve ser nulo ou vazio");
+			throw new InvalidDataException("O campo de CPF é obrigatório.");
 		}
 
 		if (!cpf.matches("^\\d{11}$")) {
-			throw new InvalidDataException("O formato do CPF é inválido");
+			throw new InvalidDataException("Formato de CPF inválido. O valor deve conter exatamente 11 dígitos numéricos.");
 		}
 
 		int[] cpf_digitos = new int[cpf.length()];
@@ -52,7 +49,7 @@ public class ValidatorUtils {
 		result = checkCpf(cpf_digitos);
 
 		if (!result) {
-			throw new InvalidDataException("CPF inválido");
+			throw new InvalidDataException("CPF inválido. O número informado não passou na verificação dos dígitos e não é considerado um CPF válido.");
 		}
 
 	}
@@ -99,35 +96,35 @@ public class ValidatorUtils {
 	public static void validateTelephone(String telephone) {
 
 		if (telephone == null || telephone.isEmpty()) {
-			throw new InvalidDataException("O telefone não deve ser nulo ou vazio");
+			throw new InvalidDataException("O campo de telefone é obrigatório.");
 		}
 
 		if (!telephone.matches("^\\d{11}$")) {
-			throw new InvalidDataException("O formato do telefone é inválido");
+			throw new InvalidDataException("Formato do telefone inválido. O valor deve conter exatamente 11 dígitos numéricos.");
 		}
 	}
 
 	public static void validateCep(String cep) {
 
 		if (cep == null || cep.isEmpty()) {
-			throw new InvalidDataException("O cep não deve ser nulo ou vazio");
+			throw new InvalidDataException("O campo de CEP é obrigatório.");
 		}
 
 		if (!cep.matches("^\\d{8}$")) {
-			throw new InvalidDataException("O formato do CEP é inválido");
+			throw new InvalidDataException("Formato do CEP inválido. O valor deve conter exatamente 8 dígitos numéricos.");
 		}
 	}
 
 	public static void validateName(String name) {
 
 		if (name == null || name.isEmpty()) {
-			throw new InvalidDataException("O nome não deve ser nulo ou vazio");
+			throw new InvalidDataException("O campo de nome é obrigatório.");
 		}
 		if (name.length() <= 5) {
-			throw new InvalidDataException("Nome muito curto.");
+			throw new InvalidDataException("O nome informado é muito curto. Deve conter no mínimo 6 caracteres.");
 		}
 		if (name.length() > 100) {
-			throw new InvalidDataException("Nome muito longo.");
+			throw new InvalidDataException("O nome informado é muito longo. Deve conter no máximo 100 caracteres.");
 		}
 
 		// lista de preposições permitidas
@@ -154,11 +151,11 @@ public class ValidatorUtils {
 	public static void validateSus(String sus) {
 
 		if (sus == null || sus.isEmpty()) {
-			throw new InvalidDataException("O número do sus não deve ser nulo ou vazio");
+			throw new InvalidDataException("O campo de SUS é obrigatório.");
 		}
 
 		if (!sus.matches("^\\d{15}$")) {
-			throw new InvalidDataException("O número do sus deve conter 15 números.");
+			throw new InvalidDataException("Formato do SUS inválido. O valor deve conter exatamente 15 dígitos numéricos.");
 		}
 
 	}
@@ -166,22 +163,22 @@ public class ValidatorUtils {
 	public static void validateBirthDate(LocalDate birthDate) {
 
 		if (birthDate == null) {
-			throw new InvalidDataException("A data de nascimento não deve ser nulo");
+			throw new InvalidDataException("O campo de data de nascimento é obrigatório.");
 		}
 		
 		LocalDate today = LocalDate.now();
 		LocalDate minDate = today.minusYears(4);
 		
 		if(birthDate.isAfter(today)) {
-			throw new InvalidDataException("A data de nascimento não pode ser no futuro.");
+			throw new InvalidDataException("Data de nascimento inválida: não pode ser uma data futura.");
 		}
 		
 		if(birthDate.isBefore(today.minusYears(120))) {
-			throw new InvalidDataException("A data de nascimento é inválida.");
+			throw new InvalidDataException("Data de nascimento inválida: não pode ser anterior a 120 anos a partir da data atual.");
 		}
 		
 		if(birthDate.isAfter(minDate)) {
-			throw new InvalidDataException("O usuário precisa ter no mínimo 4 anos de idade.");
+			throw new InvalidDataException("A idade mínima permitida para o usuário é 4 anos.");
 		}
 	}
 
