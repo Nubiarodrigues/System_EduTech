@@ -39,17 +39,4 @@ public class Student extends User {
 	@JsonBackReference
 	private Classroom classroom;
 
-	public Student(String name, LocalDate dateBirth, String cpf, String sus, String cep, String telephone,String emailResponsable, String motherName, String fatherName, Classroom classroom) {
-		super(name);
-		this.dateBirth = dateBirth;
-		this.cpf = cpf;
-		this.sus = sus;
-		this.cep = cep;
-		this.telephone = telephone;
-		this.emailResponsable = emailResponsable;
-		this.motherName = motherName;
-		this.fatherName = fatherName;
-		this.classroom = classroom;
-	}
-
 }

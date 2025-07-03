@@ -35,16 +35,4 @@ public class Teacher extends User {
 	private String cep;
 	private String address;
 	private String formedCourse;
-
-	public Teacher(String name, String cpf, String telephone, Situation status, LocalDate dateBirth,Integer workloadTotal, String rg, String cep, String formedCourse) {
-		super(name);
-		this.cpf = cpf;
-		this.telephone = telephone;
-		this.status = status;
-		this.dateBirth = dateBirth;
-		this.workloadTotal = workloadTotal;
-		this.rg = rg;
-		this.cep = cep;
-		this.formedCourse = formedCourse;
-	}
 }

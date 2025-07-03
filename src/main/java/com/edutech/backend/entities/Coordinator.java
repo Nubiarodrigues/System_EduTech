@@ -48,16 +48,4 @@ public class Coordinator extends User {
 	@JsonManagedReference
 	private List<Classroom> classroomsModality = new ArrayList<>();
 
-	public Coordinator(String name, String cpf, String telephone, Situation status, LocalDate dateBirth, String rg, String cep, String formedCourse, TeachingState modality) {
-		super(name);
-		this.cpf = cpf;
-		this.telephone = telephone;
-		this.status = status;
-		this.dateBirth = dateBirth;
-		this.rg = rg;
-		this.cep = cep;
-		this.formedCourse = formedCourse;
-		this.modality = modality;
-	}
-
 }
