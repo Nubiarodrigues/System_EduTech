@@ -19,12 +19,15 @@ public class AuthService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return
-                administratorRepository.findByEmail(username).map(admin -> (UserDetails) admin)
-                .or(() -> coordinatorRepository.findByEmail(username).map(coord -> (UserDetails) coord))
-                .or(() -> operatorRepository.findByEmail(username).map(op -> (UserDetails) op))
-                .or(() -> studentRepository.findByEmail(username).map(stu -> (UserDetails) stu))
-                .or(() -> teacherRepository.findByEmail(username).map(teacher -> (UserDetails) teacher))
+        return findUserByEmail(username);
+    }
+
+    public UserDetails findUserByEmail(String email) {
+        return administratorRepository.findByEmail(email).map(admin -> (UserDetails) admin)
+                .or(() -> coordinatorRepository.findByEmail(email).map(coord -> (UserDetails) coord))
+                .or(() -> operatorRepository.findByEmail(email).map(op -> (UserDetails) op))
+                .or(() -> studentRepository.findByEmail(email).map(stu -> (UserDetails) stu))
+                .or(() -> teacherRepository.findByEmail(email).map(teacher -> (UserDetails) teacher))
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
     }
 }
