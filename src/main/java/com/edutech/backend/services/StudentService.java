@@ -2,6 +2,7 @@ package com.edutech.backend.services;
 
 import java.util.List;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -80,6 +81,9 @@ public class StudentService {
 		}
 
 		student.setClassroom(classroom);
+
+		String enconderPassword = new BCryptPasswordEncoder().encode(dto.password());
+		student.setPassword(enconderPassword);
 
 		student.setRegistration(new RegistrationGenerator()
 				.generateRegistrationUnique(student.getRegistration()));
