@@ -63,7 +63,6 @@ public class StudentService {
 	}
 
 	private void prepareCreateStudent(Student student, StudentRequestDTO dto) {
-		ValidatorUtils.validateName(dto.name());
 		ValidatorUtils.validateEmail(dto.email());
 		ValidatorUtils.validateCpf(dto.cpf());
 		ValidatorUtils.validateTelephone(dto.telephone());
@@ -87,7 +86,7 @@ public class StudentService {
 		student.setPassword(enconderPassword);
 
 		student.setRegistration(new RegistrationGenerator()
-				.generateRegistrationUniqueStudent(student.getRegistration()));
+				.generateRegistrationUnique(student.getRegistration()));
 
 		student.setAddress(serviceCep.findAdress(dto.cep()));
 

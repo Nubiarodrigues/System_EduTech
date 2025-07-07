@@ -68,7 +68,8 @@ public class AdministratorService {
 		admin.setPassword(enconderPassword);
 		
 		admin.setRegistration(new RegistrationGenerator()
-				.generateRegistrationUniqueOperatorAndAdmin(admin.getRegistration()));
+				.generateRegistrationUnique(admin.getRegistration()));
+		
 	}
 
 }

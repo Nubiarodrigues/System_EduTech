@@ -76,7 +76,7 @@ public class TeacherService {
 		teacher.setPassword(enconderPassword);
 
 		teacher.setRegistration(new RegistrationGenerator()
-				.generateRegistrationUniqueTeacher(teacher.getRegistration()));
+				.generateRegistrationUnique(teacher.getRegistration()));
 		
 		teacher.setAddress(serviceCep.findAdress(dto.cep()));
 	}
