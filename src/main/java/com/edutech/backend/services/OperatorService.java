@@ -67,7 +67,7 @@ public class OperatorService {
 		operator.setPassword(enconderPassword);
 
 		operator.setRegistration(new RegistrationGenerator()
-				.generateRegistrationUnique(operator.getRegistration()));
+				.generateRegistrationUniqueOperatorAndAdmin(operator.getRegistration()));
 
 	}
 
