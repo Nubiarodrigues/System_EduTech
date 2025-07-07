@@ -1,6 +1,7 @@
 package com.edutech.backend.mapper;
 
 import com.edutech.backend.dtos.DisciplineRequestDTO;
+import com.edutech.backend.dtos.DisciplineResponseDTO;
 import com.edutech.backend.entities.Discipline;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
@@ -9,6 +10,8 @@ import org.mapstruct.MappingTarget;
 public interface DisciplineMapper {
 
     Discipline toEntity(DisciplineRequestDTO dto);
+
+    DisciplineResponseDTO toResponseDTO(Discipline discipline);
 
     void updateDisciplineFromDTO(DisciplineRequestDTO dto, @MappingTarget Discipline entity);
 }
