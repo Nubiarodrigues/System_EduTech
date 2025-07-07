@@ -1,15 +1,16 @@
 package com.edutech.backend.entities;
 
-import java.time.LocalDate;
-
 import com.edutech.backend.enuns.Situation;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -35,5 +36,7 @@ public class Teacher extends User {
 	private String formedCourse;
 
 	@OneToMany(mappedBy = "teacher")
+	@JsonManagedReference
+	@JsonIgnore
 	private List<Discipline> disciplines;
 }
