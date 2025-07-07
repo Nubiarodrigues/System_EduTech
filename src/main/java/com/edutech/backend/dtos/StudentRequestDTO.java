@@ -5,12 +5,17 @@ import java.time.LocalDate;
 import com.edutech.backend.entities.Classroom;
 import com.edutech.backend.enuns.RoleUser;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record StudentRequestDTO(
 		@NotBlank String name,
-		@NotNull LocalDate dateBirth,
+
+		@JsonFormat(pattern = "dd-MM-yyyy")
+		@NotNull
+		LocalDate dateBirth,
+
 		@NotBlank String cpf,
 		@NotNull RoleUser role,
 		@NotNull String email,
