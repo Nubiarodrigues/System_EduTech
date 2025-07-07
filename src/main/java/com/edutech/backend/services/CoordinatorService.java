@@ -2,6 +2,7 @@ package com.edutech.backend.services;
 
 import java.util.List;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -79,6 +80,9 @@ public class CoordinatorService {
 		if (repositoryCoordinator.findByEmail(dto.email()).isPresent()) {
 			throw new ExistingResourceException("E-mail já cadastrado.");
 		}
+
+		String enconderPassword = new BCryptPasswordEncoder().encode(dto.password());
+		coordinator.setPassword(enconderPassword);
  
 		coordinator.setRegistration(new RegistrationGenerator()
 						.generateRegistrationUniqueCoordinator(coordinator.getRegistration()));

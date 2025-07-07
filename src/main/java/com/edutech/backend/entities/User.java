@@ -1,19 +1,15 @@
 package com.edutech.backend.entities;
 
 import com.edutech.backend.enuns.RoleUser;
-
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 @MappedSuperclass
 @Getter
@@ -22,27 +18,80 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @SuperBuilder
-public abstract class User {
+public abstract class User implements UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@EqualsAndHashCode.Include
-	protected Long id;
+	private Long id;
 
-	protected String name;
-	protected String email;
-	protected String password;
-	protected String registration;
+	private String name;
+	private String email;
+	private String password;
+	private String registration;
 
 	@Enumerated(EnumType.STRING)
-	protected RoleUser role;
+	private RoleUser role;
 
-	public User(String name) {
-		this.name = name;
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		if (this.role == null) {
+			return List.of();
+		}
+
+		switch (this.role) {
+			case ADMIN:
+				return List.of(
+						new SimpleGrantedAuthority("ROLE_ADMIN"),
+						new SimpleGrantedAuthority("ROLE_OPERATOR"),
+						new SimpleGrantedAuthority("ROLE_TEACHER"),
+						new SimpleGrantedAuthority("ROLE_STUDENT"),
+						new SimpleGrantedAuthority("ROLE_COORDINATOR")
+				);
+			case OPERATOR:
+				return List.of(
+						new SimpleGrantedAuthority("ROLE_OPERATOR"),
+						new SimpleGrantedAuthority("ROLE_STUDENT")
+				);
+			case TEACHER:
+				return List.of(
+						new SimpleGrantedAuthority("ROLE_TEACHER"),
+						new SimpleGrantedAuthority("ROLE_STUDENT")
+				);
+			case COORDINATOR:
+				return List.of(
+						new SimpleGrantedAuthority("ROLE_COORDINATOR"),
+						new SimpleGrantedAuthority("ROLE_STUDENT")
+				);
+			case STUDENT:
+				return List.of(new SimpleGrantedAuthority("ROLE_STUDENT"));
+			default:
+				return List.of();
+		}
 	}
 
-	public User(Long id) {
-		this.id = id;
+	@Override
+	public String getUsername() {
+		return email;
 	}
 
+	@Override
+	public boolean isAccountNonExpired() {
+		return UserDetails.super.isAccountNonExpired();
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return UserDetails.super.isAccountNonLocked();
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return UserDetails.super.isCredentialsNonExpired();
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return UserDetails.super.isEnabled();
+	}
 }

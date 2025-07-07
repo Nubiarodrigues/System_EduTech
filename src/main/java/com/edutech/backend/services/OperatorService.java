@@ -2,6 +2,7 @@ package com.edutech.backend.services;
 
 import java.util.List;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -61,6 +62,9 @@ public class OperatorService {
 		if (repositoryOperator.findByEmail(dto.email()).isPresent()) {
 			throw new ExistingResourceException("Email já cadastrado ");
 		}
+
+		String enconderPassword = new BCryptPasswordEncoder().encode(dto.password());
+		operator.setPassword(enconderPassword);
 
 		operator.setRegistration(new RegistrationGenerator()
 				.generateRegistrationUniqueOperatorAndAdmin(operator.getRegistration()));

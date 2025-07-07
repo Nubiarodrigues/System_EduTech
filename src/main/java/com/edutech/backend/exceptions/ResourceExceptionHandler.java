@@ -94,4 +94,30 @@ public class ResourceExceptionHandler {
 		return ResponseEntity.status(status).body(err);
 	}
 
+	@ExceptionHandler(ErrorGeneratedTokenException.class)
+	public ResponseEntity<StandardError> errorGeneratedToken(ErrorGeneratedTokenException e, HttpServletRequest request){
+		String error = "Error generating token";
+		HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+		StandardError err = new StandardError(
+				Instant.now(),
+				status.value(),
+				error,
+				e.getMessage(),
+				request.getRequestURI());
+		return ResponseEntity.status(status).body(err);
+	}
+
+	@ExceptionHandler(InvalidTokenException.class)
+	public ResponseEntity<StandardError> invalidToken(InvalidTokenException e, HttpServletRequest request){
+		String error = "Invalid token";
+		HttpStatus status = HttpStatus.UNAUTHORIZED;
+		StandardError err = new StandardError(
+				Instant.now(),
+				status.value(),
+				error,
+				e.getMessage(),
+				request.getRequestURI());
+		return ResponseEntity.status(status).body(err);
+	}
+
 }

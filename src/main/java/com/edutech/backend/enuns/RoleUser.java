@@ -1,5 +1,10 @@
 package com.edutech.backend.enuns;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public enum RoleUser {
 
 	ADMIN("admin"),
@@ -9,13 +14,5 @@ public enum RoleUser {
 	COORDINATOR("coordinator");
 
 	private String role;
-
-	RoleUser(String role) {
-		this.role = role;
-	}
-
-	public String getRole() {
-		return role;
-	}
 
 }
