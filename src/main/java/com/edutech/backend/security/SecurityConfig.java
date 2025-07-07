@@ -34,7 +34,7 @@ public class SecurityConfig {
                         .requestMatchers("/students/**", "/classrooms/**").hasRole("OPERATOR")
                         .requestMatchers(HttpMethod.GET, "/students/**").hasAnyRole("TEACHER", "COORDINATOR")
                         .requestMatchers(HttpMethod.GET, "/classrooms/**").hasRole("COORDINATOR")
-                        .requestMatchers("*/**").hasRole("ADMIN")
+                        .requestMatchers("/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
