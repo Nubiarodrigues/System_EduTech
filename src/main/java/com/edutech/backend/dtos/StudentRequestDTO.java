@@ -1,13 +1,11 @@
 package com.edutech.backend.dtos;
 
-import java.time.LocalDate;
-
-import com.edutech.backend.entities.Classroom;
 import com.edutech.backend.enuns.RoleUser;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+
+import java.time.LocalDate;
 
 public record StudentRequestDTO(
 		@NotBlank String name,

@@ -1,28 +1,17 @@
 package com.edutech.backend.entities;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.edutech.backend.enuns.Shift;
 import com.edutech.backend.enuns.TeachingState;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "TB_CLASSROOM")
@@ -56,6 +45,14 @@ public class Classroom {
 	@JsonBackReference
 	private Coordinator coordinatorClass;
 
+	@ManyToMany
+	@JoinTable(
+			name = "classroom_discipline",
+			joinColumns = @JoinColumn(name = "classroom_id"),
+			inverseJoinColumns = @JoinColumn(name = "discipline_id")
+	)
+	private List<Discipline> disciplines;
+
 	public Classroom(Integer series, String identifierSeries, Integer capacity, Shift shift, Integer schoolYear,TeachingState modality) {
 		this.series = series;
 		this.identifierSeries = identifierSeries;
@@ -64,7 +61,4 @@ public class Classroom {
 		this.schoolYear = schoolYear;
 		this.modality = modality;
 	}
-	
-	
-
 }
