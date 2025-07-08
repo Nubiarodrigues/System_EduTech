@@ -1,7 +1,6 @@
 package com.edutech.backend.entities;
 
 import com.edutech.backend.enuns.Situation;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -37,6 +36,5 @@ public class Teacher extends User {
 
 	@OneToMany(mappedBy = "teacher")
 	@JsonManagedReference
-	@JsonIgnore
 	private List<Discipline> disciplines;
 }
