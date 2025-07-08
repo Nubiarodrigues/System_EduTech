@@ -31,5 +31,6 @@ public class Discipline {
     private Teacher teacher;
 
     @ManyToMany(mappedBy = "disciplines")
+    @JsonBackReference
     private List<Classroom> classrooms;
 }

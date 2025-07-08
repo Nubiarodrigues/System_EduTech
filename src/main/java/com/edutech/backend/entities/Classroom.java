@@ -51,6 +51,7 @@ public class Classroom {
 			joinColumns = @JoinColumn(name = "classroom_id"),
 			inverseJoinColumns = @JoinColumn(name = "discipline_id")
 	)
+	@JsonManagedReference
 	private List<Discipline> disciplines;
 
 	public Classroom(Integer series, String identifierSeries, Integer capacity, Shift shift, Integer schoolYear,TeachingState modality) {
