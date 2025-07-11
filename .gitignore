@@ -34,3 +34,6 @@ build/
 
 ### Arquivos de configuração sensíveis
 application-secret.properties
+
+### Arquivo de carga de dados (teste)
+PopularDatabase.java
