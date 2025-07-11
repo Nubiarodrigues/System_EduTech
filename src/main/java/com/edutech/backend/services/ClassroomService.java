@@ -44,6 +44,7 @@ public class ClassroomService {
 		Classroom classroom = mapperClassroom.toEntity(dto);
 		classroom.setCoordinatorClass(coordinator);
 		classroom = repositoryClassroom.save(classroom);
+
 		return classroom;
 	}
 

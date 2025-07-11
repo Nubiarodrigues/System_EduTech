@@ -1,6 +1,7 @@
 package com.edutech.backend.dtos;
 
 import com.edutech.backend.enuns.RoleUser;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -9,6 +10,7 @@ import java.time.LocalDate;
 public record StudentRequestDTO(
 		@NotBlank String name,
 
+		@JsonFormat(pattern = "dd-MM-yyyy")
 		@NotNull
 		LocalDate dateBirth,
 

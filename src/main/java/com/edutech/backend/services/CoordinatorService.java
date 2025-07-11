@@ -85,7 +85,7 @@ public class CoordinatorService {
 		coordinator.setPassword(enconderPassword);
  
 		coordinator.setRegistration(new RegistrationGenerator()
-						.generateRegistrationUnique(coordinator.getRegistration()));
+						.generateRegistrationUniqueCoordinator(coordinator.getRegistration()));
 
 		coordinator.setAddress(serviceCep.findAdress(dto.cep()));
 	}
