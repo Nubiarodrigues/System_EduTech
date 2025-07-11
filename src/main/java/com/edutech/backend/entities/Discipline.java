@@ -1,6 +1,7 @@
 package com.edutech.backend.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,4 +34,8 @@ public class Discipline {
     @ManyToMany(mappedBy = "disciplines")
     @JsonBackReference
     private List<Classroom> classrooms;
+
+    @OneToMany(mappedBy = "discipline")
+    @JsonManagedReference
+    private List<ClassesTaught> classesTaught;
 }
