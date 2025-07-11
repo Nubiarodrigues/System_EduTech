@@ -1,18 +1,16 @@
 package com.edutech.backend.entities;
 
-import java.time.LocalDate;
-
 import com.edutech.backend.enuns.Situation;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "TB_TEACHER")
@@ -35,4 +33,8 @@ public class Teacher extends User {
 	private String cep;
 	private String address;
 	private String formedCourse;
+
+	@OneToMany(mappedBy = "teacher")
+	@JsonManagedReference
+	private List<Discipline> disciplines;
 }

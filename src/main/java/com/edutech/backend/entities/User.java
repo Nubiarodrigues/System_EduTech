@@ -41,28 +41,13 @@ public abstract class User implements UserDetails {
 
 		switch (this.role) {
 			case ADMIN:
-				return List.of(
-						new SimpleGrantedAuthority("ROLE_ADMIN"),
-						new SimpleGrantedAuthority("ROLE_OPERATOR"),
-						new SimpleGrantedAuthority("ROLE_TEACHER"),
-						new SimpleGrantedAuthority("ROLE_STUDENT"),
-						new SimpleGrantedAuthority("ROLE_COORDINATOR")
-				);
+				return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
 			case OPERATOR:
-				return List.of(
-						new SimpleGrantedAuthority("ROLE_OPERATOR"),
-						new SimpleGrantedAuthority("ROLE_STUDENT")
-				);
+				return List.of(new SimpleGrantedAuthority("ROLE_OPERATOR"));
 			case TEACHER:
-				return List.of(
-						new SimpleGrantedAuthority("ROLE_TEACHER"),
-						new SimpleGrantedAuthority("ROLE_STUDENT")
-				);
+				return List.of(new SimpleGrantedAuthority("ROLE_TEACHER"));
 			case COORDINATOR:
-				return List.of(
-						new SimpleGrantedAuthority("ROLE_COORDINATOR"),
-						new SimpleGrantedAuthority("ROLE_STUDENT")
-				);
+				return List.of(new SimpleGrantedAuthority("ROLE_COORDINATOR"));
 			case STUDENT:
 				return List.of(new SimpleGrantedAuthority("ROLE_STUDENT"));
 			default:

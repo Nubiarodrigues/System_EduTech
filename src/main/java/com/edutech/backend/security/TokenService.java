@@ -6,8 +6,10 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.edutech.backend.entities.User;
 import com.edutech.backend.exceptions.ErrorGeneratedTokenException;
+import com.edutech.backend.exceptions.InvalidDataException;
 import com.edutech.backend.exceptions.InvalidTokenException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -26,6 +28,10 @@ public class TokenService {
             String token = JWT.create()
                     .withIssuer("auth-api")
                     .withSubject(user.getEmail())
+                    .withClaim("role", user.getAuthorities()
+                            .stream().map(GrantedAuthority::getAuthority)
+                            .findFirst()
+                            .orElseThrow(() -> new InvalidDataException("Usuário não possui a role necessária.")))
                     .withExpiresAt(generateExpirationDate())
                     .sign(algorithm);
             return token;

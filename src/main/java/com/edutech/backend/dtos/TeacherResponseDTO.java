@@ -1,9 +1,9 @@
 package com.edutech.backend.dtos;
 
-import java.time.LocalDate;
-
 import com.edutech.backend.entities.Teacher;
 import com.edutech.backend.enuns.RoleUser;
+
+import java.time.LocalDate;
 
 public record TeacherResponseDTO(
 		Long id,
