@@ -33,7 +33,8 @@ public class ClassesTaughtController {
 
     @PostMapping("{disciplineId}")
     public ResponseEntity<ClassesTaughtResponseDTO> create(@PathVariable Long disciplineId, @RequestBody @Valid ClassesTaughtRequestDTO dto, @AuthenticationPrincipal User user) {
-        ClassesTaught newClassesTaught = serviceClassesTaught.createRegister(disciplineId, dto, user);
+        Long teacherId = user.getId();
+        ClassesTaught newClassesTaught = serviceClassesTaught.createRegister(disciplineId, dto, teacherId);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(newClassesTaught.getId())

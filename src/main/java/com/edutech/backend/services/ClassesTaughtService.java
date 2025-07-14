@@ -5,7 +5,6 @@ import com.edutech.backend.dtos.ClassesTaughtResponseDTO;
 import com.edutech.backend.entities.ClassesTaught;
 import com.edutech.backend.entities.Discipline;
 import com.edutech.backend.entities.Teacher;
-import com.edutech.backend.entities.User;
 import com.edutech.backend.exceptions.ResourceNotFoundException;
 import com.edutech.backend.mapper.ClassesTaughtMapper;
 import com.edutech.backend.repositories.ClassesTaughtRepository;
@@ -14,7 +13,6 @@ import com.edutech.backend.repositories.TeacherRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,9 +36,7 @@ public class ClassesTaughtService {
     }
 
     @Transactional
-    public ClassesTaught createRegister(Long disciplineId, ClassesTaughtRequestDTO dto, @AuthenticationPrincipal User user) {
-        Long teacherId = user.getId();
-
+    public ClassesTaught createRegister(Long disciplineId, ClassesTaughtRequestDTO dto, Long teacherId) {
         Teacher teacher = repositoryTeacher.findById(teacherId)
                 .orElseThrow(() -> new ResourceNotFoundException("Professor não encontrado!"));
 
