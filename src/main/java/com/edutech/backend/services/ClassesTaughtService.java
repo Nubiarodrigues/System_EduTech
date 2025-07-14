@@ -39,20 +39,22 @@ public class ClassesTaughtService {
 
     @Transactional
     public ClassesTaught createRegister(Long disciplineId, ClassesTaughtRequestDTO dto, @AuthenticationPrincipal User user) {
-        ClassesTaught newClassesTaught = new ClassesTaught();
         Long teacherId = user.getId();
 
         Teacher teacher = repositoryTeacher.findById(teacherId)
                 .orElseThrow(() -> new ResourceNotFoundException("Professor não encontrado!"));
 
-        newClassesTaught.setTeacher(teacher);
+        ClassesTaught classesTaught = mapperclassesTaught.toEntity(dto);
+
+        classesTaught.setTeacher(teacher);
 
         Discipline discipline = repositoryDiscipline.findById(disciplineId)
                 .orElseThrow(() -> new ResourceNotFoundException("Discipline com ID " + disciplineId + " não encontrada!"));
 
-        newClassesTaught.setDiscipline(discipline);
+        classesTaught.setDiscipline(discipline);
 
-        return repositoryClassesTaught.save(newClassesTaught);
+        repositoryClassesTaught.save(classesTaught);
+        return classesTaught;
     }
 
 
@@ -66,5 +68,4 @@ public class ClassesTaughtService {
             throw new ResourceNotFoundException(id);
         }
     }
-
 }
