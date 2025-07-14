@@ -4,6 +4,7 @@ import com.edutech.backend.dtos.DisciplineRequestDTO;
 import com.edutech.backend.dtos.DisciplineResponseDTO;
 import com.edutech.backend.entities.Discipline;
 import com.edutech.backend.entities.Teacher;
+import com.edutech.backend.exceptions.InvalidDataException;
 import com.edutech.backend.exceptions.ResourceNotFoundException;
 import com.edutech.backend.mapper.DisciplineMapper;
 import com.edutech.backend.repositories.DisciplineRepository;
@@ -63,7 +64,13 @@ public class DisciplineService {
         Teacher teacher = repositoryTeacher.findById(teacherId)
                 .orElseThrow(() -> new ResourceNotFoundException("Professor com ID: " + teacherId + " não existe."));
 
-        discipline.setTeacher(teacher);
+        if(teacher.getWorkloadAllocated() < teacher.getWorkloadTotal()) {
+            teacher.setWorkloadAllocated(teacher.getWorkloadAllocated() + discipline.getWorkload());
+            discipline.setTeacher(teacher);
+        } else {
+            throw new InvalidDataException("Carga horária excedida.");
+        }
+
         repositoryDiscipline.save(discipline);
     }
 }
