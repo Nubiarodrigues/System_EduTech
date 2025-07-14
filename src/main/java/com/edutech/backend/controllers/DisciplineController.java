@@ -59,4 +59,10 @@ public class DisciplineController {
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping("/{id}/{teacherId}")
+    public ResponseEntity<DisciplineResponseDTO> allocateTeacher(@PathVariable Long id, @PathVariable Long teacherId) {
+        serviceDiscipline.allocateTeacher(id, teacherId);
+        URI location = URI.create("/disciplines/" + id + teacherId);
+        return ResponseEntity.created(location).build();
+    }
 }
