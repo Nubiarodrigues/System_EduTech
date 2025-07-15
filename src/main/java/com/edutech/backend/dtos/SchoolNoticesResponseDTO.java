@@ -1,0 +1,27 @@
+package com.edutech.backend.dtos;
+
+import com.edutech.backend.entities.SchoolNotices;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public record SchoolNoticesResponseDTO(
+        Long id,
+        String title,
+        String message,
+        LocalDate dateCreation,
+        String author,
+        List<ClassroomResponseDTO> classrooms) {
+
+        public SchoolNoticesResponseDTO(SchoolNotices schoolNotices){
+            this(
+                schoolNotices.getId(),
+                schoolNotices.getTitle(),
+                schoolNotices.getMessage(),
+                schoolNotices.getDateCreation(),
+                schoolNotices.getAuthor(),
+                schoolNotices.getClassrooms() != null ? schoolNotices.getClassrooms().stream().map(ClassroomResponseDTO::new).collect(Collectors.toList()) : null
+            );
+        }
+}
