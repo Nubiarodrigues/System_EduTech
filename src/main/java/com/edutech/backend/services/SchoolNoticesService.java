@@ -2,16 +2,19 @@ package com.edutech.backend.services;
 
 import com.edutech.backend.dtos.SchoolNoticesRequestDTO;
 import com.edutech.backend.dtos.SchoolNoticesResponseDTO;
+import com.edutech.backend.entities.Classroom;
 import com.edutech.backend.entities.SchoolNotices;
 import com.edutech.backend.exceptions.InvalidDataException;
 import com.edutech.backend.exceptions.ResourceNotFoundException;
 import com.edutech.backend.mapper.SchoolNoticesMapper;
+import com.edutech.backend.repositories.ClassroomRepository;
 import com.edutech.backend.repositories.SchoolNoticesRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,6 +23,7 @@ import java.util.stream.Collectors;
 public class SchoolNoticesService {
 
     private final SchoolNoticesRepository repositorySchoolNotices;
+    private final ClassroomRepository repositoryClassroom;
     private final SchoolNoticesMapper mapperSchoolNotices;
 
     public List<SchoolNoticesResponseDTO> findAll(){
@@ -27,9 +31,19 @@ public class SchoolNoticesService {
     }
 
     @Transactional
-    public SchoolNotices create(SchoolNoticesRequestDTO dto, String authorName){
+    public SchoolNotices create(SchoolNoticesRequestDTO dto, Long idClassroom, String authorName){
         SchoolNotices newSchoolNotices = mapperSchoolNotices.toEntity(dto);
         newSchoolNotices.setAuthor(authorName);
+
+        Classroom classroomCurrent = repositoryClassroom.findById(idClassroom)
+                .orElseThrow(() -> new ResourceNotFoundException("A turma não existe."));
+
+        if(newSchoolNotices.getClassrooms() == null){
+            newSchoolNotices.setClassrooms(new ArrayList<>());
+        }
+
+        newSchoolNotices.getClassrooms().add(classroomCurrent);
+
         return repositorySchoolNotices.save(newSchoolNotices);
     }
 
