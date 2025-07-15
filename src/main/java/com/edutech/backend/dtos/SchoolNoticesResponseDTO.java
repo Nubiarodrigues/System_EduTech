@@ -2,7 +2,7 @@ package com.edutech.backend.dtos;
 
 import com.edutech.backend.entities.SchoolNotices;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,9 +10,9 @@ public record SchoolNoticesResponseDTO(
         Long id,
         String title,
         String message,
-        LocalDate dateCreation,
+        LocalDateTime dateCreation,
         String author,
-        List<ClassroomResponseDTO> classrooms) {
+        List<ClassroomSimpleDTO> classrooms) {
 
         public SchoolNoticesResponseDTO(SchoolNotices schoolNotices){
             this(
@@ -21,7 +21,6 @@ public record SchoolNoticesResponseDTO(
                 schoolNotices.getMessage(),
                 schoolNotices.getDateCreation(),
                 schoolNotices.getAuthor(),
-                schoolNotices.getClassrooms() != null ? schoolNotices.getClassrooms().stream().map(ClassroomResponseDTO::new).collect(Collectors.toList()) : null
-            );
+                schoolNotices.getClassrooms() != null ? schoolNotices.getClassrooms().stream().map(ClassroomSimpleDTO::new).collect(Collectors.toList()) : null);
         }
 }
