@@ -50,6 +50,4 @@ public class ClassesTaughtController {
         ClassesTaughtResponseDTO response = mapperClassesTaught.toResponseDTO(current);
         return ResponseEntity.ok().body(response);
     }
-
-
 }
