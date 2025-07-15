@@ -5,6 +5,7 @@ import com.edutech.backend.dtos.ClassesTaughtResponseDTO;
 import com.edutech.backend.entities.ClassesTaught;
 import com.edutech.backend.entities.Discipline;
 import com.edutech.backend.entities.Teacher;
+import com.edutech.backend.exceptions.InvalidDataException;
 import com.edutech.backend.exceptions.ResourceNotFoundException;
 import com.edutech.backend.mapper.ClassesTaughtMapper;
 import com.edutech.backend.repositories.ClassesTaughtRepository;
@@ -55,11 +56,19 @@ public class ClassesTaughtService {
 
 
     @Transactional
-    public ClassesTaught updateRegister(Long id, ClassesTaughtRequestDTO dto) {
+    public ClassesTaught updateRegister(Long id, ClassesTaughtRequestDTO dto, Long teacherId) {
         try {
-            ClassesTaught classesTaught = repositoryClassesTaught.getReferenceById(id);
-            mapperclassesTaught.updateClassesTaughtFromDTO(dto, classesTaught);
-            return repositoryClassesTaught.save(classesTaught);
+            ClassesTaught registerClasses = repositoryClassesTaught.findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException("Registro com ID: " + id + " não encontrado."));
+
+            Teacher teacher = repositoryTeacher.findById(teacherId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Professor com ID: " + teacherId + " não encontrado."));
+
+            if(!registerClasses.getTeacher().getId().equals(teacher.getId())){
+                throw new InvalidDataException("Você não tem permissão para alterar este registro.");
+            }
+            mapperclassesTaught.updateClassesTaughtFromDTO(dto, registerClasses);
+            return repositoryClassesTaught.save(registerClasses);
         }catch(EntityNotFoundException e){
             throw new ResourceNotFoundException(id);
         }
