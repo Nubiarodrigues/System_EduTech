@@ -1,4 +1,4 @@
-package com.edutech.backend.dtos;
+package com.edutech.backend.dtos.operator;
 
 import com.edutech.backend.entities.Operator;
 import com.edutech.backend.enuns.RoleUser;

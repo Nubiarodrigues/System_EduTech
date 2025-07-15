@@ -6,8 +6,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.edutech.backend.dtos.OperatorRequestDTO;
-import com.edutech.backend.dtos.OperatorResponseDTO;
+import com.edutech.backend.dtos.operator.OperatorRequestDTO;
+import com.edutech.backend.dtos.operator.OperatorResponseDTO;
 import com.edutech.backend.entities.Operator;
 import com.edutech.backend.exceptions.ExistingResourceException;
 import com.edutech.backend.exceptions.ResourceNotFoundException;

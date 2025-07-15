@@ -1,10 +1,9 @@
 package com.edutech.backend.mapper;
 
-import com.edutech.backend.dtos.DisciplineRequestDTO;
-import com.edutech.backend.dtos.DisciplineResponseDTO;
+import com.edutech.backend.dtos.discipline.DisciplineRequestDTO;
+import com.edutech.backend.dtos.discipline.DisciplineResponseDTO;
 import com.edutech.backend.entities.Discipline;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")

@@ -1,4 +1,4 @@
-package com.edutech.backend.dtos;
+package com.edutech.backend.dtos.teacher;
 
 import com.edutech.backend.enuns.RoleUser;
 

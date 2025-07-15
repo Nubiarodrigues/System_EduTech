@@ -1,8 +1,6 @@
-package com.edutech.backend.dtos;
+package com.edutech.backend.dtos.schoolnotice;
 
 import jakarta.validation.constraints.NotNull;
-
-import java.time.LocalDate;
 
 public record SchoolNoticesRequestDTO(
         @NotNull String title,

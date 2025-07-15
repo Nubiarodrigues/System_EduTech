@@ -1,7 +1,7 @@
 package com.edutech.backend.services;
 
-import com.edutech.backend.dtos.ClassesTaughtRequestDTO;
-import com.edutech.backend.dtos.ClassesTaughtResponseDTO;
+import com.edutech.backend.dtos.classestaught.ClassesTaughtRequestDTO;
+import com.edutech.backend.dtos.classestaught.ClassesTaughtResponseDTO;
 import com.edutech.backend.entities.ClassesTaught;
 import com.edutech.backend.entities.Discipline;
 import com.edutech.backend.entities.Teacher;

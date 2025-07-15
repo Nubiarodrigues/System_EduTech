@@ -1,4 +1,4 @@
-package com.edutech.backend.dtos;
+package com.edutech.backend.dtos.classroom;
 
 import com.edutech.backend.enuns.Shift;
 import com.edutech.backend.enuns.TeachingState;

@@ -4,8 +4,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
-import com.edutech.backend.dtos.StudentRequestDTO;
-import com.edutech.backend.dtos.StudentResponseDTO;
+import com.edutech.backend.dtos.student.StudentRequestDTO;
+import com.edutech.backend.dtos.student.StudentResponseDTO;
 import com.edutech.backend.entities.Student;
 
 @Mapper(componentModel = "spring")

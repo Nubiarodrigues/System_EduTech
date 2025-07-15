@@ -1,8 +1,8 @@
 package com.edutech.backend.controllers;
 
-import com.edutech.backend.dtos.AddDisciplineClassroomRequestDTO;
-import com.edutech.backend.dtos.ClassroomRequestDTO;
-import com.edutech.backend.dtos.ClassroomResponseDTO;
+import com.edutech.backend.dtos.discipline.AddDisciplineClassroomRequestDTO;
+import com.edutech.backend.dtos.classroom.ClassroomRequestDTO;
+import com.edutech.backend.dtos.classroom.ClassroomResponseDTO;
 import com.edutech.backend.entities.Classroom;
 import com.edutech.backend.mapper.ClassroomMapper;
 import com.edutech.backend.services.ClassroomService;

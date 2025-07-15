@@ -1,5 +1,6 @@
-package com.edutech.backend.dtos;
+package com.edutech.backend.dtos.discipline;
 
+import com.edutech.backend.dtos.classestaught.ClassesTaughtResponseDTO;
 import com.edutech.backend.entities.Discipline;
 
 import java.util.List;

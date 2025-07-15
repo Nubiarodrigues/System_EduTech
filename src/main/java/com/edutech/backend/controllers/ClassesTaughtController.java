@@ -1,7 +1,7 @@
 package com.edutech.backend.controllers;
 
-import com.edutech.backend.dtos.ClassesTaughtRequestDTO;
-import com.edutech.backend.dtos.ClassesTaughtResponseDTO;
+import com.edutech.backend.dtos.classestaught.ClassesTaughtRequestDTO;
+import com.edutech.backend.dtos.classestaught.ClassesTaughtResponseDTO;
 import com.edutech.backend.entities.ClassesTaught;
 import com.edutech.backend.entities.User;
 import com.edutech.backend.mapper.ClassesTaughtMapper;

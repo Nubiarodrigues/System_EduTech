@@ -1,4 +1,4 @@
-package com.edutech.backend.dtos;
+package com.edutech.backend.dtos.student;
 
 import com.edutech.backend.enuns.RoleUser;
 import jakarta.validation.constraints.NotBlank;

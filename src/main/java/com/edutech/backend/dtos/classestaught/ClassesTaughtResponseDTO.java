@@ -1,4 +1,4 @@
-package com.edutech.backend.dtos;
+package com.edutech.backend.dtos.classestaught;
 
 import com.edutech.backend.entities.ClassesTaught;
 

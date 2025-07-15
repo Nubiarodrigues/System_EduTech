@@ -1,4 +1,4 @@
-package com.edutech.backend.dtos;
+package com.edutech.backend.dtos.discipline;
 
 import jakarta.validation.constraints.NotNull;
 

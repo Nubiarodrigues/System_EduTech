@@ -1,4 +1,4 @@
-package com.edutech.backend.dtos;
+package com.edutech.backend.dtos.apiExternal;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

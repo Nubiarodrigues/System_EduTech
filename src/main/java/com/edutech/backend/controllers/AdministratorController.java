@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.edutech.backend.dtos.AdministratorRequestDTO;
-import com.edutech.backend.dtos.AdministratorResponseDTO;
+import com.edutech.backend.dtos.administrator.AdministratorRequestDTO;
+import com.edutech.backend.dtos.administrator.AdministratorResponseDTO;
 import com.edutech.backend.entities.Administrator;
 import com.edutech.backend.mapper.AdministratorMapper;
 import com.edutech.backend.services.AdministratorService;

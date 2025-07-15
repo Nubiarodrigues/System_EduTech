@@ -1,4 +1,4 @@
-package com.edutech.backend.dtos;
+package com.edutech.backend.dtos.classestaught;
 
 import jakarta.validation.constraints.NotNull;
 

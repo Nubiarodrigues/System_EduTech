@@ -1,12 +1,11 @@
 package com.edutech.backend.controllers;
 
-import com.edutech.backend.dtos.AuthenticationRequestDTO;
-import com.edutech.backend.dtos.LoginResponseDTO;
+import com.edutech.backend.dtos.authenticate.AuthenticationRequestDTO;
+import com.edutech.backend.dtos.authenticate.LoginResponseDTO;
 import com.edutech.backend.entities.User;
 import com.edutech.backend.security.TokenService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

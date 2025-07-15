@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.springframework.stereotype.Service;
 
-import com.edutech.backend.dtos.AdressDTO;
+import com.edutech.backend.dtos.apiExternal.AdressDTO;
 import com.edutech.backend.exceptions.ExternalServiceException;
 import com.edutech.backend.exceptions.InvalidDataException;
 import com.fasterxml.jackson.databind.ObjectMapper;

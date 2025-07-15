@@ -1,7 +1,7 @@
 package com.edutech.backend.services;
 
-import com.edutech.backend.dtos.SchoolNoticesRequestDTO;
-import com.edutech.backend.dtos.SchoolNoticesResponseDTO;
+import com.edutech.backend.dtos.schoolnotice.SchoolNoticesRequestDTO;
+import com.edutech.backend.dtos.schoolnotice.SchoolNoticesResponseDTO;
 import com.edutech.backend.entities.Classroom;
 import com.edutech.backend.entities.SchoolNotices;
 import com.edutech.backend.exceptions.InvalidDataException;

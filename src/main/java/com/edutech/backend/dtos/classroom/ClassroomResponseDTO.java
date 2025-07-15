@@ -1,10 +1,10 @@
-package com.edutech.backend.dtos;
+package com.edutech.backend.dtos.classroom;
 
+import com.edutech.backend.dtos.schoolnotice.SchoolNoticesResponseDTO;
 import com.edutech.backend.entities.Classroom;
 import com.edutech.backend.entities.Discipline;
 import com.edutech.backend.entities.Student;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 

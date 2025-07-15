@@ -1,5 +1,6 @@
-package com.edutech.backend.dtos;
+package com.edutech.backend.dtos.schoolnotice;
 
+import com.edutech.backend.dtos.classroom.ClassroomSimpleDTO;
 import com.edutech.backend.entities.SchoolNotices;
 
 import java.time.LocalDateTime;

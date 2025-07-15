@@ -1,7 +1,7 @@
 package com.edutech.backend.mapper;
 
-import com.edutech.backend.dtos.ClassesTaughtRequestDTO;
-import com.edutech.backend.dtos.ClassesTaughtResponseDTO;
+import com.edutech.backend.dtos.classestaught.ClassesTaughtRequestDTO;
+import com.edutech.backend.dtos.classestaught.ClassesTaughtResponseDTO;
 import com.edutech.backend.entities.ClassesTaught;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;

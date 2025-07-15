@@ -1,7 +1,7 @@
 package com.edutech.backend.services;
 
-import com.edutech.backend.dtos.DisciplineRequestDTO;
-import com.edutech.backend.dtos.DisciplineResponseDTO;
+import com.edutech.backend.dtos.discipline.DisciplineRequestDTO;
+import com.edutech.backend.dtos.discipline.DisciplineResponseDTO;
 import com.edutech.backend.entities.Discipline;
 import com.edutech.backend.entities.Teacher;
 import com.edutech.backend.exceptions.InvalidDataException;

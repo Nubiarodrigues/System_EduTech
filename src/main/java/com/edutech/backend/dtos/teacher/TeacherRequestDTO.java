@@ -1,26 +1,22 @@
-package com.edutech.backend.dtos;
+package com.edutech.backend.dtos.teacher;
 
 import java.time.LocalDate;
 
 import com.edutech.backend.enuns.RoleUser;
 import com.edutech.backend.enuns.Situation;
-import com.edutech.backend.enuns.TeachingState;
 
 import jakarta.validation.constraints.NotNull;
 
-public record CoordinatorRequestDTO(
+public record TeacherRequestDTO(
 		@NotNull String name,
+		@NotNull String cpf,
 		@NotNull String email,
 		@NotNull RoleUser role,
 		@NotNull String password,
-		@NotNull String cpf,
-		String telephone,
+		@NotNull String telephone,
 		Situation status,
 		@NotNull LocalDate dateBirth,
-		String rg,
-		@NotNull String cep,
-		@NotNull String formedCourse,
-		@NotNull TeachingState modality
-) {
-
-}
+		@NotNull Integer workloadTotal,
+		String rg, String cep,
+		@NotNull String formedCourse) 
+{}
