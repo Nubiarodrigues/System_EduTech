@@ -32,10 +32,6 @@ public class ClassesTaughtService {
         return repositoryClassesTaught.findAll().stream().map(ClassesTaughtResponseDTO::new).collect(Collectors.toList());
     }
 
-    public ClassesTaught findById(Long id) {
-        return repositoryClassesTaught.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
-    }
-
     @Transactional
     public ClassesTaught createRegister(Long disciplineId, ClassesTaughtRequestDTO dto, Long teacherId) {
         Teacher teacher = repositoryTeacher.findById(teacherId)
