@@ -7,8 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -25,7 +26,10 @@ public class SchoolNotices {
 
     private String title;
     private String message;
-    private LocalDate dateCreation;
+
+    @CreationTimestamp
+    private LocalDateTime dateCreation;
+
     private String author;
 
     @ManyToMany
