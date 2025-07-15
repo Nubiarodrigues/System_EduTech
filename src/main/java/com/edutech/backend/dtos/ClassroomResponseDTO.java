@@ -4,7 +4,9 @@ import com.edutech.backend.entities.Classroom;
 import com.edutech.backend.entities.Discipline;
 import com.edutech.backend.entities.Student;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public record ClassroomResponseDTO(
 		Long id,
@@ -12,7 +14,8 @@ public record ClassroomResponseDTO(
 		String identifierSeries,
 		List<Discipline> discipline,
 		List<Student> students,
-		String coordinatorName) {
+		String coordinatorName,
+		List<SchoolNoticesResponseDTO>  schoolNotices) {
 
 	public ClassroomResponseDTO(Classroom classroom) {
 		this(
@@ -21,6 +24,7 @@ public record ClassroomResponseDTO(
 				classroom.getIdentifierSeries(),
 				classroom.getDisciplines(),
 				classroom.getStudents(),
-				classroom.getCoordinatorClass() != null ? classroom.getCoordinatorClass().getName() : null);
+				classroom.getCoordinatorClass() != null ? classroom.getCoordinatorClass().getName() : null,
+				classroom.getSchoolNotices() != null ? classroom.getSchoolNotices().stream().map(SchoolNoticesResponseDTO::new).collect(Collectors.toList()) : null);
 	}
 }
