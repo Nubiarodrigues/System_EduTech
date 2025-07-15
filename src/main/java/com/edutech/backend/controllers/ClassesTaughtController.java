@@ -43,5 +43,13 @@ public class ClassesTaughtController {
         return ResponseEntity.created(location).body(response);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<ClassesTaughtResponseDTO> update(@PathVariable Long id, @RequestBody @Valid ClassesTaughtRequestDTO dto, @AuthenticationPrincipal User user) {
+        Long teacherId = user.getId();
+        ClassesTaught current = serviceClassesTaught.updateRegister(id, dto, teacherId);
+        ClassesTaughtResponseDTO response = mapperClassesTaught.toResponseDTO(current);
+        return ResponseEntity.ok().body(response);
+    }
+
 
 }
