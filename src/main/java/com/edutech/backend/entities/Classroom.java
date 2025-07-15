@@ -54,6 +54,10 @@ public class Classroom {
 	@JsonManagedReference
 	private List<Discipline> disciplines;
 
+	@ManyToMany(mappedBy = "classrooms")
+	@JsonManagedReference
+	private List<SchoolNotices>	schoolNotices;
+
 	public Classroom(Integer series, String identifierSeries, Integer capacity, Shift shift, Integer schoolYear,TeachingState modality) {
 		this.series = series;
 		this.identifierSeries = identifierSeries;
