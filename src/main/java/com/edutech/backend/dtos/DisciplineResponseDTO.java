@@ -1,18 +1,22 @@
 package com.edutech.backend.dtos;
 
-import com.edutech.backend.entities.ClassesTaught;
 import com.edutech.backend.entities.Discipline;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-public record DisciplineResponseDTO(String name, Integer workload, String teacherName, List<ClassesTaught> classesTaught) {
+public record DisciplineResponseDTO(
+        String name,
+        Integer workload,
+        String teacherName,
+        List<ClassesTaughtResponseDTO> classesTaught) {
 
     public DisciplineResponseDTO(Discipline discipline) {
         this(
                 discipline.getName(),
                 discipline.getWorkload(),
                 discipline.getTeacher() != null ? discipline.getTeacher().getName() : null,
-                discipline.getClassesTaught()
+                discipline.getClassesTaught() != null ? discipline.getClassesTaught().stream().map(ClassesTaughtResponseDTO::new).collect(Collectors.toList()) : null
         );
     }
 }
