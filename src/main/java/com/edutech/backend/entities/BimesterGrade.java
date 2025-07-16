@@ -1,5 +1,6 @@
 package com.edutech.backend.entities;
 
+import com.edutech.backend.enuns.SituationStudent;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,21 +36,17 @@ public class BimesterGrade {
     private Double averageFinal;
     private Double averageGlobal;
 
+    @Enumerated(EnumType.STRING)
+    private SituationStudent situation;
 
-    public Double finalAverageCalculation(double grade1, double grade2, double grade3, double grade4, double gradeFinal) {
+
+    public Double finalAverageCalculation() {
         double finalAverage = (grade1 + grade2 + grade3 + grade4) / 4.0;
 
-        if(finalAverage > 7.0){
-            System.out.println("O aluno está na final: " + finalAverage);
-        } else {
+        if(finalAverage >= 7.0){
+            situation = SituationStudent.APROVADO;
             return finalAverage;
         }
-
-        double finalGlobal = (finalAverage + gradeFinal) / 2.0;
-
-        if(finalGlobal >= 7.0){
-            System.out.println("Aluno aprovado: " + finalGlobal);
-        }
-        return finalGlobal;
+        return (finalAverage + gradeFinal) / 2.0;
     }
 }
