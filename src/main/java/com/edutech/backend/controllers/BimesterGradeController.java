@@ -1,7 +1,6 @@
 package com.edutech.backend.controllers;
 
 import com.edutech.backend.dtos.bimestergrade.BimesterGradeFinalRequestDTO;
-import com.edutech.backend.dtos.bimestergrade.BimesterGradeFinalResponseDTO;
 import com.edutech.backend.dtos.bimestergrade.BimesterGradeRequestDTO;
 import com.edutech.backend.dtos.bimestergrade.BimesterGradeResponseDTO;
 import com.edutech.backend.entities.BimesterGrade;
@@ -53,10 +52,10 @@ public class BimesterGradeController {
     }
 
     @PatchMapping("/{disciplineId}/{studentId}")
-    public ResponseEntity<BimesterGradeFinalResponseDTO> updateFinal(@PathVariable Long disciplineId, @PathVariable Long studentId, @RequestBody @Valid BimesterGradeFinalRequestDTO dto, @AuthenticationPrincipal User user){
+    public ResponseEntity<BimesterGradeResponseDTO> updateFinal(@PathVariable Long disciplineId, @PathVariable Long studentId, @RequestBody @Valid BimesterGradeFinalRequestDTO dto, @AuthenticationPrincipal User user){
         Long teacherId = user.getId();
         BimesterGrade current = serviceBimesterGrade.updateFinal(disciplineId, dto, studentId, teacherId);
-        BimesterGradeFinalResponseDTO response = mapperBimesterGradeMapper.toResponseFinalDTO(current);
+        BimesterGradeResponseDTO response = mapperBimesterGradeMapper.toResponseDTO(current);
         return ResponseEntity.ok().body(response);
     }
 
