@@ -1,12 +1,11 @@
 package com.edutech.backend.services;
 
+import com.edutech.backend.dtos.bimestergrade.BimesterGradeFinalRequestDTO;
 import com.edutech.backend.dtos.bimestergrade.BimesterGradeRequestDTO;
 import com.edutech.backend.dtos.bimestergrade.BimesterGradeResponseDTO;
 import com.edutech.backend.entities.BimesterGrade;
 import com.edutech.backend.entities.Discipline;
 import com.edutech.backend.entities.Student;
-import com.edutech.backend.entities.Teacher;
-import com.edutech.backend.exceptions.InvalidDataException;
 import com.edutech.backend.exceptions.ResourceNotFoundException;
 import com.edutech.backend.mapper.BimesterGradeMapper;
 import com.edutech.backend.repositories.BimesterGradeRepository;
@@ -36,6 +35,12 @@ public class BimesterGradeService {
         return repositoryBimesterGrade.findAll().stream().map(BimesterGradeResponseDTO::new).collect(Collectors.toList());
     }
 
+    public BimesterGrade findById(Long id){
+        BimesterGrade bimester = repositoryBimesterGrade.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(id));
+        return bimester;
+    }
+
 
     @Transactional
     public BimesterGrade create(Long disciplineId, BimesterGradeRequestDTO dto, Long teacherId, Long studentId) {
@@ -47,16 +52,39 @@ public class BimesterGradeService {
         Discipline discipline = repositoryDiscipline.findById(disciplineId)
                 .orElseThrow(() -> new EntityNotFoundException("A disciplina não existe."));
 
-        if(discipline.getTeacher().getId().equals(teacherId)) {
-            Teacher teacher = repositoryTeacher.findById(teacherId)
-                    .orElseThrow(() -> new ResourceNotFoundException(teacherId));
-        } else {
-            throw new InvalidDataException("Você não tem permissão para adicionar notas em uma disciplina que não esta alocado.");
-        }
-
+        newBimesterGrade.setSituation(newBimesterGrade.defineSituation(newBimesterGrade));
         newBimesterGrade.setStudent(student);
         newBimesterGrade.setDiscipline(discipline);
-        return repositoryBimesterGrade.save(newBimesterGrade);
+        repositoryBimesterGrade.save(newBimesterGrade);
+
+        return repositoryBimesterGrade.findById(newBimesterGrade.getId()).orElseThrow(() -> new ResourceNotFoundException(newBimesterGrade.getId()));
+    }
+
+
+    @Transactional
+    public BimesterGrade update(Long id, BimesterGradeRequestDTO dto, Long teacherId, Long studentId) {
+        try {
+            BimesterGrade current = repositoryBimesterGrade.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+            Student currentStudent = repositoryStudent.findById(studentId).orElseThrow(() -> new ResourceNotFoundException("O aluno com ID: " + studentId + " não existe."));
+            mapperBimesterGrade.updateBimesterFromDTO(dto, current);
+            return repositoryBimesterGrade.save(current);
+        } catch(EntityNotFoundException e) {
+            throw new ResourceNotFoundException(id);
+        }
+    }
+
+    @Transactional
+    public BimesterGrade updateFinal(Long id, BimesterGradeFinalRequestDTO dto,  Long teacherId, Long studentId) {
+        try {
+            BimesterGrade current = repositoryBimesterGrade.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+            Student currentStudent = repositoryStudent.findById(studentId).orElseThrow(() -> new ResourceNotFoundException("O aluno com ID: " + studentId + " não existe."));
+            current.setGradeFinal(dto.gradeFinal());
+            current.setSituation(current.defineSituation(current));
+            mapperBimesterGrade.updateBimesterFinalFromDTO(dto, current);
+            return repositoryBimesterGrade.save(current);
+        } catch(EntityNotFoundException e) {
+            throw new ResourceNotFoundException(id);
+        }
     }
 
 }
