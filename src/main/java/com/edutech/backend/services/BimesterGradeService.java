@@ -6,6 +6,7 @@ import com.edutech.backend.dtos.bimestergrade.BimesterGradeResponseDTO;
 import com.edutech.backend.entities.BimesterGrade;
 import com.edutech.backend.entities.Discipline;
 import com.edutech.backend.entities.Student;
+import com.edutech.backend.exceptions.InvalidDataException;
 import com.edutech.backend.exceptions.ResourceNotFoundException;
 import com.edutech.backend.mapper.BimesterGradeMapper;
 import com.edutech.backend.repositories.BimesterGradeRepository;
@@ -31,11 +32,11 @@ public class BimesterGradeService {
     private final BimesterGradeMapper mapperBimesterGrade;
 
 
-    public List<BimesterGradeResponseDTO> findAll(){
+    public List<BimesterGradeResponseDTO> findAll() {
         return repositoryBimesterGrade.findAll().stream().map(BimesterGradeResponseDTO::new).collect(Collectors.toList());
     }
 
-    public BimesterGrade findById(Long id){
+    public BimesterGrade findById(Long id) {
         BimesterGrade bimester = repositoryBimesterGrade.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
         return bimester;
@@ -52,7 +53,7 @@ public class BimesterGradeService {
         Discipline discipline = repositoryDiscipline.findById(disciplineId)
                 .orElseThrow(() -> new EntityNotFoundException("A disciplina não existe."));
 
-        newBimesterGrade.setSituation(newBimesterGrade.defineSituation(newBimesterGrade));
+        newBimesterGrade.setSituation(newBimesterGrade.defineSituationNoFinal(newBimesterGrade));
         newBimesterGrade.setStudent(student);
         newBimesterGrade.setDiscipline(discipline);
         repositoryBimesterGrade.save(newBimesterGrade);
@@ -64,27 +65,43 @@ public class BimesterGradeService {
     @Transactional
     public BimesterGrade update(Long id, BimesterGradeRequestDTO dto, Long teacherId, Long studentId) {
         try {
-            BimesterGrade current = repositoryBimesterGrade.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
-            Student currentStudent = repositoryStudent.findById(studentId).orElseThrow(() -> new ResourceNotFoundException("O aluno com ID: " + studentId + " não existe."));
+            BimesterGrade current = repositoryBimesterGrade.findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException(id));
+
+            Student currentStudent = repositoryStudent.findById(studentId)
+                    .orElseThrow(() -> new ResourceNotFoundException("O aluno com ID: " + studentId + " não existe."));
+
+            if (!current.getStudent().getId().equals(currentStudent.getId())) {
+                throw new InvalidDataException("A operação não pode ser concluída: o aluno informado no update é diferente do aluno associado ao registro original.");
+            }
+
             mapperBimesterGrade.updateBimesterFromDTO(dto, current);
             return repositoryBimesterGrade.save(current);
-        } catch(EntityNotFoundException e) {
+        } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException(id);
         }
     }
 
     @Transactional
-    public BimesterGrade updateFinal(Long id, BimesterGradeFinalRequestDTO dto,  Long teacherId, Long studentId) {
+    public BimesterGrade updateFinal(Long id, BimesterGradeFinalRequestDTO dto, Long teacherId, Long studentId) {
         try {
-            BimesterGrade current = repositoryBimesterGrade.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
-            Student currentStudent = repositoryStudent.findById(studentId).orElseThrow(() -> new ResourceNotFoundException("O aluno com ID: " + studentId + " não existe."));
+            BimesterGrade current = repositoryBimesterGrade.findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException(id));
+
+            Student currentStudent = repositoryStudent.findById(studentId)
+                    .orElseThrow(() -> new ResourceNotFoundException("O aluno com ID: " + studentId + " não existe."));
+
+            if (!current.getStudent().getId().equals(currentStudent.getId())) {
+                throw new InvalidDataException("A operação não pode ser concluída: o aluno informado no update é diferente do aluno associado ao registro original.");
+            }
+
             current.setGradeFinal(dto.gradeFinal());
-            current.setSituation(current.defineSituation(current));
+            current.setSituation(current.defineSituationFinal(current));
+
             mapperBimesterGrade.updateBimesterFinalFromDTO(dto, current);
             return repositoryBimesterGrade.save(current);
-        } catch(EntityNotFoundException e) {
+        } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException(id);
         }
     }
-
 }
