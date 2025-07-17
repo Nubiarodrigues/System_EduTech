@@ -1,21 +1,18 @@
 package com.edutech.backend.dtos.student;
 
-import java.time.LocalDate;
-
+import com.edutech.backend.dtos.bimestergrade.BimesterGradeResponseDTO;
 import com.edutech.backend.entities.Student;
 import com.edutech.backend.enuns.RoleUser;
+
+import java.util.List;
 
 public record StudentResponseDTO(
 		Long id,
 		String name,
 		String email,
 		RoleUser role,
-		LocalDate dateBirth,
-		String address,
-		String cpf,
-		String motherName,
-		String fatherName,
-		String registration)
+		String registration,
+		List<BimesterGradeResponseDTO> bimesters)
 {
 
 	public StudentResponseDTO(Student student) {
@@ -24,12 +21,8 @@ public record StudentResponseDTO(
 				student.getName(),
 				student.getEmail(),
 				student.getRole(),
-				student.getDateBirth(), 
-				student.getAddress(),
-				student.getCpf(), 
-				student.getMotherName(),
-				student.getFatherName(),
-				student.getRegistration()
+				student.getRegistration(),
+				student.getBimesters().stream().map(BimesterGradeResponseDTO::new).toList()
 			);
 	}
 }
