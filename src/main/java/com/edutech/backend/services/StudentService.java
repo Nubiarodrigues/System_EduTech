@@ -1,11 +1,5 @@
 package com.edutech.backend.services;
 
-import java.util.List;
-
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.edutech.backend.dtos.student.StudentRequestDTO;
 import com.edutech.backend.dtos.student.StudentResponseDTO;
 import com.edutech.backend.entities.Classroom;
@@ -17,9 +11,13 @@ import com.edutech.backend.repositories.ClassroomRepository;
 import com.edutech.backend.repositories.StudentRepository;
 import com.edutech.backend.utils.RegistrationGenerator;
 import com.edutech.backend.utils.ValidatorUtils;
-
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -89,7 +87,5 @@ public class StudentService {
 				.generateRegistrationUnique(student.getRegistration()));
 
 		student.setAddress(serviceCep.findAdress(dto.cep()));
-
 	}
-
 }
