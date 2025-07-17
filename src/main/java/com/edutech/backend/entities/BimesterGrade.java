@@ -1,6 +1,7 @@
 package com.edutech.backend.entities;
 
 import com.edutech.backend.enuns.SituationStudent;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,8 +20,9 @@ public class BimesterGrade {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "student_id")
+    @JsonBackReference
     private Student student;
 
     @ManyToOne
@@ -41,12 +43,29 @@ public class BimesterGrade {
 
 
     public Double finalAverageCalculation() {
-        double finalAverage = (grade1 + grade2 + grade3 + grade4) / 4.0;
+        double averageBimester = (grade1 + grade2 + grade3 + grade4) / 4.0;
+        return averageBimester;
+    }
 
-        if(finalAverage >= 7.0){
-            situation = SituationStudent.APROVADO;
-            return finalAverage;
+    public Double finalGlobalCalculation() {
+        double averageBimester = (grade1 + grade2 + grade3 + grade4)  / 4.0;
+
+        if(gradeFinal == null){
+            gradeFinal = 0.0;
         }
-        return (finalAverage + gradeFinal) / 2.0;
+
+        double finalGlobal = (averageBimester + gradeFinal) / 2.0;
+        return finalGlobal;
+    }
+
+    public SituationStudent defineSituation(BimesterGrade grade){
+        if(grade.finalAverageCalculation() >= 7.0){
+            grade.setSituation(SituationStudent.APROVADO);
+        } else if(grade.finalAverageCalculation() >= 4.0 && grade.finalGlobalCalculation() <= 6.9){
+            grade.setSituation(SituationStudent.FINAL);
+        } else {
+            grade.setSituation(SituationStudent.REPROVADO);
+        }
+        return  grade.getSituation();
     }
 }
