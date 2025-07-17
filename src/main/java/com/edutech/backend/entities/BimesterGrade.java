@@ -48,24 +48,36 @@ public class BimesterGrade {
     }
 
     public Double finalGlobalCalculation() {
-        double averageBimester = (grade1 + grade2 + grade3 + grade4)  / 4.0;
-
-        if(gradeFinal == null){
-            gradeFinal = 0.0;
-        }
+        double averageBimester = (grade1 + grade2 + grade3 + grade4) / 4.0;
 
         double finalGlobal = (averageBimester + gradeFinal) / 2.0;
         return finalGlobal;
     }
 
-    public SituationStudent defineSituation(BimesterGrade grade){
-        if(grade.finalAverageCalculation() >= 7.0){
-            grade.setSituation(SituationStudent.APROVADO);
-        } else if(grade.finalAverageCalculation() >= 4.0 && grade.finalGlobalCalculation() <= 6.9){
-            grade.setSituation(SituationStudent.FINAL);
+
+    public SituationStudent defineSituationNoFinal(BimesterGrade bimester) {
+
+        if (finalAverageCalculation() >= 7.0) {
+            bimester.setSituation(SituationStudent.APROVADO);
+        } else if (finalAverageCalculation() >= 4.0 && finalAverageCalculation() <= 6.9) {
+            bimester.setSituation(SituationStudent.FINAL);
         } else {
-            grade.setSituation(SituationStudent.REPROVADO);
+            bimester.setSituation(SituationStudent.REPROVADO);
         }
-        return  grade.getSituation();
+
+        return bimester.getSituation();
+
+    }
+
+    public SituationStudent defineSituationFinal(BimesterGrade bimester){
+
+        if(finalGlobalCalculation() >= 5.0){
+            bimester.setSituation(SituationStudent.APROVADO);
+        } else {
+            bimester.setSituation(SituationStudent.REPROVADO);
+        }
+
+        return bimester.getSituation();
+
     }
 }
