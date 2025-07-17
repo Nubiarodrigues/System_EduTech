@@ -1,18 +1,16 @@
 package com.edutech.backend.entities;
 
-import java.time.LocalDate;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "TB_STUDENT")
@@ -33,6 +31,10 @@ public class Student extends User {
 	private String motherName;
 	private LocalDate frequency;
 	private String emailResponsable;
+
+	@OneToMany(mappedBy = "student")
+	@JsonManagedReference
+	private List<BimesterGrade> bimesters;
 
 	@ManyToOne
 	@JoinColumn(name = "classroom_id")
