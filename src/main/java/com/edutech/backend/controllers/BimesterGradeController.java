@@ -1,11 +1,14 @@
 package com.edutech.backend.controllers;
 
+import com.edutech.backend.dtos.bimestergrade.BimesterGradeFinalRequestDTO;
+import com.edutech.backend.dtos.bimestergrade.BimesterGradeFinalResponseDTO;
 import com.edutech.backend.dtos.bimestergrade.BimesterGradeRequestDTO;
 import com.edutech.backend.dtos.bimestergrade.BimesterGradeResponseDTO;
 import com.edutech.backend.entities.BimesterGrade;
 import com.edutech.backend.entities.User;
 import com.edutech.backend.mapper.BimesterGradeMapper;
 import com.edutech.backend.services.BimesterGradeService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,7 +19,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/bimestre-grade")
+@RequestMapping("/bimester-grade")
 @RequiredArgsConstructor
 public class BimesterGradeController {
 
@@ -30,7 +33,7 @@ public class BimesterGradeController {
     }
 
     @PostMapping("/{disciplineId}/{studentId}")
-    public ResponseEntity<BimesterGradeResponseDTO> create(@PathVariable Long disciplineId, @RequestBody BimesterGradeRequestDTO dto, @AuthenticationPrincipal User user, @PathVariable Long studentId) {
+    public ResponseEntity<BimesterGradeResponseDTO> create(@PathVariable Long disciplineId, @PathVariable Long studentId, @RequestBody @Valid BimesterGradeRequestDTO dto, @AuthenticationPrincipal User user) {
         Long idTeacher = user.getId();
         BimesterGrade newBimesterGrade = serviceBimesterGrade.create(disciplineId, dto, idTeacher,  studentId);
         URI location = ServletUriComponentsBuilder
@@ -39,6 +42,22 @@ public class BimesterGradeController {
                 .toUri();
         BimesterGradeResponseDTO response = mapperBimesterGradeMapper.toResponseDTO(newBimesterGrade);
         return ResponseEntity.created(location).body(response);
+    }
+
+    @PutMapping("/{disciplineId}/{studentId}")
+    public ResponseEntity<BimesterGradeResponseDTO> update(@PathVariable Long disciplineId, @PathVariable Long studentId, @RequestBody @Valid BimesterGradeRequestDTO dto, @AuthenticationPrincipal User user) {
+        Long teacherId = user.getId();
+        BimesterGrade current = serviceBimesterGrade.update(disciplineId, dto, studentId, teacherId);
+        BimesterGradeResponseDTO response = mapperBimesterGradeMapper.toResponseDTO(current);
+        return ResponseEntity.ok().body(response);
+    }
+
+    @PatchMapping("/{disciplineId}/{studentId}")
+    public ResponseEntity<BimesterGradeFinalResponseDTO> updateFinal(@PathVariable Long disciplineId, @PathVariable Long studentId, @RequestBody @Valid BimesterGradeFinalRequestDTO dto, @AuthenticationPrincipal User user){
+        Long teacherId = user.getId();
+        BimesterGrade current = serviceBimesterGrade.updateFinal(disciplineId, dto, studentId, teacherId);
+        BimesterGradeFinalResponseDTO response = mapperBimesterGradeMapper.toResponseFinalDTO(current);
+        return ResponseEntity.ok().body(response);
     }
 
 }
