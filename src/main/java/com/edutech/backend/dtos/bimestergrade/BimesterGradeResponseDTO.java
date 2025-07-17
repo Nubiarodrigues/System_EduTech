@@ -8,7 +8,7 @@ public record BimesterGradeResponseDTO(
         String nameDiscipline,
         SituationStudent situation,
         Integer bimester,
-        Double finalAverage) {
+        Double averageFinal) {
 
     public BimesterGradeResponseDTO(BimesterGrade bimesterGrade) {
         this(
@@ -16,7 +16,7 @@ public record BimesterGradeResponseDTO(
                 bimesterGrade.getDiscipline() != null ? bimesterGrade.getDiscipline().getName() : null,
                 bimesterGrade.getSituation(),
                 bimesterGrade.getBimester(),
-                bimesterGrade.finalAverageCalculation()
+                bimesterGrade.getGradeFinal() != null ? bimesterGrade.finalGlobalCalculation() : bimesterGrade.finalAverageCalculation()
         );
     }
 }

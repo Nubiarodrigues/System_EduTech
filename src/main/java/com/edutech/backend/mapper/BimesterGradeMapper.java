@@ -1,7 +1,6 @@
 package com.edutech.backend.mapper;
 
 import com.edutech.backend.dtos.bimestergrade.BimesterGradeFinalRequestDTO;
-import com.edutech.backend.dtos.bimestergrade.BimesterGradeFinalResponseDTO;
 import com.edutech.backend.dtos.bimestergrade.BimesterGradeRequestDTO;
 import com.edutech.backend.dtos.bimestergrade.BimesterGradeResponseDTO;
 import com.edutech.backend.entities.BimesterGrade;
@@ -18,15 +17,8 @@ public interface BimesterGradeMapper {
     @Mapping(target = "nameDiscipline", source = "discipline.name")
     @Mapping(target = "situation", source = "situation")
     @Mapping(target = "bimester", source = "bimester")
-    @Mapping(target = "finalAverage", expression = "java(entity.finalAverageCalculation())")
+    @Mapping(target = "averageFinal", expression = "java(entity.getGradeFinal() != null ? entity.finalGlobalCalculation() : entity.finalAverageCalculation())")
     BimesterGradeResponseDTO toResponseDTO(BimesterGrade entity);
-
-    @Mapping(target = "nameStudent", source = "student.name")
-    @Mapping(target = "nameDiscipline", source = "discipline.name")
-    @Mapping(target = "situation", source = "situation")
-    @Mapping(target = "bimester", source = "bimester")
-    @Mapping(target = "averageGlobal", expression = "java(entity.finalGlobalCalculation())")
-    BimesterGradeFinalResponseDTO toResponseFinalDTO(BimesterGrade entity);
 
     @Mapping(target = "bimester", source = "bimester")
     @Mapping(target = "grade1", source = "grade1")
