@@ -35,10 +35,11 @@ public class DisciplinaryRecord {
     @JsonBackReference
     private Student student;
 
+    @Enumerated(EnumType.STRING)
     private TypeOccurrence occurrence;
 
     private Integer verbalWarnings = 0;
     private Integer warningsIssued = 0;
     private Integer suspensionsIssued = 0;
-    private Boolean expulsion;
+    private Boolean expulsion = false;
 }
