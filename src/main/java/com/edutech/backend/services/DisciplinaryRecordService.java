@@ -31,7 +31,6 @@ public class DisciplinaryRecordService {
                 .stream().map(DisciplinaryRecordResponseDTO::new).collect(Collectors.toList());
     }
 
-
     @Transactional
     public DisciplinaryRecord create(DisciplinaryRecordRequestDTO dto, String responsible){
         DisciplinaryRecord newDisciplinaryRecord = mapperDisciplinaryRecord.toEntity(dto);
@@ -42,12 +41,12 @@ public class DisciplinaryRecordService {
         newDisciplinaryRecord.setStudent(student);
         newDisciplinaryRecord.setResponsible(responsible);
 
-        verifyLimitWarningsAndSupensions(newDisciplinaryRecord);
+        verifyLimitWarningsAndSuspensions(newDisciplinaryRecord);
         repositoryDisciplinaryRecord.save(newDisciplinaryRecord);
         return newDisciplinaryRecord;
     }
 
-    private void verifyLimitWarningsAndSupensions(DisciplinaryRecord entity){
+    private void verifyLimitWarningsAndSuspensions(DisciplinaryRecord entity){
 
         if(entity.getVerbalWarnings() < 2){
             if(entity.getOccurrence().equals(TypeOccurrence.LEVE)){
@@ -64,7 +63,6 @@ public class DisciplinaryRecordService {
         } else {
             throw new InvalidDataException("O limite de advertências formais foi excedido. É necessário buscar ajuda do Conselho Tutelar.");
         }
-
 
         if(entity.getSuspensionsIssued() < 3){
             if(entity.getOccurrence().equals(TypeOccurrence.SUSPENSAO)){
