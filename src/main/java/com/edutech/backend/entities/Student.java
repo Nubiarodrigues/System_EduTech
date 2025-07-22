@@ -42,4 +42,7 @@ public class Student extends User {
 	@JsonBackReference
 	private Classroom classroom;
 
+	@OneToMany(mappedBy = "student")
+	@JsonManagedReference
+	private List<DisciplinaryRecord> disciplinaryHistory;
 }
