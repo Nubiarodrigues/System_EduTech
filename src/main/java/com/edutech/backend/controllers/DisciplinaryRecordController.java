@@ -30,10 +30,10 @@ public class DisciplinaryRecordController {
         return ResponseEntity.ok(history);
     }
 
-    @PostMapping
-    public ResponseEntity<DisciplinaryRecordResponseDTO> create (@RequestBody @Valid DisciplinaryRecordRequestDTO dto, @AuthenticationPrincipal User user){
+    @PostMapping("/{idStudent}")
+    public ResponseEntity<DisciplinaryRecordResponseDTO> create (@PathVariable Long idStudent, @RequestBody @Valid DisciplinaryRecordRequestDTO dto, @AuthenticationPrincipal User user){
         String responsible = user.getName();
-        DisciplinaryRecord newDisciplinary = servicedisciplinaryRecord.create(dto,responsible);
+        DisciplinaryRecord newDisciplinary = servicedisciplinaryRecord.create(dto, idStudent, responsible);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(newDisciplinary.getId())
@@ -42,4 +42,18 @@ public class DisciplinaryRecordController {
         return ResponseEntity.created(location).body(response);
     }
 
+    @PutMapping("/{id}/{idStudent}")
+    public ResponseEntity<DisciplinaryRecordResponseDTO> update(@PathVariable Long id, @PathVariable Long idStudent, @RequestBody @Valid DisciplinaryRecordRequestDTO dto, @AuthenticationPrincipal User user){
+        String responsible = user.getName();
+        DisciplinaryRecord current = servicedisciplinaryRecord.update(id,idStudent, dto,responsible);
+        DisciplinaryRecordResponseDTO response = mapperDisciplinaryRecord.toResponseDTO(current);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{id}/{idStudent}")
+    public ResponseEntity<Void> delete(@PathVariable Long id, @PathVariable Long idStudent, @AuthenticationPrincipal User user){
+        String responsible = user.getName();
+        servicedisciplinaryRecord.delete(id, responsible);
+        return ResponseEntity.noContent().build();
+    }
 }
