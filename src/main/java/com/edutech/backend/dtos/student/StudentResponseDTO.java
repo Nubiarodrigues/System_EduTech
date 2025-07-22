@@ -1,6 +1,8 @@
 package com.edutech.backend.dtos.student;
 
 import com.edutech.backend.dtos.bimestergrade.BimesterGradeResponseDTO;
+import com.edutech.backend.dtos.disciplinaryrecord.DisciplinaryRecordResponseDTO;
+import com.edutech.backend.entities.DisciplinaryRecord;
 import com.edutech.backend.entities.Student;
 import com.edutech.backend.enuns.RoleUser;
 
@@ -14,7 +16,8 @@ public record StudentResponseDTO(
 		String email,
 		RoleUser role,
 		String registration,
-		List<BimesterGradeResponseDTO> bimesters)
+		List<BimesterGradeResponseDTO> bimesters,
+		List<DisciplinaryRecordResponseDTO> history)
 {
 
 	public StudentResponseDTO(Student student) {
@@ -24,7 +27,8 @@ public record StudentResponseDTO(
 				student.getEmail(),
 				student.getRole(),
 				student.getRegistration(),
-				student.getBimesters() != null ? student.getBimesters().stream().map(BimesterGradeResponseDTO::new).collect(Collectors.toList()) : Collections.emptyList()
+				student.getBimesters() != null ? student.getBimesters().stream().map(BimesterGradeResponseDTO::new).collect(Collectors.toList()) : Collections.emptyList(),
+				student.getDisciplinaryHistory() != null ? student.getDisciplinaryHistory().stream().map(DisciplinaryRecordResponseDTO::new).collect(Collectors.toList()) : Collections.emptyList()
 			);
 	}
 }

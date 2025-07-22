@@ -17,6 +17,7 @@ public interface StudentMapper {
 	Student toEntity(StudentRequestDTO dto);
 
 	@Mapping(target = "bimesters", expression = "java(entity.getBimesters() != null ? entity.getBimesters().stream().map(BimesterGradeResponseDTO::new).collect(Collectors.toList()) : Collections.emptyList())")
+	@Mapping(target = "history", expression = "java(entity.getDisciplinaryHistory() != null ? entity.getDisciplinaryHistory().stream().map(DisciplinaryRecordResponseDTO::new).collect(Collectors.toList()) : Collections.emptyList())")
 	StudentResponseDTO toResponseDTO(Student entity);
 
 	@Mapping(target = "frequency", ignore = true)
