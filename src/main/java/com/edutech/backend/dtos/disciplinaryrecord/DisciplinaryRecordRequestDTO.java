@@ -6,6 +6,5 @@ import jakarta.validation.constraints.NotNull;
 public record DisciplinaryRecordRequestDTO(
         @NotNull String description,
         @NotNull String measures,
-        @NotNull Long idStudent,
         @NotNull TypeOccurrence occurrence) {
 }
