@@ -1,11 +1,10 @@
 package com.edutech.backend.mapper;
 
+import com.edutech.backend.dtos.teacher.TeacherRequestDTO;
+import com.edutech.backend.dtos.teacher.TeacherResponseDTO;
+import com.edutech.backend.entities.Teacher;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
-
-import com.edutech.backend.dtos.TeacherRequestDTO;
-import com.edutech.backend.dtos.TeacherResponseDTO;
-import com.edutech.backend.entities.Teacher;
 
 @Mapper(componentModel = "spring")
 public interface TeacherMapper {

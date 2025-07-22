@@ -52,7 +52,11 @@ public class Classroom {
 			inverseJoinColumns = @JoinColumn(name = "discipline_id")
 	)
 	@JsonManagedReference
-	private List<Discipline> disciplines;
+	private List<Discipline> disciplines = new ArrayList<>();
+
+	@ManyToMany(mappedBy = "classrooms")
+	@JsonManagedReference
+	private List<SchoolNotices>	schoolNotices;
 
 	public Classroom(Integer series, String identifierSeries, Integer capacity, Shift shift, Integer schoolYear,TeachingState modality) {
 		this.series = series;

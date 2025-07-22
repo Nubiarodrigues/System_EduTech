@@ -3,8 +3,8 @@ package com.edutech.backend.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
-import com.edutech.backend.dtos.OperatorRequestDTO;
-import com.edutech.backend.dtos.OperatorResponseDTO;
+import com.edutech.backend.dtos.operator.OperatorRequestDTO;
+import com.edutech.backend.dtos.operator.OperatorResponseDTO;
 import com.edutech.backend.entities.Operator;
 
 @Mapper(componentModel = "spring")

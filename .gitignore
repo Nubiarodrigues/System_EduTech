@@ -32,5 +32,5 @@ build/
 ### VS Code ###
 .vscode/
 
-### Arquivos de configuração sensíveiS
+### Arquivos de configuração sensíveis
 application-secret.properties

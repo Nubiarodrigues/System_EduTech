@@ -29,6 +29,7 @@ public class Teacher extends User {
 
 	private LocalDate dateBirth;
 	private Integer workloadTotal;
+	private Integer workloadAllocated = 0;
 	private String rg;
 	private String cep;
 	private String address;

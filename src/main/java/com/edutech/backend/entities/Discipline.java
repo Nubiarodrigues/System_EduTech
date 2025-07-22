@@ -1,12 +1,14 @@
 package com.edutech.backend.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -33,4 +35,8 @@ public class Discipline {
     @ManyToMany(mappedBy = "disciplines")
     @JsonBackReference
     private List<Classroom> classrooms;
+
+    @OneToMany(mappedBy = "discipline")
+    @JsonManagedReference
+    private List<ClassesTaught> classesTaught = new ArrayList<>();
 }

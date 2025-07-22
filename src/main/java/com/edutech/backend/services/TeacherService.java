@@ -1,13 +1,7 @@
 package com.edutech.backend.services;
 
-import java.util.List;
-
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.edutech.backend.dtos.TeacherRequestDTO;
-import com.edutech.backend.dtos.TeacherResponseDTO;
+import com.edutech.backend.dtos.teacher.TeacherRequestDTO;
+import com.edutech.backend.dtos.teacher.TeacherResponseDTO;
 import com.edutech.backend.entities.Teacher;
 import com.edutech.backend.exceptions.ExistingResourceException;
 import com.edutech.backend.exceptions.ResourceNotFoundException;
@@ -15,9 +9,13 @@ import com.edutech.backend.mapper.TeacherMapper;
 import com.edutech.backend.repositories.TeacherRepository;
 import com.edutech.backend.utils.RegistrationGenerator;
 import com.edutech.backend.utils.ValidatorUtils;
-
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +26,7 @@ public class TeacherService {
 	private final CepService serviceCep;
 
 	public List<TeacherResponseDTO> findAll() {
-		return repositoryTeacher.findAll().stream().map(TeacherResponseDTO::new).toList();
+		return repositoryTeacher.findAll().stream().map(mapperTeacher::toResponseDTO).toList();
 	}
 
 	public Teacher findById(Long id) {
@@ -70,6 +68,10 @@ public class TeacherService {
 
 		if (repositoryTeacher.findByEmail(dto.email()).isPresent()) {
 			throw new ExistingResourceException("E-mail já cadastrado.");
+		}
+
+		if(teacher.getWorkloadAllocated() == null){
+			teacher.setWorkloadAllocated(0);
 		}
 
 		String enconderPassword = new BCryptPasswordEncoder().encode(dto.password());

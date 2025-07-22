@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.edutech.backend.dtos.TeacherRequestDTO;
-import com.edutech.backend.dtos.TeacherResponseDTO;
+import com.edutech.backend.dtos.teacher.TeacherRequestDTO;
+import com.edutech.backend.dtos.teacher.TeacherResponseDTO;
 import com.edutech.backend.entities.Teacher;
 import com.edutech.backend.mapper.TeacherMapper;
 import com.edutech.backend.services.TeacherService;
