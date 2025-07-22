@@ -6,6 +6,7 @@ import com.edutech.backend.entities.DisciplinaryRecord;
 import com.edutech.backend.entities.User;
 import com.edutech.backend.mapper.DisciplinaryRecordMapper;
 import com.edutech.backend.services.DisciplinaryRecordService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -30,7 +31,7 @@ public class DisciplinaryRecordController {
     }
 
     @PostMapping
-    public ResponseEntity<DisciplinaryRecordResponseDTO> create (@RequestBody DisciplinaryRecordRequestDTO dto, @AuthenticationPrincipal User user){
+    public ResponseEntity<DisciplinaryRecordResponseDTO> create (@RequestBody @Valid DisciplinaryRecordRequestDTO dto, @AuthenticationPrincipal User user){
         String responsible = user.getName();
         DisciplinaryRecord newDisciplinary = servicedisciplinaryRecord.create(dto,responsible);
         URI location = ServletUriComponentsBuilder
