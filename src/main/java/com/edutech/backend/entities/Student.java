@@ -10,6 +10,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -34,7 +35,7 @@ public class Student extends User {
 
 	@OneToMany(mappedBy = "student")
 	@JsonManagedReference
-	private List<BimesterGrade> bimesters;
+	private List<BimesterGrade> bimesters = new ArrayList<>();
 
 	@ManyToOne
 	@JoinColumn(name = "classroom_id")

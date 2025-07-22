@@ -52,7 +52,7 @@ public class Classroom {
 			inverseJoinColumns = @JoinColumn(name = "discipline_id")
 	)
 	@JsonManagedReference
-	private List<Discipline> disciplines;
+	private List<Discipline> disciplines = new ArrayList<>();
 
 	@ManyToMany(mappedBy = "classrooms")
 	@JsonManagedReference

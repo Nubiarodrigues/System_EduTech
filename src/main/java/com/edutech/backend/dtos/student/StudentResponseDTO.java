@@ -4,7 +4,9 @@ import com.edutech.backend.dtos.bimestergrade.BimesterGradeResponseDTO;
 import com.edutech.backend.entities.Student;
 import com.edutech.backend.enuns.RoleUser;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public record StudentResponseDTO(
 		Long id,
@@ -22,7 +24,7 @@ public record StudentResponseDTO(
 				student.getEmail(),
 				student.getRole(),
 				student.getRegistration(),
-				student.getBimesters().stream().map(BimesterGradeResponseDTO::new).toList()
+				student.getBimesters() != null ? student.getBimesters().stream().map(BimesterGradeResponseDTO::new).collect(Collectors.toList()) : Collections.emptyList()
 			);
 	}
 }

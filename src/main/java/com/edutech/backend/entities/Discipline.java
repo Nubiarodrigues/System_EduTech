@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -37,5 +38,5 @@ public class Discipline {
 
     @OneToMany(mappedBy = "discipline")
     @JsonManagedReference
-    private List<ClassesTaught> classesTaught;
+    private List<ClassesTaught> classesTaught = new ArrayList<>();
 }

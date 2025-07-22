@@ -20,11 +20,6 @@ public interface BimesterGradeMapper {
     @Mapping(target = "averageFinal", expression = "java(entity.getGradeFinal() != null ? entity.finalGlobalCalculation() : entity.finalAverageCalculation())")
     BimesterGradeResponseDTO toResponseDTO(BimesterGrade entity);
 
-    @Mapping(target = "bimester", source = "bimester")
-    @Mapping(target = "grade1", source = "grade1")
-    @Mapping(target = "grade2", source = "grade2")
-    @Mapping(target = "grade3", source = "grade3")
-    @Mapping(target = "grade4", source = "grade4")
     void updateBimesterFromDTO(BimesterGradeRequestDTO dto, @MappingTarget BimesterGrade entity);
 
     @Mapping(target = "gradeFinal", source = "gradeFinal")
