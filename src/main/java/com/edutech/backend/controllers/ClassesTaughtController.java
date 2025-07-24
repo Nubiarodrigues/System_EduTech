@@ -24,7 +24,6 @@ public class ClassesTaughtController {
     private final ClassesTaughtService serviceClassesTaught;
     private final ClassesTaughtMapper mapperClassesTaught;
 
-
     @GetMapping
     public ResponseEntity<List<ClassesTaughtResponseDTO>> findAll(){
         List<ClassesTaughtResponseDTO> recordsClasses = serviceClassesTaught.findAll();
@@ -34,7 +33,7 @@ public class ClassesTaughtController {
     @PostMapping("{disciplineId}")
     public ResponseEntity<ClassesTaughtResponseDTO> create(@PathVariable Long disciplineId, @RequestBody @Valid ClassesTaughtRequestDTO dto, @AuthenticationPrincipal User user) {
         Long teacherId = user.getId();
-        ClassesTaught newClassesTaught = serviceClassesTaught.createRegister(disciplineId, dto, teacherId);
+        ClassesTaught newClassesTaught = serviceClassesTaught.create(disciplineId, dto, teacherId);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(newClassesTaught.getId())
@@ -46,7 +45,7 @@ public class ClassesTaughtController {
     @PutMapping("/{id}")
     public ResponseEntity<ClassesTaughtResponseDTO> update(@PathVariable Long id, @RequestBody @Valid ClassesTaughtRequestDTO dto, @AuthenticationPrincipal User user) {
         Long teacherId = user.getId();
-        ClassesTaught current = serviceClassesTaught.updateRegister(id, dto, teacherId);
+        ClassesTaught current = serviceClassesTaught.update(id, dto, teacherId);
         ClassesTaughtResponseDTO response = mapperClassesTaught.toResponseDTO(current);
         return ResponseEntity.ok().body(response);
     }

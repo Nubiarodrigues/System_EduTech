@@ -33,16 +33,16 @@ public class ClassesTaughtService {
     }
 
     @Transactional
-    public ClassesTaught createRegister(Long disciplineId, ClassesTaughtRequestDTO dto, Long teacherId) {
+    public ClassesTaught create(Long disciplineId, ClassesTaughtRequestDTO dto, Long teacherId) {
         Teacher teacher = repositoryTeacher.findById(teacherId)
-                .orElseThrow(() -> new ResourceNotFoundException("Professor não encontrado!"));
+                .orElseThrow(() -> new ResourceNotFoundException("Professor com ID: " + teacherId + " não existe."));
 
         ClassesTaught classesTaught = mapperclassesTaught.toEntity(dto);
 
         classesTaught.setTeacher(teacher);
 
         Discipline discipline = repositoryDiscipline.findById(disciplineId)
-                .orElseThrow(() -> new ResourceNotFoundException("Discipline com ID " + disciplineId + " não encontrada!"));
+                .orElseThrow(() -> new ResourceNotFoundException("Disciplina com ID " + disciplineId + " não encontrada!"));
 
         classesTaught.setDiscipline(discipline);
 
@@ -50,12 +50,11 @@ public class ClassesTaughtService {
         return classesTaught;
     }
 
-
     @Transactional
-    public ClassesTaught updateRegister(Long id, ClassesTaughtRequestDTO dto, Long teacherId) {
+    public ClassesTaught update(Long id, ClassesTaughtRequestDTO dto, Long teacherId) {
         try {
             ClassesTaught registerClasses = repositoryClassesTaught.findById(id)
-                    .orElseThrow(() -> new ResourceNotFoundException("Registro com ID: " + id + " não encontrado."));
+                    .orElseThrow(() -> new ResourceNotFoundException("Registro de aula com ID: " + id + " não encontrado."));
 
             Teacher teacher = repositoryTeacher.findById(teacherId)
                     .orElseThrow(() -> new ResourceNotFoundException("Professor com ID: " + teacherId + " não encontrado."));
