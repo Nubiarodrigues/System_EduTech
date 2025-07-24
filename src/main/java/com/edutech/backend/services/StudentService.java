@@ -86,6 +86,6 @@ public class StudentService {
 		student.setRegistration(new RegistrationGenerator()
 				.generateRegistrationUnique(student.getRegistration()));
 
-		student.setAddress(serviceCep.findAdress(dto.cep()));
+		student.setAddress(serviceCep.findAddress(dto.cep()));
 	}
 }

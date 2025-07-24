@@ -80,6 +80,6 @@ public class TeacherService {
 		teacher.setRegistration(new RegistrationGenerator()
 				.generateRegistrationUnique(teacher.getRegistration()));
 		
-		teacher.setAddress(serviceCep.findAdress(dto.cep()));
+		teacher.setAddress(serviceCep.findAddress(dto.cep()));
 	}
 }
