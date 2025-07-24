@@ -1,6 +1,6 @@
 package com.edutech.backend.enuns;
 
-public enum TeachingState {
+public enum TeachingStage {
 
 	ENSINO_INFANTIL,
 	ENSINO_FUNDAMENTAL_I,
