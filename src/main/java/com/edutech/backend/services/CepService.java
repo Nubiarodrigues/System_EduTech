@@ -21,7 +21,7 @@ public class CepService {
 	private final OkHttpClient client;
 	private final ObjectMapper mapper;
 
-	public String findAdress(String cep) {
+	public String findAddress(String cep) {
 
 		Request request = new Request.Builder().url("https://viacep.com.br/ws/" + cep + "/json").build();
 
