@@ -1,7 +1,7 @@
 package com.edutech.backend.entities;
 
 import com.edutech.backend.enuns.Shift;
-import com.edutech.backend.enuns.TeachingState;
+import com.edutech.backend.enuns.TeachingStage;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -38,7 +38,7 @@ public class Classroom {
 	private List<Student> students = new ArrayList<>();
 
 	@Enumerated(EnumType.STRING)
-	private TeachingState modality;
+	private TeachingStage modality;
 	
 	@ManyToOne
 	@JoinColumn(name = "coordinator_id")
@@ -58,7 +58,11 @@ public class Classroom {
 	@JsonManagedReference
 	private List<SchoolNotices>	schoolNotices;
 
-	public Classroom(Integer series, String identifierSeries, Integer capacity, Shift shift, Integer schoolYear,TeachingState modality) {
+	@ManyToOne
+	@JoinColumn(name = "classroom_id")
+	private School school;
+
+	public Classroom(Integer series, String identifierSeries, Integer capacity, Shift shift, Integer schoolYear, TeachingStage modality) {
 		this.series = series;
 		this.identifierSeries = identifierSeries;
 		this.capacity = capacity;

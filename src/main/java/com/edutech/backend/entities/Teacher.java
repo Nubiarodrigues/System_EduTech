@@ -38,4 +38,8 @@ public class Teacher extends User {
 	@OneToMany(mappedBy = "teacher")
 	@JsonManagedReference
 	private List<Discipline> disciplines;
+
+	@ManyToOne
+	@JoinColumn(name = "teacher_id")
+	private School school;
 }

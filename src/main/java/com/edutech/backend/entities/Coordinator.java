@@ -1,24 +1,18 @@
 package com.edutech.backend.entities;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.edutech.backend.enuns.Situation;
-import com.edutech.backend.enuns.TeachingState;
+import com.edutech.backend.enuns.TeachingStage;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "TB_COORDINATOR")
@@ -42,10 +36,14 @@ public class Coordinator extends User {
 	private String formedCourse;
 
 	@Enumerated(EnumType.STRING)
-	private TeachingState modality;
+	private TeachingStage modality;
 
 	@OneToMany(mappedBy = "coordinatorClass", fetch = FetchType.EAGER)
 	@JsonManagedReference
 	private List<Classroom> classroomsModality = new ArrayList<>();
+
+	@ManyToOne
+	@JoinColumn(name = "coordinator_id")
+	private School school;
 
 }
