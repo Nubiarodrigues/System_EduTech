@@ -12,7 +12,6 @@ import com.edutech.backend.mapper.BimesterGradeMapper;
 import com.edutech.backend.repositories.BimesterGradeRepository;
 import com.edutech.backend.repositories.DisciplineRepository;
 import com.edutech.backend.repositories.StudentRepository;
-import com.edutech.backend.repositories.TeacherRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +26,6 @@ public class BimesterGradeService {
 
     private final BimesterGradeRepository repositoryBimesterGrade;
     private final DisciplineRepository repositoryDiscipline;
-    private final TeacherRepository repositoryTeacher;
     private final StudentRepository repositoryStudent;
     private final BimesterGradeMapper mapperBimesterGrade;
 
@@ -37,11 +35,9 @@ public class BimesterGradeService {
     }
 
     public BimesterGrade findById(Long id) {
-        BimesterGrade bimester = repositoryBimesterGrade.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(id));
-        return bimester;
+        return repositoryBimesterGrade.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("O bimestre com ID: " + id + " não existe."));
     }
-
 
     @Transactional
     public BimesterGrade create(Long disciplineId, BimesterGradeRequestDTO dto, Long teacherId, Long studentId) {
@@ -61,12 +57,11 @@ public class BimesterGradeService {
         return repositoryBimesterGrade.findById(newBimesterGrade.getId()).orElseThrow(() -> new ResourceNotFoundException(newBimesterGrade.getId()));
     }
 
-
     @Transactional
     public BimesterGrade update(Long id, BimesterGradeRequestDTO dto, Long teacherId, Long studentId) {
         try {
             BimesterGrade current = repositoryBimesterGrade.findById(id)
-                    .orElseThrow(() -> new ResourceNotFoundException(id));
+                    .orElseThrow(() -> new ResourceNotFoundException("O bimestre com ID: " + id + " não existe."));
 
             Student currentStudent = repositoryStudent.findById(studentId)
                     .orElseThrow(() -> new ResourceNotFoundException("O aluno com ID: " + studentId + " não existe."));
@@ -86,7 +81,7 @@ public class BimesterGradeService {
     public BimesterGrade updateFinal(Long id, BimesterGradeFinalRequestDTO dto, Long teacherId, Long studentId) {
         try {
             BimesterGrade current = repositoryBimesterGrade.findById(id)
-                    .orElseThrow(() -> new ResourceNotFoundException(id));
+                    .orElseThrow(() -> new ResourceNotFoundException("O bimestre com ID: " + id + " não existe."));
 
             Student currentStudent = repositoryStudent.findById(studentId)
                     .orElseThrow(() -> new ResourceNotFoundException("O aluno com ID: " + studentId + " não existe."));

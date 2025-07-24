@@ -58,5 +58,4 @@ public class BimesterGradeController {
         BimesterGradeResponseDTO response = mapperBimesterGradeMapper.toResponseDTO(current);
         return ResponseEntity.ok().body(response);
     }
-
 }
