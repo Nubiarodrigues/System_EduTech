@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import com.edutech.backend.enuns.RoleUser;
 import com.edutech.backend.enuns.Situation;
-import com.edutech.backend.enuns.TeachingState;
+import com.edutech.backend.enuns.TeachingStage;
 
 import jakarta.validation.constraints.NotNull;
 
@@ -20,7 +20,7 @@ public record CoordinatorRequestDTO(
 		String rg,
 		@NotNull String cep,
 		@NotNull String formedCourse,
-		@NotNull TeachingState modality
+		@NotNull TeachingStage modality
 ) {
 
 }

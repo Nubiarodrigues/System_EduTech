@@ -1,7 +1,7 @@
 package com.edutech.backend.dtos.classroom;
 
 import com.edutech.backend.enuns.Shift;
-import com.edutech.backend.enuns.TeachingState;
+import com.edutech.backend.enuns.TeachingStage;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -11,5 +11,5 @@ public record ClassroomRequestDTO(
 		@NotNull Integer capacity,
 		@NotNull(message = "Shift é obrigátorio") Shift shift,
 		@NotNull Integer schoolYear,
-		@NotNull(message = "TeachingState é obrigátorio") TeachingState modality)
+		@NotNull(message = "TeachingState é obrigátorio") TeachingStage modality)
 {}
