@@ -37,7 +37,7 @@ public class DisciplineController {
 
     @PostMapping
     public ResponseEntity<DisciplineResponseDTO> create(@RequestBody @Valid DisciplineRequestDTO dto){
-        Discipline newDiscipline = serviceDiscipline.createDiscipline(dto);
+        Discipline newDiscipline = serviceDiscipline.create(dto);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(newDiscipline.getId())
@@ -48,14 +48,14 @@ public class DisciplineController {
 
     @PutMapping("/{id}")
     public ResponseEntity<DisciplineResponseDTO> update(@PathVariable Long id, @RequestBody @Valid DisciplineRequestDTO dto){
-        Discipline current = serviceDiscipline.updateDiscipline(id, dto);
+        Discipline current = serviceDiscipline.update(id, dto);
         DisciplineResponseDTO response = mapperDiscipline.toResponseDTO(current);
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<DisciplineResponseDTO> delete(@PathVariable Long id){
-        serviceDiscipline.deleteDiscipline(id);
+        serviceDiscipline.delete(id);
         return ResponseEntity.noContent().build();
     }
 

@@ -1,11 +1,5 @@
 package com.edutech.backend.services;
 
-import java.util.List;
-
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.edutech.backend.dtos.coordinator.CoordinatorRequestDTO;
 import com.edutech.backend.dtos.coordinator.CoordinatorResponseDTO;
 import com.edutech.backend.entities.Classroom;
@@ -17,9 +11,13 @@ import com.edutech.backend.repositories.ClassroomRepository;
 import com.edutech.backend.repositories.CoordinatorRepository;
 import com.edutech.backend.utils.RegistrationGenerator;
 import com.edutech.backend.utils.ValidatorUtils;
-
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -35,20 +33,23 @@ public class CoordinatorService {
 	}
 
 	public Coordinator findById(Long id) {
-		return repositoryCoordinator.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+		return repositoryCoordinator.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Coordenador com ID: " + id + " não existe."));
 	}
 
 	@Transactional
-	public Coordinator createCoordinator(CoordinatorRequestDTO dto) {
+	public Coordinator create(CoordinatorRequestDTO dto) {
 		Coordinator newCoordinator = mapperCoordinator.toEntity(dto);
 		prepareCreateCoordinator(newCoordinator, dto);
 		return repositoryCoordinator.save(newCoordinator);
 	}
 
 	@Transactional
-	public Coordinator updateCoordinator(Long id, CoordinatorRequestDTO dto) {
+	public Coordinator update(Long id, CoordinatorRequestDTO dto) {
 		try {
-			Coordinator entity = repositoryCoordinator.getReferenceById(id);
+			Coordinator entity = repositoryCoordinator.findById(id)
+					.orElseThrow(() -> new ResourceNotFoundException("Coordenador com ID: " + id + " não existe."));
+
 			mapperCoordinator.updateCoordinatorFromDTO(dto, entity);
 			return repositoryCoordinator.save(entity);
 		} catch (EntityNotFoundException e) {
@@ -57,10 +58,10 @@ public class CoordinatorService {
 	}
 
 	@Transactional
-	public void deleteCoordinator(Long id) {
+	public void delete(Long id) {
 		Coordinator coordinator = repositoryCoordinator.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException(id));
-		repositoryCoordinator.deleteById(id);
+				.orElseThrow(() -> new ResourceNotFoundException("Coordenador com ID: " + id + " não existe."));
+		repositoryCoordinator.delete(coordinator);
 	}
 
 	public List<Classroom> getClassroomByModality(Long id) {
@@ -89,5 +90,4 @@ public class CoordinatorService {
 
 		coordinator.setAddress(serviceCep.findAddress(dto.cep()));
 	}
-
 }

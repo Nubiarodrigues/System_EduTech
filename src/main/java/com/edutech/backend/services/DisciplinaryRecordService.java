@@ -89,15 +89,16 @@ public class DisciplinaryRecordService {
     @Transactional
     public DisciplinaryRecord update(Long id, Long idStudent, DisciplinaryRecordRequestDTO dto, String responsible){
         try {
-            DisciplinaryRecord current = repositoryDisciplinaryRecord.findById(id).orElseThrow(() -> new ResourceNotFoundException("Ocorrência não existe. "));
+            DisciplinaryRecord current = repositoryDisciplinaryRecord.findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException("Ocorrência com ID: " + id + " não existe."));
+
             mapperDisciplinaryRecord.updateDisciplinaryRecordFromDTO(dto, current);
 
             if(!current.getResponsible().equals(responsible)){
                throw new InvalidDataException("Você não tem permissão para atualizar este recurso.");
             }
 
-            repositoryDisciplinaryRecord.save(current);
-            return current;
+            return repositoryDisciplinaryRecord.save(current);
         } catch(EntityNotFoundException e){
             throw new ResourceNotFoundException(id);
         }
@@ -106,7 +107,7 @@ public class DisciplinaryRecordService {
     @Transactional
     public void delete(Long id, String responsible){
         DisciplinaryRecord disciplinaryRecord = repositoryDisciplinaryRecord.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Ocorrência não existe. "));
+                .orElseThrow(() -> new ResourceNotFoundException("Ocorrência com ID: " + id + " não existe."));
 
         if(!disciplinaryRecord.getResponsible().equals(responsible)){
             throw new InvalidDataException("Você não tem permissão para atualizar este recurso.");

@@ -30,20 +30,23 @@ public class TeacherService {
 	}
 
 	public Teacher findById(Long id) {
-		return repositoryTeacher.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+		return repositoryTeacher.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Professor com ID: " + id + " não existe."));
 	}
 
 	@Transactional
-	public Teacher createTeacher(TeacherRequestDTO dto) {
+	public Teacher create(TeacherRequestDTO dto) {
 		Teacher newTeacher = mapperTeacher.toEntity(dto);
 		prepareCreateTeacher(newTeacher, dto);
 		return repositoryTeacher.save(newTeacher);
 	}
 
 	@Transactional
-	public Teacher updateTeacher(Long id, TeacherRequestDTO obj) {
+	public Teacher update(Long id, TeacherRequestDTO obj) {
 		try {
-			Teacher entity = repositoryTeacher.getReferenceById(id);
+			Teacher entity = repositoryTeacher.findById(id)
+					.orElseThrow(() -> new ResourceNotFoundException("Professor com ID: " + id + " não existe."));
+
 			mapperTeacher.updateTeacherFromDTO(obj, entity);
 			return repositoryTeacher.save(entity);
 		} catch (EntityNotFoundException e) {
@@ -52,8 +55,9 @@ public class TeacherService {
 	}
 
 	@Transactional
-	public void deleteTeacher(Long id) {
-		Teacher teacher = repositoryTeacher.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+	public void delete(Long id) {
+		Teacher teacher = repositoryTeacher.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Professor com ID: " + id + " não existe."));
 		repositoryTeacher.delete(teacher);
 	}
 

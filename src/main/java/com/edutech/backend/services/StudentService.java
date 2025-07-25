@@ -33,20 +33,23 @@ public class StudentService {
 	}
 
 	public Student findById(Long id) {
-		return repositoryStudent.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+		return repositoryStudent.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Aluno(a) com ID: " + id + " não existe."));
 	}
 
 	@Transactional
-	public Student createStudent(StudentRequestDTO dto) {
+	public Student create(StudentRequestDTO dto) {
 		Student entity = mapperStudent.toEntity(dto);
 		prepareCreateStudent(entity, dto);
 		return repositoryStudent.save(entity);
 	}
 
 	@Transactional
-	public Student updateStudent(Long id, StudentRequestDTO obj) {
+	public Student update(Long id, StudentRequestDTO obj) {
 		try {
-			Student entity = repositoryStudent.getReferenceById(id);
+			Student entity = repositoryStudent.findById(id)
+					.orElseThrow(() -> new ResourceNotFoundException("Aluno(a) com ID: " + id + " não existe."));
+
 			mapperStudent.updateStudentFromDTO(obj, entity);
 			return repositoryStudent.save(entity);
 		} catch (EntityNotFoundException e) {
@@ -55,8 +58,9 @@ public class StudentService {
 	}
 
 	@Transactional
-	public void deleteStudent(Long id) {
-		Student student = repositoryStudent.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+	public void delete(Long id) {
+		Student student = repositoryStudent.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Aluno(a) com ID: " + id + " não existe."));
 		repositoryStudent.delete(student);
 	}
 

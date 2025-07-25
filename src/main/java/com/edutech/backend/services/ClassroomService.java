@@ -50,11 +50,13 @@ public class ClassroomService {
 	@Transactional
 	public Classroom update(Long id, ClassroomRequestDTO dto) {
 		try {
-			Classroom entity = repositoryClassroom.getReferenceById(id);
+			Classroom entity = repositoryClassroom.findById(id)
+					.orElseThrow(() -> new ResourceNotFoundException("A turma com ID: " + id + " não existe."));
+
 			mapperClassroom.updateClassroomFromDTO(dto, entity);
+
 			Coordinator coordinator = repositoryCoordinator.findByModalityAndStatus(dto.modality(), Situation.ATIVO)
-					.orElseThrow(
-							() -> new ResourceNotFoundException("Coordenador não encontrado para esta modalidade"));
+					.orElseThrow(() -> new ResourceNotFoundException("Coordenador não encontrado para esta modalidade"));
 
 			entity.setCoordinatorClass(coordinator);
 			return repositoryClassroom.save(entity);

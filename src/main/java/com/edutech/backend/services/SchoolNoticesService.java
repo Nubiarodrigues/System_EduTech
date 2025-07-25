@@ -36,7 +36,7 @@ public class SchoolNoticesService {
         newSchoolNotices.setAuthor(authorName);
 
         Classroom classroomCurrent = repositoryClassroom.findById(idClassroom)
-                .orElseThrow(() -> new ResourceNotFoundException("A turma não existe."));
+                .orElseThrow(() -> new ResourceNotFoundException("A turma com ID: " + idClassroom + " não existe."));
 
         if(newSchoolNotices.getClassrooms() == null){
             newSchoolNotices.setClassrooms(new ArrayList<>());
@@ -67,7 +67,7 @@ public class SchoolNoticesService {
     @Transactional
     public void delete(Long id, String authorName){
         SchoolNotices schoolNotices = repositorySchoolNotices.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException("Aviso com o ID: " + id + " não existe."));
 
         if(!authorName.equals(schoolNotices.getAuthor())){
             throw new InvalidDataException("Você não tem permissão para alterar este aviso.");

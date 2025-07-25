@@ -1,11 +1,5 @@
 package com.edutech.backend.services;
 
-import java.util.List;
-
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.edutech.backend.dtos.operator.OperatorRequestDTO;
 import com.edutech.backend.dtos.operator.OperatorResponseDTO;
 import com.edutech.backend.entities.Operator;
@@ -15,9 +9,13 @@ import com.edutech.backend.mapper.OperatorMapper;
 import com.edutech.backend.repositories.OperatorRepository;
 import com.edutech.backend.utils.RegistrationGenerator;
 import com.edutech.backend.utils.ValidatorUtils;
-
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -31,16 +29,18 @@ public class OperatorService {
 	}
 
 	@Transactional
-	public Operator createOperator(OperatorRequestDTO dto) {
+	public Operator create(OperatorRequestDTO dto) {
 		Operator newOperator = mapperOperator.toEntity(dto);
 		prepareCreateOperator(newOperator, dto);
 		return repositoryOperator.save(newOperator);
 	}
 
 	@Transactional
-	public Operator updateOperator(Long id, OperatorRequestDTO dto) {
+	public Operator update(Long id, OperatorRequestDTO dto) {
 		try {
-			Operator entity = repositoryOperator.getReferenceById(id);
+			Operator entity = repositoryOperator.findById(id)
+					.orElseThrow(() -> new ResourceNotFoundException("Operador com ID: " + id + " não existe."));
+
 			mapperOperator.updateOperatorFromDTO(dto, entity);
 			return repositoryOperator.save(entity);
 		} catch (EntityNotFoundException e) {
@@ -49,10 +49,10 @@ public class OperatorService {
 	}
 
 	@Transactional
-	public void deleteOperator(Long id) {
+	public void delete(Long id) {
 		Operator operator = repositoryOperator.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException(id));
-		repositoryOperator.deleteById(id);
+				.orElseThrow(() -> new ResourceNotFoundException("Operador com ID: " + id + " não existe."));
+		repositoryOperator.delete(operator);
 	}
 
 	private void prepareCreateOperator(Operator operator, OperatorRequestDTO dto) {
@@ -70,5 +70,4 @@ public class OperatorService {
 				.generateRegistrationUnique(operator.getRegistration()));
 
 	}
-
 }

@@ -1,27 +1,18 @@
 package com.edutech.backend.controllers;
 
-import java.net.URI;
-import java.util.List;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import com.edutech.backend.dtos.teacher.TeacherRequestDTO;
 import com.edutech.backend.dtos.teacher.TeacherResponseDTO;
 import com.edutech.backend.entities.Teacher;
 import com.edutech.backend.mapper.TeacherMapper;
 import com.edutech.backend.services.TeacherService;
-
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/teachers")
@@ -46,7 +37,7 @@ public class TeacherController {
 
 	@PostMapping
 	public ResponseEntity<TeacherResponseDTO> create(@RequestBody @Valid TeacherRequestDTO dto) {
-		Teacher newTeacher = serviceTeacher.createTeacher(dto);
+		Teacher newTeacher = serviceTeacher.create(dto);
 		URI location = ServletUriComponentsBuilder
 				.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(newTeacher.getId())
@@ -57,15 +48,14 @@ public class TeacherController {
 
 	@PutMapping("/{id}")
 	public ResponseEntity<TeacherResponseDTO> update(@PathVariable Long id, @RequestBody @Valid TeacherRequestDTO dto) {
-		Teacher current = serviceTeacher.updateTeacher(id, dto);
+		Teacher current = serviceTeacher.update(id, dto);
 		TeacherResponseDTO response = mapperTeacher.toResponseDTO(current);
 		return ResponseEntity.ok(response);
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
-		serviceTeacher.deleteTeacher(id);
+		serviceTeacher.delete(id);
 		return ResponseEntity.noContent().build();
 	}
-
 }

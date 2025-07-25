@@ -29,19 +29,22 @@ public class DisciplineService {
     }
 
     public Discipline findById(Long id) {
-        return repositoryDiscipline.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+        return repositoryDiscipline.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Disciplina com ID: " + id + " não existe."));
     }
 
     @Transactional
-    public Discipline createDiscipline(DisciplineRequestDTO dto) {
+    public Discipline create(DisciplineRequestDTO dto) {
         Discipline newDiscipline = mapperDiscipline.toEntity(dto);
         return repositoryDiscipline.save(newDiscipline);
     }
 
     @Transactional
-    public Discipline updateDiscipline(Long id, DisciplineRequestDTO dto) {
+    public Discipline update(Long id, DisciplineRequestDTO dto) {
         try {
-            Discipline entity = repositoryDiscipline.getReferenceById(id);
+            Discipline entity = repositoryDiscipline.findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException("Disciplina com ID: " + id + " não existe."));
+
             mapperDiscipline.updateDisciplineFromDTO(dto, entity);
             return repositoryDiscipline.save(entity);
         } catch (EntityNotFoundException e) {
@@ -50,9 +53,9 @@ public class DisciplineService {
     }
 
     @Transactional
-    public void deleteDiscipline(Long id) {
+    public void delete(Long id) {
         Discipline discipline = repositoryDiscipline.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException("Disciplina com ID: " + id + " não existe."));
         repositoryDiscipline.delete(discipline);
     }
 
