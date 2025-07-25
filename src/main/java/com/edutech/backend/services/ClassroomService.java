@@ -12,6 +12,7 @@ import com.edutech.backend.mapper.ClassroomMapper;
 import com.edutech.backend.repositories.ClassroomRepository;
 import com.edutech.backend.repositories.CoordinatorRepository;
 import com.edutech.backend.repositories.DisciplineRepository;
+import com.edutech.backend.utils.UserLoggedUtils;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,7 @@ public class ClassroomService {
 	private final ClassroomMapper mapperClassroom;
 	private final CoordinatorRepository repositoryCoordinator;
 	private final DisciplineRepository repositoryDiscipline;
+	private final UserLoggedUtils  userLoggedUtils;
 
 	public List<ClassroomResponseDTO> findAll() {
 		return repositoryClassroom.findAll().stream().map(ClassroomResponseDTO::new).toList();
@@ -44,6 +46,7 @@ public class ClassroomService {
 
 		Classroom classroom = mapperClassroom.toEntity(dto);
 		classroom.setCoordinatorClass(coordinator);
+		classroom.setIdSchool(userLoggedUtils.getSchoolUserLogged());
 		return repositoryClassroom.save(classroom);
 	}
 

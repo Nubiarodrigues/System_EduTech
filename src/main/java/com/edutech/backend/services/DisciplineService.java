@@ -9,6 +9,7 @@ import com.edutech.backend.exceptions.ResourceNotFoundException;
 import com.edutech.backend.mapper.DisciplineMapper;
 import com.edutech.backend.repositories.DisciplineRepository;
 import com.edutech.backend.repositories.TeacherRepository;
+import com.edutech.backend.utils.UserLoggedUtils;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class DisciplineService {
     private final DisciplineRepository repositoryDiscipline;
     private final DisciplineMapper mapperDiscipline;
     private final TeacherRepository repositoryTeacher;
+    private final UserLoggedUtils userLoggedUtils;
 
     public List<DisciplineResponseDTO> findAll() {
         return repositoryDiscipline.findAll().stream().map(DisciplineResponseDTO::new).toList();
@@ -36,6 +38,7 @@ public class DisciplineService {
     @Transactional
     public Discipline create(DisciplineRequestDTO dto) {
         Discipline newDiscipline = mapperDiscipline.toEntity(dto);
+        newDiscipline.setIdSchool(userLoggedUtils.getSchoolUserLogged());
         return repositoryDiscipline.save(newDiscipline);
     }
 

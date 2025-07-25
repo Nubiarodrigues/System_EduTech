@@ -37,6 +37,7 @@ public class BimesterGrade {
     private Double gradeFinal;
     private Double averageFinal;
     private Double averageGlobal;
+    private Long idSchool;
 
     @Enumerated(EnumType.STRING)
     private SituationStudent situation;

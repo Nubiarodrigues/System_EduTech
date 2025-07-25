@@ -32,6 +32,7 @@ public class Classroom {
 	private Shift shift;
 
 	private Integer schoolYear;
+	private Long idSchool;
 
 	@OneToMany(mappedBy = "classroom", fetch = FetchType.EAGER)
 	@JsonManagedReference

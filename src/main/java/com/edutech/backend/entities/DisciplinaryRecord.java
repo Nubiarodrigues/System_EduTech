@@ -29,6 +29,7 @@ public class DisciplinaryRecord {
     private String description;
     private String measures;
     private String responsible;
+    private Long idSchool;
 
     @ManyToOne
     @JoinColumn(name = "student_id")

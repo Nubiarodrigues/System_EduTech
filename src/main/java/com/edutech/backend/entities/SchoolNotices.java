@@ -26,6 +26,7 @@ public class SchoolNotices {
 
     private String title;
     private String message;
+    private Long idSchool;
 
     @CreationTimestamp
     private LocalDateTime dateCreation;

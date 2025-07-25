@@ -26,6 +26,7 @@ public class Discipline {
 
     private String name;
     private Integer workload;
+    private Long idSchool;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JsonBackReference

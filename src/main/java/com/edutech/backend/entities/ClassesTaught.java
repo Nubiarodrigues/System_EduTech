@@ -23,6 +23,7 @@ public class ClassesTaught {
 
     private String description;
     private LocalDate date;
+    private Long idSchool;
 
     @ManyToOne
     @JoinColumn(name = "teacher_id")

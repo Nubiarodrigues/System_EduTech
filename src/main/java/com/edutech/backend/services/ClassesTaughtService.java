@@ -11,6 +11,7 @@ import com.edutech.backend.mapper.ClassesTaughtMapper;
 import com.edutech.backend.repositories.ClassesTaughtRepository;
 import com.edutech.backend.repositories.DisciplineRepository;
 import com.edutech.backend.repositories.TeacherRepository;
+import com.edutech.backend.utils.UserLoggedUtils;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ public class ClassesTaughtService {
     private final ClassesTaughtMapper mapperclassesTaught;
     private final TeacherRepository repositoryTeacher;
     private final DisciplineRepository repositoryDiscipline;
+    private final UserLoggedUtils  userLoggedUtils;
 
     public List<ClassesTaughtResponseDTO> findAll() {
         return repositoryClassesTaught.findAll().stream().map(ClassesTaughtResponseDTO::new).collect(Collectors.toList());
@@ -44,6 +46,7 @@ public class ClassesTaughtService {
         Discipline discipline = repositoryDiscipline.findById(disciplineId)
                 .orElseThrow(() -> new ResourceNotFoundException("Disciplina com ID " + disciplineId + " não encontrada!"));
 
+        classesTaught.setIdSchool(userLoggedUtils.getSchoolUserLogged());
         classesTaught.setDiscipline(discipline);
 
         repositoryClassesTaught.save(classesTaught);

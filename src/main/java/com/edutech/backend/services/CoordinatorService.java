@@ -10,6 +10,7 @@ import com.edutech.backend.mapper.CoordinatorMapper;
 import com.edutech.backend.repositories.ClassroomRepository;
 import com.edutech.backend.repositories.CoordinatorRepository;
 import com.edutech.backend.utils.RegistrationGenerator;
+import com.edutech.backend.utils.UserLoggedUtils;
 import com.edutech.backend.utils.ValidatorUtils;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ public class CoordinatorService {
 	private final CoordinatorMapper mapperCoordinator;
 	private final ClassroomRepository repositoryClassroom;
 	private final CepService serviceCep;
+	private final UserLoggedUtils userLoggedUtils;
 
 	public List<CoordinatorResponseDTO> findAll() {
 		return repositoryCoordinator.findAll().stream().map(CoordinatorResponseDTO::new).toList();
@@ -81,6 +83,8 @@ public class CoordinatorService {
 		if (repositoryCoordinator.findByEmail(dto.email()).isPresent()) {
 			throw new ExistingResourceException("E-mail já cadastrado.");
 		}
+
+		coordinator.setIdSchool(userLoggedUtils.getSchoolUserLogged());
 
 		String enconderPassword = new BCryptPasswordEncoder().encode(dto.password());
 		coordinator.setPassword(enconderPassword);

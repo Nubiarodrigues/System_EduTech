@@ -3,10 +3,12 @@ package com.edutech.backend.services;
 import com.edutech.backend.dtos.administrator.AdministratorRequestDTO;
 import com.edutech.backend.dtos.administrator.AdministratorResponseDTO;
 import com.edutech.backend.entities.Administrator;
+import com.edutech.backend.entities.School;
 import com.edutech.backend.exceptions.ExistingResourceException;
 import com.edutech.backend.exceptions.ResourceNotFoundException;
 import com.edutech.backend.mapper.AdministratorMapper;
 import com.edutech.backend.repositories.AdministratorRepository;
+import com.edutech.backend.repositories.SchoolRepository;
 import com.edutech.backend.utils.RegistrationGenerator;
 import com.edutech.backend.utils.ValidatorUtils;
 import jakarta.persistence.EntityNotFoundException;
@@ -22,6 +24,7 @@ import java.util.List;
 public class AdministratorService {
 
 	private final AdministratorRepository repositoryAdministrator;
+	private final SchoolRepository repositorySchool;
 	private final AdministratorMapper mapperAdministrator;
 
 	public List<AdministratorResponseDTO> findAll() {
@@ -63,6 +66,11 @@ public class AdministratorService {
 		if(repositoryAdministrator.findByEmail(dto.email()).isPresent()) {
 			throw new ExistingResourceException("Email já cadastrado. ");
 		}
+
+		School school = repositorySchool.findById(dto.idSchool())
+				.orElseThrow(() -> new ResourceNotFoundException("Escola com ID: " + dto.idSchool() + " não existe."));
+
+		admin.setIdSchool(school.getId());
 
 		String enconderPassword = new BCryptPasswordEncoder().encode(dto.password());
 		admin.setPassword(enconderPassword);

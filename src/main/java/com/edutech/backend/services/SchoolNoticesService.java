@@ -9,6 +9,7 @@ import com.edutech.backend.exceptions.ResourceNotFoundException;
 import com.edutech.backend.mapper.SchoolNoticesMapper;
 import com.edutech.backend.repositories.ClassroomRepository;
 import com.edutech.backend.repositories.SchoolNoticesRepository;
+import com.edutech.backend.utils.UserLoggedUtils;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ public class SchoolNoticesService {
     private final SchoolNoticesRepository repositorySchoolNotices;
     private final ClassroomRepository repositoryClassroom;
     private final SchoolNoticesMapper mapperSchoolNotices;
+    private final UserLoggedUtils  userLoggedUtils;
 
     public List<SchoolNoticesResponseDTO> findAll(){
         return repositorySchoolNotices.findAll().stream().map(SchoolNoticesResponseDTO::new).collect(Collectors.toList());
@@ -42,6 +44,7 @@ public class SchoolNoticesService {
             newSchoolNotices.setClassrooms(new ArrayList<>());
         }
 
+        newSchoolNotices.setIdSchool(userLoggedUtils.getSchoolUserLogged());
         newSchoolNotices.getClassrooms().add(classroomCurrent);
 
         return repositorySchoolNotices.save(newSchoolNotices);

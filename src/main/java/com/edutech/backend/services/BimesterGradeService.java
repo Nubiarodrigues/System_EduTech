@@ -12,6 +12,7 @@ import com.edutech.backend.mapper.BimesterGradeMapper;
 import com.edutech.backend.repositories.BimesterGradeRepository;
 import com.edutech.backend.repositories.DisciplineRepository;
 import com.edutech.backend.repositories.StudentRepository;
+import com.edutech.backend.utils.UserLoggedUtils;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,7 @@ public class BimesterGradeService {
     private final DisciplineRepository repositoryDiscipline;
     private final StudentRepository repositoryStudent;
     private final BimesterGradeMapper mapperBimesterGrade;
+    private final UserLoggedUtils  userLoggedUtils;
 
 
     public List<BimesterGradeResponseDTO> findAll() {
@@ -48,6 +50,8 @@ public class BimesterGradeService {
 
         Discipline discipline = repositoryDiscipline.findById(disciplineId)
                 .orElseThrow(() -> new EntityNotFoundException("A disciplina não existe."));
+
+        newBimesterGrade.setIdSchool(userLoggedUtils.getSchoolUserLogged());
 
         newBimesterGrade.setSituation(newBimesterGrade.defineSituationNoFinal(newBimesterGrade));
         newBimesterGrade.setStudent(student);

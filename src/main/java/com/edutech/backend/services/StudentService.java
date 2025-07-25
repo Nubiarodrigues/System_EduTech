@@ -10,6 +10,7 @@ import com.edutech.backend.mapper.StudentMapper;
 import com.edutech.backend.repositories.ClassroomRepository;
 import com.edutech.backend.repositories.StudentRepository;
 import com.edutech.backend.utils.RegistrationGenerator;
+import com.edutech.backend.utils.UserLoggedUtils;
 import com.edutech.backend.utils.ValidatorUtils;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ public class StudentService {
 	private final StudentMapper mapperStudent;
 	private final ClassroomRepository repositoryClassroom;
 	private final CepService serviceCep;
+	private final UserLoggedUtils  userLoggedUtils;
 
 	public List<StudentResponseDTO> findAll() {
 		return repositoryStudent.findAll().stream().map(StudentResponseDTO::new).toList();
@@ -81,6 +83,8 @@ public class StudentService {
 		if (repositoryStudent.findByEmail(dto.email()).isPresent()) {
 			throw new ExistingResourceException("E-mail já cadastrado.");
 		}
+
+		student.setIdSchool(userLoggedUtils.getSchoolUserLogged());
 
 		student.setClassroom(classroom);
 

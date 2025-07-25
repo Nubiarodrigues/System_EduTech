@@ -10,6 +10,7 @@ import com.edutech.backend.exceptions.ResourceNotFoundException;
 import com.edutech.backend.mapper.DisciplinaryRecordMapper;
 import com.edutech.backend.repositories.DisciplinaryRecordRepository;
 import com.edutech.backend.repositories.StudentRepository;
+import com.edutech.backend.utils.UserLoggedUtils;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ public class DisciplinaryRecordService {
     private final DisciplinaryRecordRepository repositoryDisciplinaryRecord;
     private final StudentRepository repositoryStudent;
     private final DisciplinaryRecordMapper mapperDisciplinaryRecord;
+    private final UserLoggedUtils  userLoggedUtils;
 
 
     public List<DisciplinaryRecordResponseDTO> findAll(){
@@ -39,6 +41,7 @@ public class DisciplinaryRecordService {
         Student student = repositoryStudent.findById(idStudent)
                 .orElseThrow(() -> new ResourceNotFoundException("O aluno não existe."));
 
+        newDisciplinaryRecord.setIdSchool(userLoggedUtils.getSchoolUserLogged());
         newDisciplinaryRecord.setStudent(student);
         newDisciplinaryRecord.setResponsible(responsible);
 

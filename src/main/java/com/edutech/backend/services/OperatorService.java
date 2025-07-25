@@ -8,6 +8,7 @@ import com.edutech.backend.exceptions.ResourceNotFoundException;
 import com.edutech.backend.mapper.OperatorMapper;
 import com.edutech.backend.repositories.OperatorRepository;
 import com.edutech.backend.utils.RegistrationGenerator;
+import com.edutech.backend.utils.UserLoggedUtils;
 import com.edutech.backend.utils.ValidatorUtils;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class OperatorService {
 
 	private final OperatorRepository repositoryOperator;
 	private final OperatorMapper mapperOperator;
+	private final UserLoggedUtils userLoggedUtils;
 
 	public List<OperatorResponseDTO> findAll() {
 		return repositoryOperator.findAll().stream().map(OperatorResponseDTO::new).toList();
@@ -62,6 +64,8 @@ public class OperatorService {
 		if (repositoryOperator.findByEmail(dto.email()).isPresent()) {
 			throw new ExistingResourceException("Email já cadastrado ");
 		}
+
+		operator.setIdSchool(userLoggedUtils.getSchoolUserLogged());
 
 		String enconderPassword = new BCryptPasswordEncoder().encode(dto.password());
 		operator.setPassword(enconderPassword);

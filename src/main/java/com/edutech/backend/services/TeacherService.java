@@ -8,6 +8,7 @@ import com.edutech.backend.exceptions.ResourceNotFoundException;
 import com.edutech.backend.mapper.TeacherMapper;
 import com.edutech.backend.repositories.TeacherRepository;
 import com.edutech.backend.utils.RegistrationGenerator;
+import com.edutech.backend.utils.UserLoggedUtils;
 import com.edutech.backend.utils.ValidatorUtils;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class TeacherService {
 	private final TeacherRepository repositoryTeacher;
 	private final TeacherMapper mapperTeacher;
 	private final CepService serviceCep;
+	private final UserLoggedUtils  userLoggedUtils;
 
 	public List<TeacherResponseDTO> findAll() {
 		return repositoryTeacher.findAll().stream().map(mapperTeacher::toResponseDTO).toList();
@@ -77,6 +79,8 @@ public class TeacherService {
 		if(teacher.getWorkloadAllocated() == null){
 			teacher.setWorkloadAllocated(0);
 		}
+
+		teacher.setIdSchool(userLoggedUtils.getSchoolUserLogged());
 
 		String enconderPassword = new BCryptPasswordEncoder().encode(dto.password());
 		teacher.setPassword(enconderPassword);
