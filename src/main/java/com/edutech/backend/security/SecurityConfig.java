@@ -30,6 +30,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/school").permitAll()
                         .requestMatchers(HttpMethod.POST, "/administrators").permitAll()
                         .requestMatchers("/warnings/**").hasRole("COORDINATOR")
                         .requestMatchers("/**").hasRole("ADMIN")
