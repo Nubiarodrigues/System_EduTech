@@ -32,7 +32,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/school").permitAll()
                         .requestMatchers(HttpMethod.POST, "/administrators").permitAll()
-                        .requestMatchers("/warnings/**").hasRole("COORDINATOR")
+                        //.requestMatchers("/warnings/**").hasRole("COORDINATOR")
                         .requestMatchers("/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
