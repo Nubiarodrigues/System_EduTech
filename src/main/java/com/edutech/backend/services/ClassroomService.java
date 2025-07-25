@@ -1,8 +1,8 @@
 package com.edutech.backend.services;
 
-import com.edutech.backend.dtos.discipline.AddDisciplineClassroomRequestDTO;
 import com.edutech.backend.dtos.classroom.ClassroomRequestDTO;
 import com.edutech.backend.dtos.classroom.ClassroomResponseDTO;
+import com.edutech.backend.dtos.discipline.AddDisciplineClassroomRequestDTO;
 import com.edutech.backend.entities.Classroom;
 import com.edutech.backend.entities.Coordinator;
 import com.edutech.backend.entities.Discipline;
@@ -33,22 +33,22 @@ public class ClassroomService {
 	}
 
 	public Classroom findById(Long id) {
-		return repositoryClassroom.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+		return repositoryClassroom.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("A turma com ID: " + id + " não existe."));
 	}
 
 	@Transactional
-	public Classroom createClassroom(ClassroomRequestDTO dto) {
+	public Classroom create(ClassroomRequestDTO dto) {
 		Coordinator coordinator = repositoryCoordinator.findByModalityAndStatus(dto.modality(), Situation.ATIVO)
 				.orElseThrow(() -> new ResourceNotFoundException("Coordenador não encontrado para esta modalidade"));
 
 		Classroom classroom = mapperClassroom.toEntity(dto);
 		classroom.setCoordinatorClass(coordinator);
-		classroom = repositoryClassroom.save(classroom);
-		return classroom;
+		return repositoryClassroom.save(classroom);
 	}
 
 	@Transactional
-	public Classroom updateClassroom(Long id, ClassroomRequestDTO dto) {
+	public Classroom update(Long id, ClassroomRequestDTO dto) {
 		try {
 			Classroom entity = repositoryClassroom.getReferenceById(id);
 			mapperClassroom.updateClassroomFromDTO(dto, entity);
@@ -64,8 +64,9 @@ public class ClassroomService {
 	}
 
 	@Transactional
-	public void deleteClassroom(Long id) {
-		Classroom classroom = repositoryClassroom.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+	public void delete(Long id) {
+		Classroom classroom = repositoryClassroom.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("A turma com ID: " + id + " não existe."));
 		repositoryClassroom.delete(classroom);
 	}
 
@@ -73,15 +74,13 @@ public class ClassroomService {
 	public void addDiscipline (Long classroomId, AddDisciplineClassroomRequestDTO dto) {
 
 		Discipline discipline = repositoryDiscipline.findById(dto.disciplineId())
-				.orElseThrow(() -> new ResourceNotFoundException("Disciplina com ID " +  dto.disciplineId() + " não encontrada."));
-
+				.orElseThrow(() -> new ResourceNotFoundException("Disciplina com ID " +  dto.disciplineId() + " não existe."));
 
 		Classroom classroom = repositoryClassroom.findById(classroomId)
-				.orElseThrow(() -> new ResourceNotFoundException("Turma com ID " + classroomId + " não encontrada."));
+				.orElseThrow(() -> new ResourceNotFoundException("Turma com ID " + classroomId + " não existe."));
 
 		classroom.getDisciplines().add(discipline);
 
 		repositoryClassroom.save(classroom);
 	}
-
 }

@@ -1,8 +1,8 @@
 package com.edutech.backend.controllers;
 
-import com.edutech.backend.dtos.discipline.AddDisciplineClassroomRequestDTO;
 import com.edutech.backend.dtos.classroom.ClassroomRequestDTO;
 import com.edutech.backend.dtos.classroom.ClassroomResponseDTO;
+import com.edutech.backend.dtos.discipline.AddDisciplineClassroomRequestDTO;
 import com.edutech.backend.entities.Classroom;
 import com.edutech.backend.mapper.ClassroomMapper;
 import com.edutech.backend.services.ClassroomService;
@@ -38,7 +38,7 @@ public class ClassroomController {
 
 	@PostMapping
 	public ResponseEntity<ClassroomResponseDTO> create(@RequestBody @Valid ClassroomRequestDTO dto) {
-		Classroom newClassroom = serviceClassroom.createClassroom(dto);
+		Classroom newClassroom = serviceClassroom.create(dto);
 		URI location = ServletUriComponentsBuilder
 				.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(newClassroom.getId()).toUri();
@@ -48,14 +48,14 @@ public class ClassroomController {
 
 	@PutMapping("/{id}")
 	public ResponseEntity<ClassroomResponseDTO> update(@PathVariable Long id, @RequestBody @Valid ClassroomRequestDTO obj) {
-		Classroom current = serviceClassroom.updateClassroom(id, obj);
+		Classroom current = serviceClassroom.update(id, obj);
 		ClassroomResponseDTO response = mapperClassroom.toResponseDTO(current);
 		return ResponseEntity.ok(response);
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
-		serviceClassroom.deleteClassroom(id);
+		serviceClassroom.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 
@@ -64,5 +64,4 @@ public class ClassroomController {
 		serviceClassroom.addDiscipline(classroomId, disciplineId);
 		return ResponseEntity.ok().build();
 	}
-
 }
