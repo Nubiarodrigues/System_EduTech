@@ -2,7 +2,7 @@ package com.edutech.backend.dtos.student;
 
 import com.edutech.backend.dtos.bimestergrade.BimesterGradeResponseDTO;
 import com.edutech.backend.dtos.disciplinaryrecord.DisciplinaryRecordResponseDTO;
-import com.edutech.backend.entities.DisciplinaryRecord;
+import com.edutech.backend.dtos.frequency.FrequencyResponseDTO;
 import com.edutech.backend.entities.Student;
 import com.edutech.backend.enuns.RoleUser;
 
@@ -17,7 +17,8 @@ public record StudentResponseDTO(
 		RoleUser role,
 		String registration,
 		List<BimesterGradeResponseDTO> bimesters,
-		List<DisciplinaryRecordResponseDTO> history)
+		List<DisciplinaryRecordResponseDTO> history,
+		List<FrequencyResponseDTO> frequencies)
 {
 
 	public StudentResponseDTO(Student student) {
@@ -28,7 +29,8 @@ public record StudentResponseDTO(
 				student.getRole(),
 				student.getRegistration(),
 				student.getBimesters() != null ? student.getBimesters().stream().map(BimesterGradeResponseDTO::new).collect(Collectors.toList()) : Collections.emptyList(),
-				student.getDisciplinaryHistory() != null ? student.getDisciplinaryHistory().stream().map(DisciplinaryRecordResponseDTO::new).collect(Collectors.toList()) : Collections.emptyList()
+				student.getDisciplinaryHistory() != null ? student.getDisciplinaryHistory().stream().map(DisciplinaryRecordResponseDTO::new).collect(Collectors.toList()) : Collections.emptyList(),
+				student.getFrequencyHistory() != null ? student.getFrequencyHistory().stream().map(FrequencyResponseDTO::new).collect(Collectors.toList()) : Collections.emptyList()
 			);
 	}
 }

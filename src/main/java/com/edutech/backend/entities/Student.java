@@ -30,7 +30,6 @@ public class Student extends User {
 	private String address;
 	private String fatherName;
 	private String motherName;
-	private LocalDate frequency;
 	private String emailResponsable;
 
 	@OneToMany(mappedBy = "student")
@@ -45,4 +44,7 @@ public class Student extends User {
 	@OneToMany(mappedBy = "student")
 	@JsonManagedReference
 	private List<DisciplinaryRecord> disciplinaryHistory;
+
+	@OneToMany(mappedBy = "student")
+	private List<Frequency> frequencyHistory;
 }
