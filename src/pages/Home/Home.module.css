@@ -1,0 +1,17 @@
+.home_container {
+  flex: 1;       /* ocupa todo espaço restante */
+  min-width: 0;  /* permite encolher se necessário */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  color: black;
+}
+
+p {
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+}
+
+
