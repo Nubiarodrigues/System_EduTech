@@ -1,0 +1,10 @@
+.container_global {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100vh;
+}
+
+.container_right {
+    display: flex;
+    background-color: #343A40;
+}
