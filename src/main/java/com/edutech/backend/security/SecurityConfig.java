@@ -30,8 +30,8 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/h2-console/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/school").permitAll()
+                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/school").permitAll()
                         .requestMatchers(HttpMethod.POST, "/administrators").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/**").hasRole("ADMIN")
