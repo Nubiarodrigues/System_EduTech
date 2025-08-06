@@ -3,6 +3,7 @@ package com.edutech.backend.security;
 import com.edutech.backend.services.AuthService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -36,13 +37,19 @@ public class SecurityFilter extends OncePerRequestFilter {
     }
 
     private String recoverToken(HttpServletRequest request) {
-        var authHeader = request.getHeader("Authorization");
-
-        if(authHeader == null){
-            return null;
+        if(request.getCookies() != null){
+            for(Cookie cookie : request.getCookies()){
+                if("access_token".equals(cookie.getName())){
+                    return cookie.getValue();
+                }
+            }
         }
 
-        return authHeader.replace("Bearer ", "");
-    }
+        String authGeader = request.getHeader("Authorization");
+        if(authGeader != null && authGeader.startsWith("Bearer ")){
+            return authGeader.substring(7);
+        }
 
+        return null;
+    }
 }
