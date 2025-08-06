@@ -34,3 +34,4 @@ build/
 
 ### Arquivos de configuração sensíveis
 application-secret.properties
+application-https.properties
