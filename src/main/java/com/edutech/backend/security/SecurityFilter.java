@@ -37,19 +37,18 @@ public class SecurityFilter extends OncePerRequestFilter {
     }
 
     private String recoverToken(HttpServletRequest request) {
-        if(request.getCookies() != null){
-            for(Cookie cookie : request.getCookies()){
-                if("access_token".equals(cookie.getName())){
+        if (request.getCookies() != null) {
+            for (Cookie cookie : request.getCookies()) {
+                if ("access_token".equals(cookie.getName())) {
                     return cookie.getValue();
                 }
             }
         }
 
-        String authGeader = request.getHeader("Authorization");
-        if(authGeader != null && authGeader.startsWith("Bearer ")){
-            return authGeader.substring(7);
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            return authHeader.substring(7);
         }
-
         return null;
     }
 }
