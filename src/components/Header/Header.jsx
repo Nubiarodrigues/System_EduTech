@@ -1,9 +1,13 @@
-import styles from './Header.module.css'
+import { useAuthContext } from '../../contexts/auth/AuthContext';
+import styles from './Header.module.css';
 
-export default function Header(){
-    return (
-        <header className={styles.container_header}>
-            <p>cabeçalho dessa poha</p>
-        </header>
-    )
+export default function Header() {
+
+    const { user, isLoadingLoggedUser, sendLogin, logout } = useAuthContext();
+
+    if (isLoadingLoggedUser) return <p>Carregando usuário...</p>;
+
+    if (!user) return <p>Usuário não está logado.</p>;
+
+    return <p>Olá, {user.name} - {user.role}!</p>;
 }
