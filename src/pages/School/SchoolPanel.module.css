@@ -1,0 +1,12 @@
+.container-school {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+}
+
+.container_details {
+    background-color: black;
+    display: grid;
+    width: 100%;
+}
