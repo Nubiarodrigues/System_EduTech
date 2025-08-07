@@ -4,6 +4,7 @@ import MainLayout from "../layouts/MainLayout";
 import Home from '../pages/Home/Home';
 import SchoolPanel from "../pages/School/SchoolPanel";
 import LoginScreen from '../pages/LoginScreen/Login';
+import AdminForm from "../components/AdminForm/AdminForm";
 
 export const router = createBrowserRouter([
     {
@@ -12,12 +13,21 @@ export const router = createBrowserRouter([
         children: [
             { index: true, element: <Home /> },
             { path: "/school-details", element: <SchoolPanel /> },
-            { path: "/register-school", element: <FormRegister /> },
         ]
     },
 
     {
         path: "/login",
         element: <LoginScreen />
+    },
+
+    {
+        path: "/createAdmin",
+        element: <AdminForm />
+    },
+
+    {
+        path: "/createSchool",
+        element: <FormRegister />
     }
 ])
