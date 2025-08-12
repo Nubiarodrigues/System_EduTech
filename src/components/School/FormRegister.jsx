@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSchoolActions } from '../../hooks/schoolActions/useSchoolCreate';
 import styles from './FormRegister.module.css';
+import useCepFind from "../../hooks/cepActions/useCepFind";
 
 const FormRegister = () => {
 
@@ -8,35 +9,47 @@ const FormRegister = () => {
     const [email, setEmail] = useState('');
     const [telephone, setTelephone] = useState('');
     const [cnpj, setCnpj] = useState('');
-    const [cep, setCep] = useState('');
-    const [address, setAddress] = useState('');
+
+    const [address, setAddress] = useState({
+        cep: '',
+        street: '',
+        number: '',
+        complement: '',
+        neighborhood: '',
+        city: '',
+        state: ''
+    });
+
     const [stages, setStages] = useState([]);
     const [typeSchool, setTypeSchool] = useState('');
 
     const { sendData, loading, error } = useSchoolActions();
+    const { findAddress } = useCepFind();
 
     const [selectedStage, setSelectedStages] = useState('')
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        console.log({
+            name,
+            email,
+            telephone,
+            cnpj,
+            address,
+            stages,
+            typeSchool
+        });
+
         try {
-            await sendData({ name, email, telephone, cnpj, cep, address, stages, typeSchool });
-
-            setName("");
-            setEmail("");
-            setTelephone("");
-            setCnpj("");
-            setCep("");
-            setAddress("");
-            setStages([]);
-            setTypeSchool("");
-
-            alert("Cadastro enviado com sucesso!");
-        } catch {
+            await sendData({ name, email, telephone, cnpj, address, stages, typeSchool });
+            alert("Cadastro realizado com sucesso!!")
+        } catch (error) {
+            console.error(error.response?.data || error);
             alert("Erro ao enviar cadastro!!");
         }
     };
+
 
     const handleAddStage = (e) => {
         if (selectedStage && !stages.includes(selectedStage)) {
@@ -45,6 +58,32 @@ const FormRegister = () => {
             setSelectedStages('');
         }
     };
+
+    const handleAddComponentsAdress = (e) => {
+        const { name, value } = e.target;
+        setAddress(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    }
+
+    useEffect(() => {
+        const cep = address.cep.replace(/\D/g, '');
+        if (cep.length === 8) {
+            findAddress(cep).then((data) => {
+                if (data) {
+                    setAddress(prev => ({
+                        ...prev,
+                        street: data.logradouro,
+                        neighborhood: data.bairro,
+                        city: data.localidade,
+                        state: data.uf,
+                        complement: data.complemento
+                    }));
+                }
+            });
+        }
+    }, [address.cep]);
 
     return (
         <div className={styles.cadastro_container}>
@@ -102,19 +141,62 @@ const FormRegister = () => {
                         <input
                             type="text"
                             name="cep"
-                            value={cep}
-                            placeholder="00000000"
-                            onChange={e => setCep(e.target.value)}
+                            value={address.cep}
+                            onChange={(e) => setAddress(prev => ({ ...prev, cep: e.target.value }))}
                             required />
                     </label>
 
                     <label>
-                        Endereço:
+                        Rua:
                         <input
-                            type="text"
-                            name="address"
-                            value={address}
-                            onChange={e => setAddress(e.target.value)}
+                            name="street"
+                            value={address.street}
+                            onChange={handleAddComponentsAdress}
+                            required />
+                    </label>
+
+                    <label>
+                        Número:
+                        <input
+                            name="number"
+                            value={address.number}
+                            onChange={handleAddComponentsAdress}
+                            required />
+                    </label>
+
+                    <label>
+                        Bairro:
+                        <input
+                            name="neighborhood"
+                            value={address.neighborhood}
+                            onChange={handleAddComponentsAdress}
+                            required />
+                    </label>
+
+                    <label>
+                        Complemento:
+                        <input
+                            name="complement"
+                            value={address.complement}
+                            onChange={handleAddComponentsAdress}
+                            required />
+                    </label>
+
+                    <label>
+                        Cidade:
+                        <input
+                            name="city"
+                            value={address.city}
+                            onChange={handleAddComponentsAdress}
+                            required />
+                    </label>
+
+                    <label>
+                        Estado:
+                        <input
+                            name="state"
+                            value={address.state}
+                            onChange={handleAddComponentsAdress}
                             required />
                     </label>
 
