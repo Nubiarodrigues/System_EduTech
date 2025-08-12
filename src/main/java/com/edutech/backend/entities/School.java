@@ -1,5 +1,6 @@
 package com.edutech.backend.entities;
 
+import com.edutech.backend.entities.embeddable.Address;
 import com.edutech.backend.enuns.TeachingStage;
 import com.edutech.backend.enuns.TypeSchool;
 import jakarta.persistence.*;
@@ -27,8 +28,9 @@ public class School {
     private String email;
     private String telephone;
     private String cnpj;
-    private String cep;
-    private String address;
+
+    @Embedded
+    private Address address;
 
     @ElementCollection(targetClass = TeachingStage.class)
     @Enumerated(EnumType.STRING)
@@ -45,5 +47,6 @@ public class School {
     @OneToMany(mappedBy = "school", fetch = FetchType.LAZY)
     private List<Coordinator>  coordinators;
 
+    @Enumerated(EnumType.STRING)
     private TypeSchool typeSchool;
 }

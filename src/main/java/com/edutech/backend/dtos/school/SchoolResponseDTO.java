@@ -1,6 +1,7 @@
 package com.edutech.backend.dtos.school;
 
 import com.edutech.backend.entities.School;
+import com.edutech.backend.entities.embeddable.Address;
 import com.edutech.backend.enuns.TeachingStage;
 import com.edutech.backend.enuns.TypeSchool;
 
@@ -11,7 +12,7 @@ public record SchoolResponseDTO(
         String email,
         String telephone,
         String cnpj,
-        String address,
+        Address address,
         Set<TeachingStage> stages,
         TypeSchool typeSchool) {
 
