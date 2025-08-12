@@ -31,7 +31,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/school").permitAll()
+                        .requestMatchers("/school/**").permitAll()
+                        .requestMatchers("/api/cep/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/administrators").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/**").hasRole("ADMIN")
@@ -51,5 +52,4 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }
