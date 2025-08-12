@@ -5,7 +5,7 @@ import logo from '/src/assets/image/logo.png';
 
 export default function SideBar() {
 
-    const { user, isLoadingLoggedUser, login, logout } = useAuthContext();
+    const { logout } = useAuthContext();
 
     const navigate = useNavigate();
 
