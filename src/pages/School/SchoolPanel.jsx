@@ -7,7 +7,7 @@ import styles from './SchoolPanel.module.css';
 const SchoolPanel = () => {
 
   const navigate = useNavigate();
-  const { findById, error } = useSchoolFindById();
+  const { findById } = useSchoolFindById();
   const { user } = useAuthContext();
   const [school, setSchool] = useState(null);
 
@@ -36,7 +36,11 @@ const SchoolPanel = () => {
 
       <div className={styles.container_details}>
         <p>Nome da instituição: {school?.name || "Carregando..."}</p>
-        <p>Endereço: {school?.address || "Carregando..."}</p>
+        <p>
+          Endereço:{" "}
+          {school?.address
+            ? `${school.address.street}, ${school.address.number} - ${school.address.neighborhood}, ${school.address.city} - ${school.address.cep}` : "Carregando..."}
+        </p>
         <p>Capacidade: </p>
         <p>Modalidade: </p>
         <p>Oferta: {school?.stages || "Carregando..."}</p>
