@@ -17,8 +17,6 @@ public class SchoolService {
 
     private final SchoolRepository repositorySchool;
     private final SchoolMapper mapperSchool;
-    private final CepService serviceCep;
-
 
     public School findById(Long id){
         return repositorySchool.findById(id)
@@ -28,7 +26,6 @@ public class SchoolService {
     @Transactional
     public School create(SchoolRequestDTO dto) {
         School newSchool = mapperSchool.toEntity(dto);
-        newSchool.setAddress(serviceCep.findAddress(dto.cep()));
         return repositorySchool.save(newSchool);
     }
 

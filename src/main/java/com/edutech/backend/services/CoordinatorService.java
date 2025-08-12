@@ -91,7 +91,5 @@ public class CoordinatorService {
  
 		coordinator.setRegistration(new RegistrationGenerator()
 						.generateRegistrationUnique(coordinator.getRegistration()));
-
-		coordinator.setAddress(serviceCep.findAddress(dto.cep()));
 	}
 }
