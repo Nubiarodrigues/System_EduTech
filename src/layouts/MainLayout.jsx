@@ -1,23 +1,26 @@
-import Header from "../components/Header/Header";
-import SideBar from "../components/SideBar/SideBar";
+import { useState } from "react";
+import Header from "../components/Header";
+import SideBar from "../components/SideBar";
 import { Outlet } from "react-router-dom";
 
 export default function MainLayout() {
+
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <div className="flex h-screen w-screen">
       <aside className="">
-        <SideBar />
+        <SideBar isOpen={isOpen} setIsOpen={setIsOpen}/> 
       </aside>
 
       <div className="flex-1 flex flex-col">
-        <header className="bg-fuchsia-300 flex items-center p-4">
-          <Header />
+        <header className="flex justify-end items-center bg-[#A0A0A0] h-[12%]">
+          <Header /> 
         </header>
-        <main className="flex-1 bg-gray-100">
+        <main className="flex-1 bg-white">
           <Outlet />
         </main>
       </div>
     </div>
-
   );
 }
