@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from '../../contexts/auth/AuthContext';
 import useSchoolFindById from "../../hooks/schoolActions/useSchoolFindById";
-import styles from './SchoolPanel.module.css';
+
 
 const SchoolPanel = () => {
 
@@ -32,26 +32,36 @@ const SchoolPanel = () => {
   }, [user]);
 
   return (
-    <div className={styles.container_school}>
+    <div className='text-white block'>
 
-      <div className={styles.container_details}>
-        <p>Nome da instituição: {school?.name || "Carregando..."}</p>
-        <p>
-          Endereço:{" "}
-          {school?.address
-            ? `${school.address.street}, ${school.address.number} - ${school.address.neighborhood}, ${school.address.city} - ${school.address.cep}` : "Carregando..."}
-        </p>
+      <div className='bg-amber-950 m-4 p-4'>
+        <h2 className='text-2xl'>{school?.name || "Carregando..."}</h2>
+
         <p>Capacidade: </p>
         <p>Modalidade: </p>
         <p>Oferta: {school?.stages || "Carregando..."}</p>
       </div>
 
-      <button onClick={() => navigate('/register-school')}>
-        Cadastrar nova escola
-      </button>
+      <div className='bg-amber-950 m-4 p-4'>
+        <h2>Localização</h2>
+        <p>
+          Endereço:{" "}
+          {school?.address
+            ? `${school.address.street}` : "Carregando..."}
+        </p>
+        <p>
+          Cep:{" "}
+          {school?.address ? `${school.address.cep}` : "Carregando"}
+        </p>
 
+        <p>
+          Cidade:{" "}
+          {school?.address ? `${school.address.city}` : "Carregando"}
+        </p>
+      </div>
     </div>
   )
 }
 
 export default SchoolPanel;
+

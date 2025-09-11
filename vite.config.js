@@ -7,8 +7,8 @@ export default defineConfig({
   plugins: [react()],
   server: {
     https: {
-      key: fs.readFileSync('D:/system_edutech/cert_mkcert/localhost-key.pem'),
-      cert: fs.readFileSync('D:/system_edutech/cert_mkcert/localhost.pem'),
+      key: fs.readFileSync('E:/system_edutech/cert_mkcert/localhost-key.pem'),
+      cert: fs.readFileSync('E:/system_edutech/cert_mkcert/localhost.pem'),
     },
     port: 5173
   }

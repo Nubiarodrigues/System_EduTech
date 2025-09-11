@@ -1,5 +1,5 @@
 import { useState } from "react";
-import useAdminCreate from "../../hooks/adminActions/useAdminCreate";
+import useAdminCreate from "../hooks/adminActions/useAdminCreate";
 
 const AdminForm = () => {
 
