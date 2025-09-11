@@ -6,7 +6,6 @@ import Home from '../pages/Home/Home';
 import Login from "../pages/Login/Login";
 import Profile from "../pages/ProfileUser/Profile";
 import SchoolPanel from "../pages/School/SchoolPanel";
-import SideBar from "../components/SideBar/SideBar";
 
 export const router = createBrowserRouter([
     {
