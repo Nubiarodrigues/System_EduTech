@@ -8,6 +8,7 @@ const FormRegister = () => {
     const [email, setEmail] = useState('');
     const [telephone, setTelephone] = useState('');
     const [cnpj, setCnpj] = useState('');
+    const [capacity, setCapacity] = useState();
 
     const [address, setAddress] = useState({
         cep: '',
@@ -35,13 +36,14 @@ const FormRegister = () => {
             email,
             telephone,
             cnpj,
+            capacity,
             address,
             stages,
             typeSchool
         });
 
         try {
-            await sendData({ name, email, telephone, cnpj, address, stages, typeSchool });
+            await sendData({ name, email, telephone, cnpj, capacity, address, stages, typeSchool });
             alert("Cadastro realizado com sucesso!!")
         } catch (error) {
             console.error(error.response?.data || error);
@@ -132,6 +134,17 @@ const FormRegister = () => {
                             value={cnpj}
                             placeholder="00.000.000/0000-00"
                             onChange={e => setCnpj(e.target.value)}
+                            required />
+                    </label>
+
+                    <label>
+                        Capacidade:
+                        <input
+                            type="text"
+                            name="cnpj"
+                            value={capacity}
+                            placeholder="00.000.000/0000-00"
+                            onChange={e => setCapacity(e.target.value)}
                             required />
                     </label>
 
