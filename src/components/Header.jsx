@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuthContext } from "../contexts/auth/AuthContext";
-import { UserMenuModal } from "./Modal/UserMenu/UserMenuModal";
+import { UserMenuModal } from "./UserMenuModal";
 import { Icon } from "@iconify/react";
 
 export default function Header() {

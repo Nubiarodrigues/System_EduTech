@@ -1,12 +1,9 @@
-import React from 'react'
-import ProfileUser from '../../components/FormProfile/ProfileUser'
+import ProfileUser from '../components/ProfileUser'
 
 const Profile = () => {
     return (
         <div>
-
             <ProfileUser />
-
         </div>
     )
 }

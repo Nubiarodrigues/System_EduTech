@@ -49,14 +49,11 @@ const LoginForm = () => {
         </p>
       </div>
 
-      <form
-        onSubmit={handleSubmit}
-        className="w-[90%] lg:w-[70%] text-black xl:text-xl 2xl:text-2xl 2xl:mb-40"
-      >
-        <label className="pb-4">
+      <form onSubmit={handleSubmit} className="w-[90%] lg:w-[70%] text-black xl:text-xl 2xl:text-2xl 2xl:mb-40">
+        <label>
           Email
-          <div className="flex items-center">
-            <div className="border h-10 flex items-center border-[#e1dcdc]">
+          <div className="flex items-center mb-4 border border-[#e1dcdc] rounded p-1 mt-2">
+            <div className="h-10 flex items-center">
               <Icon
                 icon="mdi:email-variant"
                 className="text-[#999999] ml-2 mr-2"
@@ -68,7 +65,7 @@ const LoginForm = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="border-[#e1dcdc] font-normal placeholder:text-[#999999] md:text-[16px] xl:placeholder:text-lg"
+              className="font-normal outline-none ml-4 w-[90%] h-10 placeholder:text-[#999999] md:text-[16px] xl:placeholder:text-lg"
               placeholder="exemplo@gmail.com"
             />
           </div>
@@ -76,8 +73,8 @@ const LoginForm = () => {
 
         <label>
           Senha
-          <div className="flex items-center">
-            <div className="border h-10 flex items-center border-[#e1dcdc]">
+          <div className="flex items-center border border-[#e1dcdc] rounded p-1 mt-2">
+            <div className="h-10 flex items-center">
               <Icon icon="uil:padlock" className="text-[#999999] ml-2 mr-2" />
             </div>
 
@@ -87,24 +84,20 @@ const LoginForm = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="border-[#e1dcdc] font-normal placeholder:text-[#999999] md:text-[16px] xl:placeholder:text-lg"
+              className="font-normal outline-none ml-4 w-[90%] h-10 placeholder:text-[#999999] md:text-[16px] xl:placeholder:text-lg"
               placeholder="********"
             />
           </div>
         </label>
 
-        <div className="flex mt-2 justify-between items-center  xl:text-xl 2xl:text-2xl">
-          <div className="w-[60%] text-[#074F8A]">
+        <div className="flex mt-4 justify-between items-center xl:text-xl 2xl:text-2xl">
+          <div className="w-[60%] text-[#074F8A] mt-2 mb-2">
             <div className="flex items-center w-[20%] cursor-pointer">
               <input
                 type="checkbox"
                 id="remember"
-                className="m-0 appearance-none w-4 h-4 border rounded checked:bg-blue-600 checked:border-blue-600"
-              />
-              <label
-                htmlFor="remember"
-                className="ml-2 text-sm whitespace-nowrap cursor-pointer "
-              >
+                className="m-0 appearance-none w-4 h-4 border rounded checked:bg-blue-600 checked:border-blue-600"/>
+              <label htmlFor="remember" className="ml-2 text-sm whitespace-nowrap cursor-pointer ">
                 Lembrar de mim
               </label>
             </div>

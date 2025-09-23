@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuthContext } from '../../contexts/auth/AuthContext';
-import useSchoolFindById from "../../hooks/schoolActions/useSchoolFindById";
+import { useAuthContext } from '../contexts/auth/AuthContext';
+import useSchoolFindById from "../hooks/schoolActions/useSchoolFindById";
 
 
 const SchoolPanel = () => {

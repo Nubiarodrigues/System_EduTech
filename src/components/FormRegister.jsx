@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { useSchoolActions } from '../../hooks/schoolActions/useSchoolCreate';
-import styles from './FormRegister.module.css';
-import useCepFind from "../../hooks/cepActions/useCepFind";
+import { useSchoolActions } from '../hooks/schoolActions/useSchoolCreate';
+import useCepFind from "../hooks/cepActions/useCepFind";
 
 const FormRegister = () => {
 
@@ -86,12 +85,12 @@ const FormRegister = () => {
     }, [address.cep]);
 
     return (
-        <div className={styles.cadastro_container}>
+        <div>
 
             <h2>Formulário de cadastro</h2>
 
             <form onSubmit={handleSubmit}>
-                <div className={styles.grid}>
+                <div>
                     <label>
                         Nome da unidade:
                         <input
@@ -200,7 +199,7 @@ const FormRegister = () => {
                             required />
                     </label>
 
-                    <div className={styles.container_stages}>
+                    <div>
                         {stages.map((stage, index) => (
                             <span key={stage}>
                                 {stage}{index < stages.length - 1 ? '  ,  ' : ''}
@@ -218,7 +217,7 @@ const FormRegister = () => {
                         <option value="EDUCACAO_JOVENS_ADULTOS">EDUCACAO_JOVENS_ADULTOS</option>
                     </select>
 
-                    <button type="button" className={styles.btn_stages} onClick={handleAddStage} disabled={!selectedStage}>Adicionar</button>
+                    <button type="button"  onClick={handleAddStage} disabled={!selectedStage}>Adicionar</button>
 
                     <label htmlFor="typeSchool">Tipo de instituição: </label>
                     <select id="typeSchool" value={typeSchool} onChange={e => setTypeSchool(e.target.value)}>

@@ -2,7 +2,7 @@ import React from 'react'
 import { createRoot } from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
 import AuthProvider from './contexts/auth/AuthProvider'
-import './index.css'
+import './index.css';
 
 import { router } from './routes/router'
 
