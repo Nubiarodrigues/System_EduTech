@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuthContext } from "../contexts/auth/AuthContext";
-import useSchoolFindById from "../hooks/schoolActions/useSchoolFindById";
+import useSchoolFindById from "../hooks/school/useSchoolFindById";
 import { Icon } from "@iconify/react";
 
 const SchoolPanel = () => {
@@ -43,8 +43,8 @@ const SchoolPanel = () => {
   return (
     <div className="text-black flex flex-col items-center">
 
-      <div className="bg-amber-300">
-        <button>editar</button>
+      <div className="flex">
+        <button className="bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded cursor-pointer flex items-center gap-2"><Icon icon="ic:outline-edit-note"/> Editar</button>
       </div>
 
       <div className="bg-white w-[90%] p-4 m-4 border border-[#07EE5F] flex flex-col">

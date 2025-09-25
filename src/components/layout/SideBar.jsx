@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useAuthContext } from "../contexts/auth/AuthContext";
+import { useAuthContext } from "../../contexts/auth/AuthContext";
 import { Icon } from "@iconify/react";
 
 export default function SideBar({ isOpen, setIsOpen }) {
@@ -17,7 +17,7 @@ export default function SideBar({ isOpen, setIsOpen }) {
 
   const menuItems = [
     { icon: "mdi:home", label: "Home", path: "/" },
-    { icon: "mdi:school", label: "Turmas", path: "/turmas" },
+    { icon: "mdi:school", label: "Turmas", path: "/classes" },
     { icon: "mdi:teach-poll", label: "Professores", path: "/professores" },
     { icon: "mdi:notebook-multiple",label: "Disciplinas",path: "/disciplinas",},
     { icon: "mdi:office-building", label: "Escola", path: "/school-details" },

@@ -1,11 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
-import AdminForm from "../components/AdminForm";
-import FormRegister from "../components/FormRegister";
+import AdminForm from "../components/forms/AdminForm";
+import SchoolForm from "../components/forms/SchoolForm";
 import MainLayout from "../layouts/MainLayout";
 import Home from "../pages/Home";
-import Login from "../pages/Login";
-import Profile from "../pages/Profile";
+import Login from "../pages/Login";;
 import SchoolPanel from "../pages/SchoolPanel";
+import ClassesPanel from "../pages/ClassesPanel";
 
 export const router = createBrowserRouter([
   {
@@ -14,7 +14,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: "/school-details", element: <SchoolPanel /> },
-      { path: "/profile", element: <Profile /> },
+      {path: "classes", element: <ClassesPanel />}
     ],
   },
 
@@ -30,6 +30,6 @@ export const router = createBrowserRouter([
 
   {
     path: "/createSchool",
-    element: <FormRegister />,
+    element: <SchoolForm />,
   },
 ]);

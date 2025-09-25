@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useSchoolActions } from '../hooks/schoolActions/useSchoolCreate';
-import useCepFind from "../hooks/cepActions/useCepFind";
+import { useSchoolActions } from '../../hooks/school/useSchoolCreate';
+import useCepFind from "../../hooks/cep/useCepFind";
 
 const FormRegister = () => {
 
