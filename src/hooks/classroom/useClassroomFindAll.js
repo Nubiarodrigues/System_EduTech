@@ -20,7 +20,7 @@ const useClassroomFindAll = () => {
       setLoading(false);
     }
   };
-  return { findAll, loading, error, classrooms };
+  return { findAll, loading, error, classrooms, setClassrooms };
 };
 
 export default useClassroomFindAll;
