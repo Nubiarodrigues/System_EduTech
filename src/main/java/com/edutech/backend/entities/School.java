@@ -28,6 +28,7 @@ public class School {
     private String email;
     private String telephone;
     private String cnpj;
+    private Integer capacity;
 
     @Embedded
     private Address address;

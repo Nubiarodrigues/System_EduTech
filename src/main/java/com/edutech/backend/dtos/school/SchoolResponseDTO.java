@@ -12,6 +12,7 @@ public record SchoolResponseDTO(
         String email,
         String telephone,
         String cnpj,
+        Integer capacity,
         Address address,
         Set<TeachingStage> stages,
         TypeSchool typeSchool) {
@@ -22,6 +23,7 @@ public record SchoolResponseDTO(
                 school.getEmail(),
                 school.getTelephone(),
                 school.getCnpj(),
+                school.getCapacity(),
                 school.getAddress(),
                 school.getStages(),
                 school.getTypeSchool()

@@ -12,6 +12,7 @@ public record SchoolRequestDTO(
         @NotNull String email,
         @NotNull String telephone,
         @NotNull String cnpj,
+        @NotNull Integer capacity,
         @NotNull Address address,
         @NotNull Set<TeachingStage> stages,
         @NotNull TypeSchool typeSchool) {
