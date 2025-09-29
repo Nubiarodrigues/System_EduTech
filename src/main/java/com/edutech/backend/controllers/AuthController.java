@@ -70,7 +70,7 @@ public class AuthController {
                 .map(a -> a.getAuthority())
                 .orElse("");
 
-        UserResponseDTO response = new UserResponseDTO(user.getName(), role, user.getIdSchool());
+        UserResponseDTO response = new UserResponseDTO(user.getName(), role, user.getEmail(), user.getIdSchool(), user.getRegistration());
         return ResponseEntity.ok(response);
     }
 }
