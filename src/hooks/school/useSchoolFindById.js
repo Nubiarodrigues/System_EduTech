@@ -4,8 +4,11 @@ import * as schoolService from "../../services/schoolService";
 const useSchoolFindByIdAction = () => {
   const [school, setSchool] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const findById = async (id) => {
+    setLoading(true);
+
     try {
       const response = await schoolService.findById(id);
       setSchool(response.data);
@@ -18,7 +21,7 @@ const useSchoolFindByIdAction = () => {
     }
   };
 
-  return { findById, error };
+  return { findById, school, error, loading };
 };
 
 export default useSchoolFindByIdAction;

@@ -4,9 +4,8 @@ import useSchoolFindById from "../hooks/school/useSchoolFindById";
 import { Icon } from "@iconify/react";
 
 const SchoolPanel = () => {
-  const { findById } = useSchoolFindById();
+  const { findById, school } = useSchoolFindById();
   const { user } = useAuthContext();
-  const [school, setSchool] = useState(null);
 
   const typeSchoolMap = {
     PUBLICA: "Pública",
@@ -25,8 +24,7 @@ const SchoolPanel = () => {
     console.log("Buscando escola com ID:", user?.idSchool);
 
     try {
-      const schoolData = await findById(user.idSchool);
-      setSchool(schoolData);
+      await findById(user.idSchool);
     } catch (error) {
       console.error("Erro ao buscar escola:", error);
     }
