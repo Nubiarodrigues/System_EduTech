@@ -13,5 +13,7 @@ public class UserResponseDTO {
 
     private String name;
     private String role;
+    private String email;
     private Long idSchool;
+    private String registration;
 }
