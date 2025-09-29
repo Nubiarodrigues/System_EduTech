@@ -6,8 +6,13 @@ import com.edutech.backend.dtos.discipline.AddDisciplineClassroomRequestDTO;
 import com.edutech.backend.entities.Classroom;
 import com.edutech.backend.mapper.ClassroomMapper;
 import com.edutech.backend.services.ClassroomService;
+import com.edutech.backend.specifications.ClassroomSpecifications;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -24,8 +29,8 @@ public class ClassroomController {
 	private final ClassroomMapper mapperClassroom;
 
 	@GetMapping
-	public ResponseEntity<List<ClassroomResponseDTO>> findAll() {
-		List<ClassroomResponseDTO> classrooms = serviceClassroom.findAll();
+	public ResponseEntity<List<ClassroomResponseDTO>> findAll(ClassroomSpecifications.ClassroomSpecification spec) {
+		List<ClassroomResponseDTO> classrooms = serviceClassroom.findAll(spec);
 		return ResponseEntity.ok(classrooms);
 	}
 
