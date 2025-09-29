@@ -15,6 +15,7 @@ import com.edutech.backend.repositories.DisciplineRepository;
 import com.edutech.backend.utils.UserLoggedUtils;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,8 +31,8 @@ public class ClassroomService {
 	private final DisciplineRepository repositoryDiscipline;
 	private final UserLoggedUtils  userLoggedUtils;
 
-	public List<ClassroomResponseDTO> findAll() {
-		return repositoryClassroom.findAll().stream().map(ClassroomResponseDTO::new).toList();
+	public List<ClassroomResponseDTO> findAll(Specification<Classroom> spec) {
+		return repositoryClassroom.findAll(spec).stream().map(ClassroomResponseDTO::new).toList();
 	}
 
 	public Classroom findById(Long id) {
