@@ -9,3 +9,7 @@ export const findAll = () => {
 export const findAllFiltered = (params) => {
   return axios.get(`${BASE_URL}/classrooms?${params}`, { withCredentials: true });
 };
+
+export const findById = (id) => {
+  return axios.get(`${BASE_URL}/classrooms/${id}`, {withCredentials: true});
+}
