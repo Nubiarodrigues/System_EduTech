@@ -6,7 +6,7 @@ const useSchoolFindByIdAction = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const findById = async (id) => {
+  const findByIdSchool = async (id) => {
     setLoading(true);
 
     try {
@@ -21,7 +21,7 @@ const useSchoolFindByIdAction = () => {
     }
   };
 
-  return { findById, school, error, loading };
+  return { findByIdSchool, school, error, loading };
 };
 
 export default useSchoolFindByIdAction;
