@@ -1,30 +1,20 @@
-import { useEffect, useState } from "react";
+import { Icon } from "@iconify/react";
+import { useEffect } from "react";
+import BtnGeneric from "../components/buttons/BtnGeneric";
+import { formattedEnums } from "../components/constants/FormattedEnums";
 import { useAuthContext } from "../contexts/auth/AuthContext";
 import useSchoolFindById from "../hooks/school/useSchoolFindById";
-import { Icon } from "@iconify/react";
+
 
 const SchoolPanel = () => {
-  const { findById, school } = useSchoolFindById();
+  const { findByIdSchool, school } = useSchoolFindById();
   const { user } = useAuthContext();
-
-  const typeSchoolMap = {
-    PUBLICA: "Pública",
-    PRIVADA: "Privada",
-  };
-
-  const stagesMap = {
-    ENSINO_INFANTIL: "Ensino Infantil",
-    ENSINO_FUNDAMENTAL_I: "Ensino Fundamental I",
-    ENSINO_FUNDAMENTAL_II: "Ensino Fundamental II",
-    ENSINO_MEDIO: "Ensino Médio",
-    EDUCACAO_JOVENS_ADULTOS: "Educação de Jovens e Adultos",
-  };
 
   const handleFindBySchool = async () => {
     console.log("Buscando escola com ID:", user?.idSchool);
 
     try {
-      await findById(user.idSchool);
+      await findByIdSchool(user.idSchool);
     } catch (error) {
       console.error("Erro ao buscar escola:", error);
     }
@@ -40,9 +30,13 @@ const SchoolPanel = () => {
 
   return (
     <div className="text-black flex flex-col items-center">
-
       <div className="flex">
-        <button className="bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded cursor-pointer flex items-center gap-2"><Icon icon="ic:outline-edit-note"/> Editar</button>
+        <BtnGeneric
+          size="md"
+          className="ml-4 bg-emerald-500 text-white"
+          icon=""
+          children={"Editar"}
+        />
       </div>
 
       <div className="bg-white w-[90%] p-4 m-4 border border-[#07EE5F] flex flex-col">
@@ -57,14 +51,19 @@ const SchoolPanel = () => {
 
         <div className="flex items-center gap-2">
           <Icon icon="ic:baseline-public" />
-          <p>{school ? typeSchoolMap[school.typeSchool] : "Carregando..."}</p>
+          <p>{school
+              ? formattedEnums.typeSchoolFormat[school.typeSchool]
+              : "Carregando..."}
+          </p>
         </div>
 
         <div className="flex items-center gap-2">
           <Icon icon="ic:outline-local-offer" />
           <p>
             {school?.stages?.length
-              ? school.stages.map((stage) => stagesMap[stage]).join(", ")
+              ? school.stages
+                  .map((stage) => formattedEnums.stagesFormat[stage])
+                  .join(", ")
               : "Carregando..."}
           </p>
         </div>
