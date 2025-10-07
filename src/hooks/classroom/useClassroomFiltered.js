@@ -8,7 +8,7 @@ function useClassroomFiltered(filters) {
   useEffect(() => {
     async function fetchData() {
       try {
-        const params = new URLSearchParams(filters);
+        const params = new URLSearchParams(filters ? Object.entries(filters) : []);
         const response = await classroomService.findAllFiltered(params);
         setClassrooms(response.data);
       } catch (error) {
